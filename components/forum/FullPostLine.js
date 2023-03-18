@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 import COLORS from "../../data/colors";
 import styled from "styled-components";
