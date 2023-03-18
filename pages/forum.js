@@ -20,6 +20,7 @@ const Cont = styled.div`
   }
 `;
 const Forum = () => {
+  let del = "delte";
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
