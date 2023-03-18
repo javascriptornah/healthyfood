@@ -6,6 +6,7 @@ import ForumContent from "../components/forum/ForumContent";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   padding-top: 40px;
+  min-height: 100vh;
   .content-holder {
     background: #fff;
     width: 90%;
@@ -15,12 +16,10 @@ const Cont = styled.div`
     @media only screen and (max-width: 600px) {
       width: 100%;
       border-radius: 0px;
-      padding: 0;
     }
   }
 `;
 const Forum = () => {
-  let del = "delte";
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
