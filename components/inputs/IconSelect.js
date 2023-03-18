@@ -84,7 +84,7 @@ const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
   const iconElems = icons.map((icon, index) => {
     return (
       <div
-        ke={index}
+        key={index}
         className="icon mar-right-8 box-shadow-2"
         id={icon}
         onClick={() => setIcon(icon)}
