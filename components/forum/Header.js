@@ -6,7 +6,7 @@ import Signup from "./Signup";
 const Cont = styled.div``;
 const Header = () => {
   return (
-    <Cont colors={COLORS} className="mar-bottom-48">
+    <Cont colors={COLORS} className="mar-bottom-32">
       <h3 className="underline text-shadow-red mar-bottom-16">
         FOOD SOURCING FORUM
       </h3>

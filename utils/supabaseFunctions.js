@@ -923,3 +923,21 @@ export const fetchForumProvinceByName = async (name) => {
     return error;
   }
 };
+
+export const fetchPostById = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select(
+        "*, city_id(name), state_id(name), country_id(name),user_id(username)"
+      )
+      .eq("id", id)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
