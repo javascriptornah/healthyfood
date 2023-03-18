@@ -29,7 +29,7 @@ const Cont = styled.div`
     border-bottom: 1px solid ${(props) => props.colors.black};
   }
 `;
-const index = ({ fish, allFish, reFetchFish}) => {
+const Index = ({ fish, allFish, reFetchFish }) => {
   const [fishOceans, setFishOceans] = useState({ oceans: [], seas: [] });
   useEffect(() => {
     const oceans = [];
@@ -233,10 +233,8 @@ const index = ({ fish, allFish, reFetchFish}) => {
     },
   });
 
-  useEffect(()=> {
-    setQuantity(
-      `${fish.nutrients_id.quantity} grams`
-    );
+  useEffect(() => {
+    setQuantity(`${fish.nutrients_id.quantity} grams`);
     setNutrientObject({
       nutrients: {
         "Vitamin A": {
@@ -255,7 +253,8 @@ const index = ({ fish, allFish, reFetchFish}) => {
         },
         "Vitamin D": {
           value: fish.nutrients_id.vitamin_d_units?.match(/\d*\.*\d*/g)[0] || 0,
-          units: fish.nutrients_id.vitamin_d_units?.match(/(mcg|mg|IU)/)[0] || 0,
+          units:
+            fish.nutrients_id.vitamin_d_units?.match(/(mcg|mg|IU)/)[0] || 0,
           daily_value: fish.nutrients_id.vitamin_d_daily_value || 0,
         },
         "Vitamin E": {
@@ -273,13 +272,16 @@ const index = ({ fish, allFish, reFetchFish}) => {
           daily_value: fish.nutrients_id.vitamin_k_daily_value,
         },
         Thiamin: {
-          value: fish.nutrients_id.thiamin_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.thiamin_units?.match(/(mcg|mg|IU)/)[0] || null,
+          value:
+            fish.nutrients_id.thiamin_units?.match(/\d*\.*\d*/g)[0] || null,
+          units:
+            fish.nutrients_id.thiamin_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: fish.nutrients_id.thiamin_daily_value,
         },
         Niacin: {
           value: fish.nutrients_id.niacin_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.niacin_units?.match(/(mcg|mg|IU)/)[0] || null,
+          units:
+            fish.nutrients_id.niacin_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: fish.nutrients_id.niacin_daily_value,
         },
         "Vitamin B6": {
@@ -291,14 +293,16 @@ const index = ({ fish, allFish, reFetchFish}) => {
         },
         Folate: {
           value: fish.nutrients_id.folate_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.folate_units?.match(/(mcg|mg|IU)/)[0] || null,
+          units:
+            fish.nutrients_id.folate_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: fish.nutrients_id.folate_daily_value,
         },
         "Vitamin B12": {
           value:
             fish.nutrients_id.vitamin_b12_units?.match(/\d*\.*\d*/g)[0] || null,
           units:
-            fish.nutrients_id.vitamin_b12_units?.match(/(mcg|mg|IU)/)[0] || null,
+            fish.nutrients_id.vitamin_b12_units?.match(/(mcg|mg|IU)/)[0] ||
+            null,
           daily_value: fish.nutrients_id.vitamin_b12_daily_value,
         },
         "Pantothenic Acid": {
@@ -311,13 +315,17 @@ const index = ({ fish, allFish, reFetchFish}) => {
           daily_value: fish.nutrients_id.pantothenic_acid_daily_value,
         },
         Choline: {
-          value: fish.nutrients_id.choline_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.choline_units?.match(/(mcg|mg|IU)/)[0] || null,
+          value:
+            fish.nutrients_id.choline_units?.match(/\d*\.*\d*/g)[0] || null,
+          units:
+            fish.nutrients_id.choline_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: fish.nutrients_id?.choline_daily_value || null,
         },
         Calcium: {
-          value: fish.nutrients_id.calcium_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.calcium_units?.match(/(mcg|mg|IU)/)[0] || null,
+          value:
+            fish.nutrients_id.calcium_units?.match(/\d*\.*\d*/g)[0] || null,
+          units:
+            fish.nutrients_id.calcium_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: fish.nutrients_id.calcium_daily_value,
         },
         Iron: {
@@ -348,7 +356,8 @@ const index = ({ fish, allFish, reFetchFish}) => {
         },
         Sodium: {
           value: fish.nutrients_id.sodium_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.sodium_units?.match(/(mcg|mg|IU)/)[0] || null,
+          units:
+            fish.nutrients_id.sodium_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: fish.nutrients_id.sodium_daily_value,
         },
         Zinc: {
@@ -358,7 +367,8 @@ const index = ({ fish, allFish, reFetchFish}) => {
         },
         Copper: {
           value: fish.nutrients_id.copper_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.copper_units?.match(/(mcg|mg|IU)/)[0] || null,
+          units:
+            fish.nutrients_id.copper_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: fish.nutrients_id.copper_daily_value,
         },
         Manganese: {
@@ -369,7 +379,8 @@ const index = ({ fish, allFish, reFetchFish}) => {
           daily_value: fish.nutrients_id.manganese_daily_value,
         },
         Selenium: {
-          value: fish.nutrients_id.selenium_units?.match(/\d*\.*\d*/g)[0] || null,
+          value:
+            fish.nutrients_id.selenium_units?.match(/\d*\.*\d*/g)[0] || null,
           units:
             fish.nutrients_id.selenium_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: fish.nutrients_id.selenium_daily_value,
@@ -378,17 +389,20 @@ const index = ({ fish, allFish, reFetchFish}) => {
           value:
             fish.nutrients_id.cholesterol_units?.match(/\d*\.*\d*/g)[0] || null,
           units:
-            fish.nutrients_id.cholesterol_units?.match(/(mcg|mg|IU)/)[0] || null,
+            fish.nutrients_id.cholesterol_units?.match(/(mcg|mg|IU)/)[0] ||
+            null,
           daily_value: fish.nutrients_id.cholesterol_daily_value,
         },
         "Omega 6": {
           value: fish.nutrients_id.omega6_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.omega6_units?.match(/(mcg|mg|IU)/)[0] || null,
+          units:
+            fish.nutrients_id.omega6_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: null,
         },
         "Omega 3": {
           value: fish.nutrients_id.omega3_units?.match(/\d*\.*\d*/g)[0] || null,
-          units: fish.nutrients_id.omega3_units?.match(/(mcg|mg|IU)/)[0] || null,
+          units:
+            fish.nutrients_id.omega3_units?.match(/(mcg|mg|IU)/)[0] || null,
           daily_value: null,
         },
       },
@@ -412,9 +426,8 @@ const index = ({ fish, allFish, reFetchFish}) => {
           value: fish.nutrients_id.monounsaturated_fat,
         },
       },
-    })
-   
-  },[fish])
+    });
+  }, [fish]);
   const toggleQuantity = (newQuantity) => {
     setQuantity(newQuantity);
 
@@ -805,8 +818,7 @@ const index = ({ fish, allFish, reFetchFish}) => {
       };
     });
   };
-  
- 
+
   return (
     <Cont colors={COLORS}>
       <div className="center-inline">
@@ -818,8 +830,8 @@ const index = ({ fish, allFish, reFetchFish}) => {
         fish={fish}
         quantity={quantity}
         setQuantity={toggleQuantity}
-        nutrientObject = {nutrientObject}
-        reFetchFish = {reFetchFish}
+        nutrientObject={nutrientObject}
+        reFetchFish={reFetchFish}
       />
       <div className="nutrient-sections-holder">
         <div className="nutrient-holder box-shadow-2">
@@ -1062,4 +1074,4 @@ const index = ({ fish, allFish, reFetchFish}) => {
   );
 };
 
-export default index;
+export default Index;

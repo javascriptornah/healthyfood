@@ -14,9 +14,10 @@ const PostsSection = ({ title, posts }) => {
   console.log(posts);
 
   const [postLines, setPostLines] = useState(
-    posts.map((post) => {
+    posts.map((post, index) => {
       return (
         <FullPostLine
+          key={index}
           title={post.title}
           username={post.username}
           forum={post.forum}

@@ -53,8 +53,12 @@ const ForumContent = ({
           <p className="blue bold">{title}</p>
           {subTitles !== null && (
             <div className="subtitles">
-              {subTitles.map((title) => {
-                return <p className="inline-block mar-right-4">{title}, </p>;
+              {subTitles.map((title, index) => {
+                return (
+                  <p key={index} className="inline-block mar-right-4">
+                    {title},{" "}
+                  </p>
+                );
               })}
             </div>
           )}

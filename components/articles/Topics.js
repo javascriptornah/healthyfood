@@ -23,9 +23,9 @@ const Topics = () => {
     "Illness",
   ]);
 
-  const topicLines = topics.map((topic) => {
+  const topicLines = topics.map((topic, index) => {
     return (
-      <Link href={`/article${topic}`}>
+      <Link key={index} href={`/article${topic}`}>
         <h5 className="bold blue underline-hover mar-bottom-8">{topic}</h5>{" "}
       </Link>
     );

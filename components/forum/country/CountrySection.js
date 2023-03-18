@@ -26,9 +26,10 @@ const ForumContent = ({ country, provinces }) => {
     date: new Date(),
   });
   console.log(country);
-  const provinceLines = provinces.map((province) => {
+  const provinceLines = provinces.map((province, index) => {
     return (
       <Mainline
+        key={index}
         title={province.name}
         link="province"
         postsX={24}

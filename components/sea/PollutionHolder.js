@@ -5,8 +5,8 @@ import Pollution from "./Pollution";
 const Cont = styled.div``;
 
 const PollutionHolder = ({ pollutionEvents }) => {
-  const pollutionElems = pollutionEvents.map((pollution) => {
-    return <Pollution pollution={pollution} />;
+  const pollutionElems = pollutionEvents.map((pollution, index) => {
+    return <Pollution key={index} pollution={pollution} />;
   });
   return (
     <Cont colors={COLORS}>

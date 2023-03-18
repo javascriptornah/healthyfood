@@ -48,13 +48,14 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
   });
 
   const [oceanElems, setOceanElems] = useState(
-    oceans.map((ocean) => {
+    oceans.map((ocean, index) => {
       return (
         <Circle
           center={{
             lat: ocean.lat,
             lng: ocean.lng,
           }}
+          key={index}
           options={{
             strokeColor: "#0000FF",
             strokeOpacity: 0.8,
@@ -74,9 +75,10 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
   );
 
   const [oceanMarkers, setOceanMarkers] = useState(
-    oceans.map((ocean) => {
+    oceans.map((ocean, index) => {
       return (
         <MarkerComponent
+          key={index}
           latLong={{
             lat: ocean.lat,
             lng: ocean.lng,
@@ -89,9 +91,10 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
   );
 
   const [seaElems, setSeaElems] = useState(
-    seas.map((sea) => {
+    seas.map((sea, index) => {
       return (
         <Circle
+          key={index}
           center={{
             lat: sea.lat,
             lng: sea.lng,
@@ -115,9 +118,10 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
   );
 
   const [seaMarkers, setSeaMarkers] = useState(
-    seas.map((sea) => {
+    seas.map((sea, index) => {
       return (
         <SeaMarker
+          key={index}
           latLong={{
             lat: sea.lat,
             lng: sea.lng,
@@ -131,9 +135,10 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
   );
 
   const [pollutionElems, setPollutionlems] = useState(
-    pollution.map((pollutionItem) => {
+    pollution.map((pollutionItem, index) => {
       return (
         <Circle
+          key={index}
           center={{
             lat: pollutionItem.lat,
             lng: pollutionItem.lng,
@@ -157,9 +162,10 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
   );
 
   const [pollutionMarkers, setPollutionMarkers] = useState(
-    pollution.map((pollutionItem) => {
+    pollution.map((pollutionItem, index) => {
       return (
         <MarkerComponent
+          key={index}
           latLong={{
             lat: pollutionItem.lat,
             lng: pollutionItem.lng,
@@ -175,9 +181,10 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
   );
 
   const [fishMarkers, setFishMarkers] = useState(
-    fish.map((fishItem) => {
+    fish.map((fishItem, index) => {
       return (
         <FishMarker
+          key={index}
           latLong={{
             lat: fishItem.lat,
             lng: fishItem.lng,

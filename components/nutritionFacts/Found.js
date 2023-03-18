@@ -13,9 +13,9 @@ const Cont = styled.div`
 `;
 
 const Found = ({ oceans, seas }) => {
-  const oceanElems = oceans.map((ocean) => {
+  const oceanElems = oceans.map((ocean, index) => {
     return (
-      <Link href={`/ocean/${ocean}`}>
+      <Link key={index} href={`/ocean/${ocean}`}>
         <div className="redirect-box box-shadow-2">
           <p>{ocean} </p>
           <FontAwesomeIcon icon={faArrowRight} className="black icon-ssm" />
@@ -23,9 +23,9 @@ const Found = ({ oceans, seas }) => {
       </Link>
     );
   });
-  const seaElems = seas.map((sea) => {
+  const seaElems = seas.map((sea, index) => {
     return (
-      <Link href={`/sea/${sea}`}>
+      <Link key={index} href={`/sea/${sea}`}>
         <div className="redirect-box box-shadow-2">
           <p>{sea} </p>
           <FontAwesomeIcon icon={faArrowRight} className="black icon-ssm" />

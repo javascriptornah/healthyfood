@@ -30,7 +30,7 @@ const Cont = styled.div`
     border-bottom: 1px solid ${(props) => props.colors.black};
   }
 `;
-const index = ({ fish, allFish, reFetchFood }) => {
+const Index = ({ fish, allFish, reFetchFood }) => {
   const [quantity, setQuantity] = useState(
     `${fish.nutrients_id.quantity} grams`
   );
@@ -1044,4 +1044,4 @@ const index = ({ fish, allFish, reFetchFood }) => {
   );
 };
 
-export default index;
+export default Index;

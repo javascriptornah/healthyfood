@@ -99,7 +99,7 @@ const SupplierBox = ({ links, pros, cons, name, country, image }) => {
               icon={faLink}
               className="light-blue icon-sm mar-right-8"
             />
-            <a target="_blank" href={links[0]}>
+            <a target="_blank" rel="noreferrer" href={links[0]}>
               <p className="bold light-blue underline-hover"> {links[0]} </p>
             </a>
           </div>
@@ -109,7 +109,7 @@ const SupplierBox = ({ links, pros, cons, name, country, image }) => {
                 icon={faInstagram}
                 className="mar-right-8 light-blue icon-sm"
               />
-              <a target="_blank" href={links[1]}>
+              <a target="_blank" rel="noreferrer" href={links[1]}>
                 <p className="bold light-blue underline-hover"> {links[1]} </p>
               </a>
             </div>

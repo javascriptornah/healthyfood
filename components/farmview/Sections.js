@@ -266,7 +266,9 @@ const Sections = ({
           <div className="center-inline mar-bottom-16">
             <h4>DESCRIPTION</h4>
           </div>
-          <ReactMarkdown className="description-text small-scrollbar markdown">{description}</ReactMarkdown>
+          <ReactMarkdown className="description-text small-scrollbar markdown">
+            {description}
+          </ReactMarkdown>
         </div>
       </section>
       <section className="section">
@@ -280,7 +282,7 @@ const Sections = ({
           <div className="section-line">
             <h5 className="black mar-bottom-8">WEBSITE</h5>
             <div className="grey-line mar-bottom-4"></div>
-            <a target="_blank" href={website}>
+            <a target="_blank" rel="noreferrer" href={website}>
               <p className="bold light-blue underline-hover">{website}</p>
             </a>
           </div>

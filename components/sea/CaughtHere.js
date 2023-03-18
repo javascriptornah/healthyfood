@@ -15,7 +15,7 @@ const Cont = styled.div`
 const CaughtHere = ({ seaName, fish }) => {
   const fishElems = fish.map((innerFish, index) => {
     return (
-      <Link href={`/fish/${innerFish.fish_id.name}`}>
+      <Link key={index} href={`/fish/${innerFish.fish_id.name}`}>
         <div className="flex align-center">
           <div className="redirect-index">
             <p>{index + 1}</p>

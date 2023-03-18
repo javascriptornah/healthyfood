@@ -79,9 +79,10 @@ const Results = ({
     ...nutrientList,
   ]);
 
-  const foodLines = foods.map((food) => {
+  const foodLines = foods.map((food, index) => {
     return (
       <FoodLine
+        key={index}
         name={food.name}
         category={food.food_category_id.name}
         id={food.id}

@@ -12,9 +12,10 @@ const Cont = styled.div`
 
 const PostsSection = ({ title, posts }) => {
   const [postLines, setPostLines] = useState(
-    posts.map((post) => {
+    posts.map((post, index) => {
       return (
         <PostLine
+          key={index}
           title={post.title}
           username={post.poster}
           forum={post.forum}

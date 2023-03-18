@@ -26,23 +26,23 @@ const Cont = styled.div`
 const SearchResults = ({ fish, oceans, seas }) => {
   const fishLines = fish.map((innerFish, index) => {
     return (
-      <Link href={`/fish/${innerFish}`}>
-        <ResultLine key={index} text={innerFish} />
+      <Link key={index} href={`/fish/${innerFish}`}>
+        <ResultLine text={innerFish} />
       </Link>
     );
   });
 
   const oceanLines = oceans.map((ocean, index) => {
     return (
-      <Link href={`/ocean/${ocean.name}`}>
-        <OceanLine key={index} name={ocean.name} fish={ocean.fish} />
+      <Link key={index} href={`/ocean/${ocean.name}`}>
+        <OceanLine name={ocean.name} fish={ocean.fish} />
       </Link>
     );
   });
   const seaLines = seas.map((sea, index) => {
     return (
-      <Link href={`/sea/${sea.name}`}>
-        <OceanLine key={index} name={sea.name} fish={sea.fish} />
+      <Link key={index} href={`/sea/${sea.name}`}>
+        <OceanLine name={sea.name} fish={sea.fish} />
       </Link>
     );
   });

@@ -65,7 +65,7 @@ const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
     "/icons/fish.png",
     "/icons/fruit.png",
     "/icons/market.png",
-    "/icons/honey.png"
+    "/icons/honey.png",
   ]);
   const setIcon = (icon) => {
     setIcons((icons) => {
@@ -81,9 +81,10 @@ const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
     }, 1000);
   };
 
-  const iconElems = icons.map((icon) => {
+  const iconElems = icons.map((icon, index) => {
     return (
       <div
+        ke={index}
         className="icon mar-right-8 box-shadow-2"
         id={icon}
         onClick={() => setIcon(icon)}
