@@ -6,7 +6,7 @@
 @import "icons.scss";
 @import "scrollbar.scss";
 $tan: #edc7b7;
-$x: #E8D6CE;
+$x: #e8d6ce;
 $light-beige: #eee2dc;
 $grey: #bab2b5;
 $darkBlue: rgb(18, 60, 105);
@@ -23,7 +23,7 @@ $yellow: #cce729;
 $orange: #df5f28;
 $green: #3bac46;
 $offWhite: #e7eff8;
-$offWhite2:#eff1f3;
+$offWhite2: #eff1f3;
 $darkGrey: #533f45;
 $light-blue: #278ffd;
 $light-blue-2: #88c1ff;
@@ -31,8 +31,14 @@ $light-green: #27fd55;
 $light-red: #fd2727;
 $light-orange: #fd7d27;
 
-
-.tan-container{
+.grey-border {
+  border-radius: 8px;
+  border: 1px solid $grey;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  padding: 8px 12px;
+}
+.tan-container {
   border: 1px solid $darkPink;
   border-radius: 8px;
   background-color: $tan;
@@ -51,10 +57,10 @@ $light-orange: #fd7d27;
     text-decoration-color: inherit !important;
   }
 }
-.green-circle{
+.green-circle {
   border: 1px solid $green;
-  display:inline-flex;
-  width:32px;
+  display: inline-flex;
+  width: 32px;
   height: 32px;
   justify-content: center;
   align-items: center;
@@ -71,63 +77,73 @@ $light-orange: #fd7d27;
   z-index: -5;
 }
 
-.header{
+.header {
   border-bottom: 2px solid $darkBlue;
   background-color: $offWhite;
   padding: 32px;
   width: 100%;
   text-align: center;
 }
-.header-2{
-  display:inline-block;
+.header-2 {
+  display: inline-block;
   background-color: $darkBlue;
   border-radius: 48px;
   padding: 16px 32px;
 }
-.header-3{
+.header-3 {
   background-color: $tan;
   border-radius: 16px;
   text-align: center;
-  display:inline-block;
+  display: inline-block;
   padding: 8px 16px;
   border: 2px solid $darkPink;
 }
-.redirect-index{
-  display:flex;
+.redirect-index {
+  display: flex;
   border-radius: 50%;
   border: 1px solid $grey;
   margin-bottom: 16px;
-  width:24px;
-  height:24px;
+  width: 24px;
+  height: 24px;
   align-items: center;
   justify-content: center;
   margin-right: 8px;
-  p{
+  p {
     color: $grey;
   }
 }
-.redirect-box{
-  display:inline-flex;
+.redirect-box {
+  display: inline-flex;
   align-items: center;
   padding: 4px 8px;
   margin-right: 16px;
   border-radius: 8px;
   background-color: #fff;
   border: 1px solid $black;
-  transition: box-shadow .25s ease;
+  transition: box-shadow 0.25s ease;
   margin-bottom: 16px;
-  p{
+  p {
     margin-right: 8px;
   }
-  &:hover{
+  &:hover {
     box-shadow: none;
-    background: rgb(231,239,248);
-background: linear-gradient(90deg, rgba(231,239,248,1) 0%, rgba(255,255,255,1) 35%, rgba(231,239,248,1) 100%);
+    background: rgb(231, 239, 248);
+    background: linear-gradient(
+      90deg,
+      rgba(231, 239, 248, 1) 0%,
+      rgba(255, 255, 255, 1) 35%,
+      rgba(231, 239, 248, 1) 100%
+    );
   }
 }
-.gradient-light-blue { 
-  background: rgb(231,239,248);
-background: linear-gradient(90deg, rgba(231,239,248,1) 0%, rgba(255,255,255,1) 35%, rgba(231,239,248,1) 100%);
+.gradient-light-blue {
+  background: rgb(231, 239, 248);
+  background: linear-gradient(
+    90deg,
+    rgba(231, 239, 248, 1) 0%,
+    rgba(255, 255, 255, 1) 35%,
+    rgba(231, 239, 248, 1) 100%
+  );
 }
 .image-upload-btn {
   border-radius: 32px;
@@ -152,9 +168,8 @@ background: linear-gradient(90deg, rgba(231,239,248,1) 0%, rgba(255,255,255,1) 3
     border: 1px solid $blue;
   }
 }
-.markdown{
-    
-  p{
+.markdown {
+  p {
     margin-bottom: 16px;
   }
 }
@@ -164,21 +179,20 @@ background: linear-gradient(90deg, rgba(231,239,248,1) 0%, rgba(255,255,255,1) 3
     margin-bottom: 8px;
   }
 }
-.mde-preview{
+.mde-preview {
   background: #fff;
 }
-.mde-header{
+.mde-header {
   border-radius: 8px 8px 0 0 !important;
-  border:1px solid $darkPink;
+  border: 1px solid $darkPink;
 }
-.editor{
-  
+.editor {
   border-radius: 8px;
   textarea {
     border-radius: 0 0 8px 8px;
-    border:1px solid $darkPink !important;
+    border: 1px solid $darkPink !important;
   }
-  button{
+  button {
     padding: 4px 8px;
   }
 }
@@ -233,11 +247,11 @@ body {
 
 .default-page {
   background-color: $tan;
-  width:100%;
-  margin-top:64px;
-  padding-left:32px;
-  padding-right:32px;
-  @media only screen and (max-width:600px){
+  width: 100%;
+  margin-top: 64px;
+  padding-left: 32px;
+  padding-right: 32px;
+  @media only screen and (max-width: 600px) {
     padding: 0;
   }
 }
@@ -359,15 +373,15 @@ input[type="password"] {
     outline: 3px solid $darkPink;
   }
 }
-input[type='text'].input-small{
+input[type="text"].input-small {
   max-width: 120px;
   border-radius: 4px;
-  font-size:16px;
-  height:100%;
+  font-size: 16px;
+  height: 100%;
   padding: 4px;
   border: 1px solid $grey;
-  &:focus{
-    outline:none !important;
+  &:focus {
+    outline: none !important;
     border: 1px solid $darkPink;
   }
 }
@@ -461,7 +475,8 @@ li {
   justify-content: space-between;
   width: 200px;
   min-width: 100px;
-  h5,h6 {
+  h5,
+  h6 {
     margin-right: 4px;
     display: inline-block;
     &::before {
@@ -483,17 +498,16 @@ li {
   background-color: $light-beige;
   border: 1px solid $grey;
 }
-.results-box{
+.results-box {
   max-width: 400px;
   border: 1px solid $darkBlue;
   border-radius: 8px;
 }
-.result-group{
-  max-height:320px;
+.result-group {
+  max-height: 320px;
   overflow: auto;
-  
 }
-.scroll-blue{
+.scroll-blue {
   ::-webkit-scrollbar {
     background: $offWhite;
   }
@@ -504,20 +518,18 @@ li {
     }
   }
 }
-.result-title{
+.result-title {
   text-align: center;
   border: 1px solid $darkBlue;
   background-color: $offWhite;
   padding: 4px;
-  &:nth-of-type(1){
+  &:nth-of-type(1) {
     border-radius: 8px 8px 0 0;
-    border:none;
+    border: none;
     border-bottom: 1px solid $darkBlue;
   }
-  
-  
 }
-.search-bar{
+.search-bar {
   border: 1px solid $grey;
   background-color: $offWhite;
   font-size: 18px;
@@ -526,18 +538,17 @@ li {
   min-height: 40px;
   width: 100%;
   border-radius: 8px;
-  max-width:400px;
+  max-width: 400px;
   margin: 0 auto;
-  
+
   input {
-    
     padding: 0;
     height: 36px;
     border: none;
     background-color: #fff;
     outline: 1px solid $grey;
     padding: 4px;
-    &:focus{
+    &:focus {
       outline: 2px solid $darkBlue;
     }
   }

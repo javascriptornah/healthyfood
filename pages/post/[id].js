@@ -6,6 +6,7 @@ import { faArrowTurnDown } from "@fortawesome/free-solid-svg-icons";
 import COLORS from "../../data/colors";
 import { fetchPostById } from "../../utils/supabaseFunctions";
 import Header from "../../components/forum/Header";
+import PostSection from "../../components/forum/post/PostSection";
 
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
@@ -28,16 +29,16 @@ const Cont = styled.div`
 `;
 
 export async function getServerSideProps(params) {
-  const fetchPost = await fetchPostById(params.query.id);
+  const post = await fetchPostById(params.query.id);
   return {
     props: {
-      fetchPost,
+      post,
     },
   };
 }
 
-const Post = ({ fetchPost }) => {
-  console.log(fetchPost);
+const Post = ({ post }) => {
+  console.log(post);
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
@@ -54,7 +55,15 @@ const Post = ({ fetchPost }) => {
             </div>
           </Link>
         </div>
-        <PostSection />
+        <PostSection
+          content={post.content}
+          title={post.title}
+          username={post.user_id.username}
+          country={post.country_id.name}
+          province={post.state_id.name}
+          city={post.city_id?.name}
+          date={post.created_at}
+        />
       </div>
     </Cont>
   );
