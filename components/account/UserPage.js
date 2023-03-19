@@ -7,10 +7,16 @@ import { fetchUserLocations } from "../../utils/supabaseFunctions";
 import { useEffect, useState } from "react";
 import PostPreview from "./PostPreview";
 import toast from "react-hot-toast";
+import AccountPreview from "./AccountPreview";
 const Cont = styled.div`
   .default-page {
     background: #fff;
     border: none !important;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: flex-start;
   }
 `;
 
@@ -54,7 +60,24 @@ const UserPage = ({ user, fetchUser }) => {
         </div>
         <div className="mar-bottom-32"></div>
         <div className="blue-line mar-bottom-32"></div>
-        <PostPreview title="Recent Posts" locations={locations} />
+        <div className="grid">
+          <PostPreview title="Recent Posts" locations={locations} />
+          <RecentPosts />
+          <AccountPreview
+            username="rawfatgod"
+            bio="I enjoy eating raw meat and computer 
+ programing. I am offering health
+consultation for $50 hour. DM me 
+formore info."
+            upvotes="675"
+            posts="65"
+            comments="99"
+            links={[
+              "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
+              "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
+            ]}
+          />
+        </div>
       </div>
     </Cont>
   );
