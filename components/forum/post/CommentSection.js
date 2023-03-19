@@ -7,9 +7,10 @@ const Cont = styled.div`
 `;
 
 const CommentSection = ({ comments }) => {
-  const commentElems = comments.map((comment) => {
+  const commentElems = comments.map((comment, index) => {
     return (
       <Comment
+        key={index}
         username={comment.username}
         content={comment.content}
         upvotes={comment.upvotes}

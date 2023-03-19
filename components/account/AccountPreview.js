@@ -70,9 +70,9 @@ const AccountPreview = ({ username, bio, upvotes, posts, comments, links }) => {
 
       <div className="padding-16">
         <p className="bold mar-bottom-8">Links</p>
-        {links.map((link) => {
+        {links.map((link, index) => {
           return (
-            <p className="underline-hover">
+            <p key={index} className="underline-hover">
               {" "}
               <Link href={link}>{link}</Link>
             </p>

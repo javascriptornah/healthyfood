@@ -5,6 +5,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { useState, createContext } from "react";
 import NProgress from "nprogress";
 import Router from "next/router";
+import { Analytics } from "@vercel/analytics/react";
 export const AppContext = createContext();
 
 Router.events.on("routeChangeStart", (url) => {
@@ -17,11 +18,11 @@ Router.events.on("routeChangeError", () => NProgress.done());
 function MyApp({ Component, pageProps }) {
   const [context, setContext] = useState({ name: "k" });
 
-  
   return (
     <AppContext.Provider value={[context, setContext]}>
       <Layout>
         <Component {...pageProps} />
+        <Analytics />
       </Layout>
     </AppContext.Provider>
   );
