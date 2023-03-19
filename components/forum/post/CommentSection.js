@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../../data/colors";
 import Comment from "./Comment";
@@ -7,29 +7,20 @@ const Cont = styled.div`
 `;
 
 const CommentSection = ({ comments }) => {
-  const [renderCount, setRenderCount] = useState(0);
-  const [commentElems, setCommentElems] = useState([]);
-
-  useEffect(() => {
-    let commentElemsTemp = [];
-    for (let i = renderCount; i < renderCount + 20; i++) {
-      commentElemsTemp.push(
-        <Comment
-          key={i}
-          username={comments[i].username}
-          content={comments[i].content}
-          upvotes={comments[i].upvotes}
-          downvotes={comments[i].downvotes}
-          replies={comments[i].replies}
-        />
-      );
-    }
-    setCommentElems(commentElemsTemp);
-  }, [renderCount]);
-
+  const commentElems = comments.map((comment) => {
+    return (
+      <Comment
+        username={comment.username}
+        content={comment.content}
+        upvotes={comment.upvotes}
+        downvotes={comment.downvotes}
+        replies={comment.replies}
+      />
+    );
+  });
   return (
     <Cont colors={COLORS} className="grey-border">
-      <div>{commentElems}</div>
+      {commentElems}
     </Cont>
   );
 };
