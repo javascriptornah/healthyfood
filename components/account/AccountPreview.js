@@ -14,6 +14,7 @@ const Cont = styled.div`
     background-color: ${(props) => props.colors.offWhite};
     padding: 4px;
     border-bottom: 1px solid ${(props) => props.colors.darkBlue};
+    border-radius: 8px 8px 0 0;
   }
   .bio {
     padding: 16px;
@@ -29,7 +30,7 @@ const Cont = styled.div`
 
 const AccountPreview = ({ username, bio, upvotes, posts, comments, links }) => {
   return (
-    <Cont colors={COLORS} className="grey-border">
+    <Cont colors={COLORS} className="grey-border-2">
       <div className="center-inline title-specx mar-bottom-32">
         <h5 className="blue">{username}</h5>
       </div>

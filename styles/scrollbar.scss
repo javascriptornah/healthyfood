@@ -43,3 +43,22 @@ $light-green: #27fd55;
     scrollbar-width: auto;
   }
 }
+.scrollbar-blue {
+  ::-webkit-scrollbar {
+    width: 1rem;
+    background: $offWhite;
+  }
+  .small-scrollbar {
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+  }
+  ::-webkit-scrollbar-thumb {
+    background: $darkBlue;
+    border-radius: 1rem;
+
+    &:hover {
+      background: $light-blue;
+    }
+  }
+}

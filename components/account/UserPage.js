@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import PostPreview from "./PostPreview";
 import toast from "react-hot-toast";
 import AccountPreview from "./AccountPreview";
+import RecentPosts from "./RecentPosts";
 const Cont = styled.div`
   .default-page {
     background: #fff;

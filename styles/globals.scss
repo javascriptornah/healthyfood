@@ -48,6 +48,12 @@ $light-orange: #fd7d27;
 
   padding: 8px 12px;
 }
+.grey-border-2 {
+  border-radius: 8px;
+  border: 1px solid $grey;
+
+  padding: 8px 12px;
+}
 .tan-container {
   border: 1px solid $darkPink;
   border-radius: 8px;

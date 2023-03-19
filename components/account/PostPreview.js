@@ -8,6 +8,27 @@ const Cont = styled.div`
   background-color: ${(props) => props.colors.lightWhite};
   border-radius: 8px;
   padding: 8px 12px;
+  .overscroll {
+    max-height: 800px;
+    overflow: auto;
+    ::-webkit-scrollbar {
+      width: 1rem;
+      background: ${(props) => props.colors.offWhite};
+    }
+    .small-scrollbar {
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+    }
+    ::-webkit-scrollbar-thumb {
+      background: ${(props) => props.colors.darkBlue};
+      border-radius: 1rem;
+
+      &:hover {
+        background: ${(props) => props.colors.lightBlue};
+      }
+    }
+  }
 `;
 const PostPreview = ({ title, locations }) => {
   const iteration = 10;
@@ -65,9 +86,10 @@ const PostPreview = ({ title, locations }) => {
   return (
     <Cont colors={COLORS} className="mar-bottom-64">
       <h4 className="blue mar-bottom-16">{title}</h4>
-      {renderElems}
+      <div className="overscroll">{renderElems}</div>
       {renderElems.length < locations.length && (
-        <div className="center-inline">
+        <div className="center-inline ">
+          <div className="mar-bottom-4"></div>
           <div onClick={increaseIteration} className="blue-btn-one">
             <h5>Show More</h5>
           </div>
