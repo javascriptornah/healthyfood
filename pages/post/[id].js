@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,13 +41,15 @@ export async function getServerSideProps(params) {
 }
 
 const Post = ({ post }) => {
-  console.log(comments);
+  const router = useRouter();
+  const backLink = router.query.backLink;
+
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
         <Header />
         <div className="flex justify-end mar-bottom-16">
-          <Link href={{ pathname: `/forum` }}>
+          <Link href={{ pathname: backLink }}>
             <div className="black-gradient-btn flex-inline box-shadow align-center">
               <p className="blue bold mar-right-8">Back</p>
               <FontAwesomeIcon

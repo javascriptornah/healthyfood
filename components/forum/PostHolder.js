@@ -26,6 +26,8 @@ const PostsSection = ({ title, posts }) => {
           replies={post.replies}
           views={post.views}
           lastComment={post.lastComment}
+          region="province"
+          province={title}
         />
       );
     })

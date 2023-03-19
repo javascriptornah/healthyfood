@@ -44,37 +44,47 @@ const FullPostLine = ({
   replies,
   views,
   lastComment,
+  id = 2,
+  province,
+  region,
 }) => {
   return (
-    <Cont colors={COLORS}>
-      <div className="flex-one">
-        <p className="bold blue mar-right-4 text-spec">{title}</p>
-        <p className="">
-          by <span className="green underline-hover">{username}</span>{" "}
-        </p>
-      </div>
-      <div className="flex-one flex space-between ">
-        <div className="flex  align-center mar-right-8">
-          <div className="green small mar-right-8">{forum}</div>
-          <div className="post-info">
-            <p className="small">{replies} replies</p>
-            <p className="small">{views} views</p>
+    <Link
+      href={{
+        pathname: `/post/${id}`,
+        query: { backLink: `/forum/${region}/${province}` },
+      }}
+    >
+      <Cont colors={COLORS}>
+        <div className="flex-one">
+          <p className="bold blue mar-right-4 text-spec">{title}</p>
+          <p className="">
+            by <span className="green underline-hover">{username}</span>{" "}
+          </p>
+        </div>
+        <div className="flex-one flex space-between ">
+          <div className="flex  align-center mar-right-8">
+            <div className="green small mar-right-8">{forum}</div>
+            <div className="post-info">
+              <p className="small">{replies} replies</p>
+              <p className="small">{views} views</p>
+            </div>
+          </div>
+          <div className="flex  hide-400">
+            <div className=" recent mar-right-4 mar-right-8">
+              <p className="bold small">Last activity</p>
+              <p className="small">{lastComment.date.toDateString()}</p>
+              <p className=" small">
+                by <span className="green">{lastComment.username} </span>
+              </p>
+            </div>
+          </div>
+          <div className="flex align-center">
+            <p className="small">{date.toDateString()}</p>
           </div>
         </div>
-        <div className="flex  hide-400">
-          <div className=" recent mar-right-4 mar-right-8">
-            <p className="bold small">Last activity</p>
-            <p className="small">{lastComment.date.toDateString()}</p>
-            <p className=" small">
-              by <span className="green">{lastComment.username} </span>
-            </p>
-          </div>
-        </div>
-        <div className="flex align-center">
-          <p className="small">{date.toDateString()}</p>
-        </div>
-      </div>
-    </Cont>
+      </Cont>
+    </Link>
   );
 };
 
