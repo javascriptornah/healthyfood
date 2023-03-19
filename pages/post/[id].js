@@ -43,13 +43,13 @@ export async function getServerSideProps(params) {
 const Post = ({ post }) => {
   const router = useRouter();
   const backLink = router.query.backLink;
-
+  console.log(backLink);
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
         <Header />
         <div className="flex justify-end mar-bottom-16">
-          <Link href={{ pathname: backLink }}>
+          <Link href={{ pathname: backLink, query: {} }}>
             <div className="black-gradient-btn flex-inline box-shadow align-center">
               <p className="blue bold mar-right-8">Back</p>
               <FontAwesomeIcon
