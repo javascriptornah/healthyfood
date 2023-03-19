@@ -3,6 +3,7 @@ import styled from "styled-components";
 import COLORS from "../../../data/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+import ReactMarkdown from "react-markdown";
 
 const Cont = styled.div``;
 const PostSection = ({
@@ -25,7 +26,8 @@ const PostSection = ({
         </div>
         <FontAwesomeIcon icon={faBookmark} className=" cursor grey" />
       </div>
-      <div className="padding-16"></div>
+      <div className="grey-line"></div>
+      <ReactMarkdown className="padding-16">{content}</ReactMarkdown>
     </Cont>
   );
 };

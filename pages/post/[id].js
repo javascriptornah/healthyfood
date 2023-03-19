@@ -7,7 +7,9 @@ import COLORS from "../../data/colors";
 import { fetchPostById } from "../../utils/supabaseFunctions";
 import Header from "../../components/forum/Header";
 import PostSection from "../../components/forum/post/PostSection";
-
+import ReplySection from "../../components/forum/post/ReplySection";
+import CommentSection from "../../components/forum/post/CommentSection";
+import comments from "../../data/comments.json";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   padding-top: 40px;
@@ -38,7 +40,7 @@ export async function getServerSideProps(params) {
 }
 
 const Post = ({ post }) => {
-  console.log(post);
+  console.log(comments);
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
@@ -64,6 +66,10 @@ const Post = ({ post }) => {
           city={post.city_id?.name}
           date={post.created_at}
         />
+        <div className="ssm-spacer"></div>
+        <ReplySection username={post.user_id.username} />
+        <div className="ssm-spacer"></div>
+        <CommentSection comments={comments} />
       </div>
     </Cont>
   );
