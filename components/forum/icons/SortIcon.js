@@ -92,11 +92,12 @@ const SortIcon = () => {
   console.log(selectedLine);
   const lineElems = lines
     .filter((line) => line.selected == false)
-    .map((line) => {
+    .map((line, index) => {
       return (
         <div
           className="line flex align-center"
           onClick={() => selectLine(line.text)}
+          key={index}
         >
           <FontAwesomeIcon
             icon={line.icon}
