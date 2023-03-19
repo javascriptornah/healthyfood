@@ -7,6 +7,8 @@
 @import "scrollbar.scss";
 $tan: #edc7b7;
 $lt-grey: #e8d6ce;
+$lt-grey2: #fafafa;
+$lt-grey3: #efeded;
 $light-beige: #eee2dc;
 $grey: #bab2b5;
 $darkBlue: rgb(18, 60, 105);
@@ -31,11 +33,19 @@ $light-green: #27fd55;
 $light-red: #fd2727;
 $light-orange: #fd7d27;
 
+.comment-reply {
+  border-left: 1px solid $grey;
+  &:nth-of-type(1n) {
+    background-color: #fff;
+  }
+  &:nth-of-type(2n) {
+    background: $lt-grey3 !important;
+  }
+}
 .grey-border {
   border-radius: 8px;
-  border: 1px solid $lt-grey;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border: 1px solid $lt-grey3;
+
   padding: 8px 12px;
 }
 .tan-container {

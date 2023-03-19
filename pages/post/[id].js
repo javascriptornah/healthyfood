@@ -25,7 +25,7 @@ const Cont = styled.div`
     @media only screen and (max-width: 600px) {
       width: 100%;
       border-radius: 0px;
-      padding: 0;
+      padding: 8px 12px;
     }
   }
 `;
@@ -65,6 +65,8 @@ const Post = ({ post }) => {
           province={post.state_id.name}
           city={post.city_id?.name}
           date={post.created_at}
+          views={434}
+          replies={34}
         />
         <div className="ssm-spacer"></div>
         <ReplySection username={post.user_id.username} />

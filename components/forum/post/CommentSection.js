@@ -8,12 +8,14 @@ const Cont = styled.div`
 
 const CommentSection = ({ comments }) => {
   const commentElems = comments.map((comment) => {
+    console.log(comment);
     return (
       <Comment
         username={comment.username}
         content={comment.content}
         upvotes={comment.upvotes}
         downvotes={comment.downvotes}
+        replies={comment.replies}
       />
     );
   });

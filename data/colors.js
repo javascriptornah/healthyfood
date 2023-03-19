@@ -4,6 +4,8 @@ export default {
   grey: "#BAB2B5",
   lightGrey: "#C6CACF",
   ultraLightGrey: "#e8d6ce",
+  lightGrey2: "#fafafa",
+  lightGrey3: "#F5F5F5",
   darkBlue: "#123C69",
   darkPink: "#AC3B61",
   darkGrey: "#81646D",
