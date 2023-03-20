@@ -44,21 +44,25 @@ const Country = ({ fetchCountry }) => {
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
         <Header />
-        <div className="flex space-between mar-bottom-16 align-center">
-          <CreatePostIcon
-            forum={fetchCountry.name}
-            options={fetchCountry.forumStates}
-          />
-          <Link href={{ pathname: "/forum" }}>
-            <div className="black-gradient-btn flex-inline box-shadow align-center">
-              <p className="blue bold mar-right-8">Back</p>
-              <FontAwesomeIcon
-                icon={faArrowTurnDown}
-                style={{ transform: "rotate(90deg)" }}
-                className="blue icon-ssm"
-              />
-            </div>
-          </Link>
+        <div className="flex space-between  align-center flex-wrap">
+          <div className="mar-bottom-16">
+            <CreatePostIcon
+              forum={fetchCountry.name}
+              options={fetchCountry.forumStates.map((country) => country.name)}
+            />
+          </div>
+          <div className="mar-bottom-16">
+            <Link href={{ pathname: "/forum" }}>
+              <div className="black-gradient-btn flex-inline box-shadow align-center">
+                <p className="blue bold mar-right-8">Back</p>
+                <FontAwesomeIcon
+                  icon={faArrowTurnDown}
+                  style={{ transform: "rotate(90deg)" }}
+                  className="blue icon-ssm"
+                />
+              </div>
+            </Link>
+          </div>
         </div>
         <CountryHolder
           country={fetchCountry.name}
