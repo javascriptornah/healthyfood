@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState, useCallback, useRef } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
@@ -142,7 +143,15 @@ const CreatePostIcon = ({ forum, options }) => {
   return (
     <Cont colors={COLORS} className="flex-inline flex-row">
       <div className="cont mar-right-8">
-        <input type="text" className="input-small" placeholder="Create Post" />
+        <Link
+          href={{ pathname: "/createPost", query: { forum: selectedLine } }}
+        >
+          <input
+            type="text"
+            className="input-small"
+            placeholder="Create Post"
+          />
+        </Link>
       </div>
 
       <div ref={dropdownEl} className="cont cursor dropdown">
