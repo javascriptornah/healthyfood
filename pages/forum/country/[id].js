@@ -7,6 +7,7 @@ import CountryHolder from "../../../components/forum/country/CountryHolder";
 import Header from "../../../components/forum/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowTurnDown } from "@fortawesome/free-solid-svg-icons";
+import CreatePostIcon from "../../../components/forum/CreatePostIcon";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   padding-top: 40px;
@@ -43,7 +44,11 @@ const Country = ({ fetchCountry }) => {
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
         <Header />
-        <div className="flex justify-end mar-bottom-16">
+        <div className="flex space-between mar-bottom-16 align-center">
+          <CreatePostIcon
+            forum={fetchCountry.name}
+            options={fetchCountry.forumStates}
+          />
           <Link href={{ pathname: "/forum" }}>
             <div className="black-gradient-btn flex-inline box-shadow align-center">
               <p className="blue bold mar-right-8">Back</p>

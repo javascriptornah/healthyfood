@@ -24,6 +24,7 @@ const Forum = () => {
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
         <Header />
+
         <ForumContent />
       </div>
     </Cont>
