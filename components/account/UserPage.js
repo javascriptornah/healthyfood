@@ -66,7 +66,7 @@ const UserPage = ({ user, fetchUser }) => {
           <RecentPosts />
           <AccountPreview
             username="rawfatgod"
-            bio="I enjoy eating raw meat and computer 
+            bio="I enjoy eating steak and computer 
  programing. I am offering health
 consultation for $50 hour. DM me 
 formore info."
