@@ -54,6 +54,8 @@ const Cont = styled.div`
     top: 100%;
     width: 160px;
     padding: 0;
+    max-height: 400px;
+    overflow: auto !important;
     .line {
       border-bottom: 1px solid ${(props) => props.colors.grey};
       padding: 4px 8px;
@@ -162,7 +164,11 @@ const CreatePostIcon = ({ forum, options }) => {
           <p className="contrast mar-right-8">/{selectedLine}</p>
           <FontAwesomeIcon icon={faChevronDown} className="icon-ssm contrast" />
         </div>
-        {showDropdown && <div className="popup">{lineElems}</div>}
+        {showDropdown && (
+          <div className="popup scrollbar-blue small-scrollbar box-shadow-2">
+            {lineElems}
+          </div>
+        )}
       </div>
     </Cont>
   );

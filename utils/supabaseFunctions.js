@@ -957,3 +957,74 @@ export const signInWithEmail = async (email, password) => {
     return error;
   }
 };
+
+export const createUserComment = async (content, user_id, post_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .insert({ content, user_id, post_id })
+      .select();
+    if (error) throw error;
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const createUserCommentReply = async (
+  content,
+  user_id,
+  post_id,
+  comment_id
+) => {
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .insert({ content, user_id, post_id, comment_id })
+      .select();
+    if (error) throw error;
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const createGuestComment = async (content, name, email, post_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .insert({ content, name, email, post_id })
+      .select();
+    if (error) throw error;
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const createGuestCommentReply = async (
+  content,
+  name,
+  email,
+  post_id,
+  comment_id
+) => {
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .insert({ content, name, email, post_id, comment_id })
+      .select();
+    if (error) throw error;
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

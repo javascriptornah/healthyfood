@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
@@ -25,7 +26,7 @@ const Header = () => {
     };
     fetchUser();
   }, []);
-  console.log(user);
+
   return (
     <Cont colors={COLORS} className="mar-bottom-48">
       {showLogin && <SignupPopup hideFunction={hideLogin} />}
@@ -36,7 +37,11 @@ const Header = () => {
       {user !== null ? (
         <p>
           You are currently signed in as{" "}
-          <span className="light-blue-2">{user.username} </span>
+          <Link href="/account">
+            <span className="light-blue-2 underline-hover">
+              {user.user_metadata.username}{" "}
+            </span>
+          </Link>
         </p>
       ) : (
         <Signup showFunction={displayLogin} />
