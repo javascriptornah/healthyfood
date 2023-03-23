@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
@@ -5,7 +6,16 @@ import SignupForm from "../signin/signupForm";
 import SigninForm from "../signin/signinForm";
 
 const Cont = styled.div`
-  position: relative;
+background: 
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 100%;
+  align-items: center;
+
   .login {
     overflow: hidden;
     max-width: 400px;

@@ -29,15 +29,22 @@ const Cont = styled.div`
     }
   }
   .recent-posts {
+    margin-right: 16px;
     @media only screen and (max-width: 1200px) {
       grid-column-start: 2;
       grid-column-end: 3;
+      margin: 0;
     }
   }
   .post-activity {
     @media only screen and (max-width: 1200px) {
       grid-row-start: 1;
       grid-row-end: 10;
+    }
+  }
+  .bio {
+    @media only screen and (max-width: 1200px) {
+      grid-row-start: 1;
     }
   }
 `;
@@ -95,26 +102,28 @@ const UserPage = ({ user, fetchUser }) => {
         <div className="mar-bottom-32"></div>
         <div className="blue-line mar-bottom-32"></div>
         <div className="grid">
-          <div className="mar-right-16 recent-posts">
+          <div className=" recent-posts">
             <PostPreview title="Recent Posts" locations={locations} />
           </div>
           <div className="mar-right-16 post-activity">
             <RecentPosts posts={postsX} />
           </div>
-          <AccountPreview
-            username="rawfatgod"
-            bio="I enjoy eating steak and computer 
+          <div className="bio">
+            <AccountPreview
+              username="rawfatgod"
+              bio="I enjoy eating steak and computer 
  programing. I am offering health
 consultation for $50 hour. DM me 
 formore info."
-            upvotes="675"
-            posts="65"
-            comments="99"
-            links={[
-              "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
-              "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
-            ]}
-          />
+              upvotes="675"
+              posts="65"
+              comments="99"
+              links={[
+                "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
+                "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
+              ]}
+            />
+          </div>
         </div>
       </div>
     </Cont>
