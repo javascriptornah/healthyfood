@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
-import {Mde} from "fc-mde";
+import { Mde } from "fc-mde";
 import Showdown from "showdown";
-
 
 export default function Editor({ section, updateSection }) {
   const [selectedTab, setSelectedTab] = useState("write");
@@ -18,7 +17,7 @@ export default function Editor({ section, updateSection }) {
       <Mde
         text={section}
         setText={updateSection}
-        refTextarea = {refTextarea}
+        refTextarea={refTextarea}
         selectedTab={selectedTab}
         onTabChange={setSelectedTab}
         generateMarkdownPreview={(markdown) =>

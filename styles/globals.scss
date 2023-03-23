@@ -42,6 +42,11 @@ $light-orange: #fd7d27;
     background: $lt-grey3 !important;
   }
 }
+.white-input{
+  border: 1px solid $grey !important;
+  background-color: #fff !important;
+  outline:none !important;
+}
 .grey-border {
   border-radius: 8px;
   border: 1px solid $lt-grey3;
