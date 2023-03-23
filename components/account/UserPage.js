@@ -44,6 +44,18 @@ const UserPage = ({ user, fetchUser }) => {
     fetchUser();
     router.reload();
   };
+
+  const postsX = [
+    {
+      forum: "Ontario, Canada",
+      username: "rawfatgod",
+      title: "Where do I find raw beef fat in Ottawa?",
+      content:
+        "I’ve been looking all over for grass fed/finished unfrozen beef fat and I cannot find it. \n Do you guys have any idea where I might be able to find some? \n I would really appreciate it and I would send you money in return for it...",
+      views: 646,
+      comments: 42,
+    },
+  ];
   return (
     <Cont colors={COLORS}>
       <div className="default-page">
@@ -63,7 +75,8 @@ const UserPage = ({ user, fetchUser }) => {
         <div className="blue-line mar-bottom-32"></div>
         <div className="grid">
           <PostPreview title="Recent Posts" locations={locations} />
-          <RecentPosts />
+          <RecentPosts posts={postsX} />
+          {/*
           <AccountPreview
             username="rawfatgod"
             bio="I enjoy eating steak and computer 
@@ -78,6 +91,7 @@ formore info."
               "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
             ]}
           />
+          */}
         </div>
       </div>
     </Cont>

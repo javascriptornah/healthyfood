@@ -2,10 +2,28 @@ import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 import Post from "./Post";
-const Cont = styled.div``;
+const Cont = styled.div`
+  padding: 0;
+`;
 
 const RecentPosts = ({ posts }) => {
-  return <Cont colors={COLORS}></Cont>;
+  const postElems = posts.map((post) => {
+    return (
+      <Post
+        title={post.title}
+        forum={post.forum}
+        username={post.username}
+        content={post.content}
+        views={post.views}
+        comments={post.comments}
+      />
+    );
+  });
+  return (
+    <Cont colors={COLORS} className="grey-border-2">
+      {postElems}
+    </Cont>
+  );
 };
 
 export default RecentPosts;
