@@ -941,3 +941,19 @@ export const fetchPostById = async (id) => {
     return error;
   }
 };
+
+export const signInWithEmail = async (email, password) => {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: formData.emailSignIn,
+      password: formData.passwordSignIn,
+    });
+
+    if (error) throw error;
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

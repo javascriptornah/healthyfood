@@ -9,9 +9,9 @@ const Cont = styled.div`
     padding: 4px 12px;
   }
 `;
-const Header = () => {
+const Signup = ({ showFunction }) => {
   return (
-    <Cont colors={COLORS}>
+    <Cont colors={COLORS} className="opacity-anim">
       <div className="flex-inline align-end">
         <div className="mar-right-16">
           <p>Do you need an account?</p>
@@ -24,7 +24,10 @@ const Header = () => {
           <input type="text" className="input-small" placeholder="password" />
         </div>
         <div>
-          <div className="white-btn mar-bottom-8 justify-start">
+          <div
+            onClick={showFunction}
+            className="white-btn mar-bottom-8 justify-start"
+          >
             <h5>Register</h5>
           </div>
           <div className="black-btn">
@@ -36,4 +39,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Signup;

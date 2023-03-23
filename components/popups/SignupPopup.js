@@ -4,9 +4,11 @@ import styled from "styled-components";
 import COLORS from "../../data/colors";
 import SignupForm from "../signin/signupForm";
 import SigninForm from "../signin/signinForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 const Cont = styled.div`
-background: 
+  background-color: rgba(18, 60, 105, 0.3);
   position: absolute;
   z-index: 1;
   display: flex;
@@ -15,7 +17,31 @@ background:
   top: 0;
   height: 100%;
   align-items: center;
-
+  .delete {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    cursor: pointer;
+    border: 2px solid ${(props) => props.colors.offWhite};
+    height: 48px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.25s ease;
+    &:hover {
+      background-color: ${(props) => props.colors.black};
+    }
+    &:active {
+      .white {
+        color: ${(props) => props.colors.grey} !important;
+      }
+    }
+    @media only screen and (max-width: 600px) {
+      top: 16px;
+      right: 16px;
+    }
+  }
   .login {
     overflow: hidden;
     max-width: 400px;
@@ -119,7 +145,7 @@ background:
   }
 `;
 
-const Signup = () => {
+const Signup = ({ hideFunction }) => {
   const [passwordState, setPasswordState] = useState("password");
   const togglePasswordState = () => {
     setPasswordState((prev) => {
@@ -143,7 +169,10 @@ const Signup = () => {
   };
 
   return (
-    <Cont colors={COLORS}>
+    <Cont colors={COLORS} className="opacity-anim">
+      <div className="delete" onClick={hideFunction}>
+        <FontAwesomeIcon icon={faClose} className="icon-lg white" />
+      </div>
       <div className="login box-shadow-2">
         <div className="header">
           <Image
