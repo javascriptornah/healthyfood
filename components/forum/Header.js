@@ -3,6 +3,7 @@ import styled from "styled-components";
 import COLORS from "../../data/colors";
 import Signup from "./Signup";
 import SignupPopup from "../popups/SignupPopup";
+
 const Cont = styled.div``;
 const Header = () => {
   const [showLogin, setShowLogin] = useState(false);

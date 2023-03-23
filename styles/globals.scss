@@ -389,7 +389,7 @@ input[type="password"] {
     outline: 3px solid $darkPink;
   }
 }
-input[type="text"].input-small {
+input[type="text"].input-small, input[type='email'].input-small {
   max-width: 120px;
   border-radius: 4px;
   font-size: 16px;
