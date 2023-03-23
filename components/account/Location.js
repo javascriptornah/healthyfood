@@ -56,7 +56,7 @@ const Location = ({
     >
       <Cont colors={COLORS} className="box-shadow-2 cursor opacity-anim">
         <p className="green bold green-circle mar-right-16 mar-bottom-8">
-          {index}
+          {index + 1}
         </p>
         <div>
           <div className="mar-bottom-8">

@@ -4,10 +4,14 @@ import axios from "axios";
 import COLORS from "../data/colors";
 import Editor from "../components/Editor";
 import Select from "../components/google/Select";
+import ImageDropper from "../components/inputs/ImageDropper";
 const Cont = styled.div`
+  background-color: ${(props) => props.colors.tan};
+  min-height: 100vh;
   padding-top: 40px;
   width: 90%;
   margin: 0 auto;
+  padding: 40px 16px 16px;
   .mde__textarea {
     height: 30vh;
     background-color: ${(props) => props.colors.lightGrey2};
@@ -27,7 +31,7 @@ const Cont = styled.div`
   .dropdown__selected {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-
+    background-color: white;
     border-radius: 8px;
     &:hover {
       border: 1px solid ${(props) => props.colors.black};
@@ -125,7 +129,7 @@ const CreatePost = () => {
   }
   return (
     <Cont colors={COLORS}>
-      <h5 className="light contrast mar-bottom-8">CREATE POST</h5>
+      <h5 className="light black mar-bottom-8">CREATE POST</h5>
       <div className="grey-line mar-bottom-16"></div>
       <div className="grey-border box-shadow">
         <div className="flex mar-bottom-32">
@@ -176,6 +180,9 @@ const CreatePost = () => {
           type="text"
           className="white-input mar-bottom-16"
         />
+        <div className="mar-bottom-16">
+          <ImageDropper />
+        </div>
         <Editor section={text} updateSection={setText} />
         <div className="mar-bottom-16"></div>
         <div className="flex justify-end">

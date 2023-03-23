@@ -945,16 +945,16 @@ export const fetchPostById = async (id) => {
 export const signInWithEmail = async (email, password) => {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: formData.emailSignIn,
-      password: formData.passwordSignIn,
+      email: email,
+      password: password,
     });
 
     if (error) throw error;
 
-    return data;
+    return { state: true, data };
   } catch (error) {
     console.log(error);
-    return error;
+    return { state: false, error };
   }
 };
 
@@ -1026,5 +1026,27 @@ export const createGuestCommentReply = async (
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const logout = async (content, name, email, post_id, comment_id) => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+
+    return { state: true };
+  } catch (error) {
+    return { state: false, error };
+  }
+};
+
+export const createPost = async (title, content, user_id) => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+
+    return { state: true };
+  } catch (error) {
+    return { state: false, error };
   }
 };

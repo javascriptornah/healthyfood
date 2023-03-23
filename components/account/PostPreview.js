@@ -86,15 +86,17 @@ const PostPreview = ({ title, locations }) => {
   return (
     <Cont colors={COLORS} className="mar-bottom-64">
       <h4 className="blue mar-bottom-16">{title}</h4>
-      <div className="overscroll">{renderElems}</div>
-      {renderElems.length < locations.length && (
-        <div className="center-inline ">
-          <div className="mar-bottom-4"></div>
-          <div onClick={increaseIteration} className="blue-btn-one">
-            <h5>Show More</h5>
+      <div className="overscroll">
+        {renderElems}
+        {renderElems.length < locations.length && (
+          <div className="center-inline mar-bottom-32">
+            <div className="mar-bottom-4"></div>
+            <div onClick={increaseIteration} className="blue-btn-one">
+              <h5>Show More</h5>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </Cont>
   );
 };

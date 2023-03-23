@@ -33,6 +33,10 @@ $light-green: #27fd55;
 $light-red: #fd2727;
 $light-orange: #fd7d27;
 
+.forum-page{
+  max-width:1400px;
+}
+
 .comment-reply {
   border-left: 1px solid $grey;
   &:nth-of-type(1n) {
@@ -394,7 +398,7 @@ input[type="password"] {
     outline: 3px solid $darkPink;
   }
 }
-input[type="text"].input-small, input[type='email'].input-small {
+input[type="text"].input-small, input[type='email'].input-small,input[type='password'].input-small {
   max-width: 120px;
   border-radius: 4px;
   font-size: 16px;

@@ -46,7 +46,7 @@ const Post = ({ post }) => {
   console.log(backLink);
   return (
     <Cont colors={COLORS}>
-      <div className="content-holder box-shadow-2">
+      <div className="content-holder box-shadow-2 forum-page">
         <Header />
         <div className="flex justify-end mar-bottom-16">
           <Link href={{ pathname: backLink, query: {} }}>
