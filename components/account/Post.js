@@ -3,7 +3,11 @@ import styled from "styled-components";
 import COLORS from "../../data/colors";
 import ReactMarkdown from "react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComment, faEye } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowTurnUp,
+  faComment,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 const Cont = styled.div`
   padding: 8px 12px;
   border-bottom: 1px solid ${(props) => props.colors.grey};
@@ -29,7 +33,7 @@ const Post = ({ title, forum, username, content, views, comments }) => {
         <ReactMarkdown className="markdown mar-bottom-16">
           {content}
         </ReactMarkdown>
-        <div className="flex space-between">
+        <div className="flex space-between align-center">
           <div>
             <div className="flex-inline align-center mar-right-16">
               <FontAwesomeIcon
@@ -47,7 +51,12 @@ const Post = ({ title, forum, username, content, views, comments }) => {
             </div>
           </div>
           <div>
-            <FontAwesomeIcon icon = {faArrow}
+            <FontAwesomeIcon
+              style={{ transform: "rotate(90deg)" }}
+              icon={faArrowTurnUp}
+              className="icon-ssm black"
+            />
+            <p className="bold"></p>
           </div>
         </div>
       </div>

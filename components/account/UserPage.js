@@ -18,6 +18,27 @@ const Cont = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: flex-start;
+    max-width: 1600px;
+    margin: 0 auto;
+    justify-items: center;
+    & > div {
+      max-width: 480px;
+    }
+    @media only screen and (max-width: 1200px) {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+  .recent-posts {
+    @media only screen and (max-width: 1200px) {
+      grid-column-start: 2;
+      grid-column-end: 3;
+    }
+  }
+  .post-activity {
+    @media only screen and (max-width: 1200px) {
+      grid-row-start: 1;
+      grid-row-end: 10;
+    }
   }
 `;
 
@@ -74,9 +95,12 @@ const UserPage = ({ user, fetchUser }) => {
         <div className="mar-bottom-32"></div>
         <div className="blue-line mar-bottom-32"></div>
         <div className="grid">
-          <PostPreview title="Recent Posts" locations={locations} />
-          <RecentPosts posts={postsX} />
-          {/*
+          <div className="mar-right-16 recent-posts">
+            <PostPreview title="Recent Posts" locations={locations} />
+          </div>
+          <div className="mar-right-16 post-activity">
+            <RecentPosts posts={postsX} />
+          </div>
           <AccountPreview
             username="rawfatgod"
             bio="I enjoy eating steak and computer 
@@ -91,7 +115,6 @@ formore info."
               "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
             ]}
           />
-          */}
         </div>
       </div>
     </Cont>
