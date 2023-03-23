@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import COLORS from "../data/colors";
 import Editor from "../components/Editor";
-
+import Select from "../components/google/Select";
 const Cont = styled.div`
   padding-top: 40px;
   width: 90%;
@@ -14,19 +15,175 @@ const Cont = styled.div`
       background-color: white;
     }
   }
+  .dropdown {
+    border: none;
+    &__menu {
+      border: 1px solid ${(props) => props.colors.grey};
+    }
+    &__menu_search {
+      border: 1px solid ${(props) => props.colors.darkBlue};
+    }
+  }
+  .dropdown__selected {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+    border-radius: 8px;
+    &:hover {
+      border: 1px solid ${(props) => props.colors.black};
+    }
+  }
+  .select-line {
+    margin-right: 32px;
+    @media only screen and (max-width: 400px) {
+      margin-right: 0;
+    }
+  }
+  .mde__preview__content {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      color: ${(props) => props.colors.black};
+    }
+  }
 `;
 
 const CreatePost = () => {
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [data, setData] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [regions, setRegions] = useState([]);
+
+  const [text, setText] = useState("");
+  useEffect(() => {
+    axios
+      .get(
+        "https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json"
+      )
+      .then((res) => {
+        setData((prevData) => {
+          return res.data;
+        });
+        setRegions((prevData) => {
+          return [...new Set(res.data.map((item) => item.country))].sort();
+        });
+        setOptions((prevData) => {
+          return [...new Set(res.data.map((item) => item.country))].sort();
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  function updateCountry(value) {
+    setCountry((prevCountry) => {
+      return value;
+    });
+    let states = data.filter((item) => {
+      return item.country === value;
+    });
+    states = [...new Set(states.map((item) => item.subcountry))];
+    states.sort();
+    setStates((prevStates) => {
+      return states;
+    });
+    setState("");
+    setCity("");
+  }
+
+  function updateState(value) {
+    setState((prevState) => {
+      return value;
+    });
+    let cities = data.filter((city) => city.subcountry === value);
+    cities = cities.map((city) => city.name);
+    cities.sort();
+    setCities(cities);
+  }
+
+  function updateCity(value) {
+    setCity((prevCity) => {
+      return value;
+    });
+  }
+
+  function updateRegion(location, name) {
+    if (name === "country") {
+      updateCountry(location);
+    } else if (name === "state") {
+      updateState(location);
+    } else if (name == "city") {
+      updateCity(location);
+    }
+  }
   return (
     <Cont colors={COLORS}>
       <h5 className="light contrast mar-bottom-8">CREATE POST</h5>
-      <div className="grey-line mar-bottom-32"></div>
-      <input
-        placeholder="Title"
-        type="text"
-        className="white-input mar-bottom-16"
-      />
-      <Editor />
+      <div className="grey-line mar-bottom-16"></div>
+      <div className="grey-border box-shadow">
+        <div className="flex mar-bottom-32">
+          <div className="select-line mar-bottom-16">
+            <h5 className="light contrast mar-bottom-16">COUNTRY *</h5>
+            <Select
+              regions={countries}
+              value={country}
+              updateValue={updateRegion}
+              searchPlaceholder="Search"
+              options={options}
+              setOptions={setOptions}
+              name="country"
+            />
+          </div>
+
+          <div className="select-line mar-bottom-16">
+            <h5 className="light contrast mar-bottom-16">
+              STATE <span className="light small">(OPTIONAL)</span>
+            </h5>
+            <Select
+              regions={states}
+              value={state}
+              updateValue={updateRegion}
+              options={states}
+              setOptions={setStates}
+              name="state"
+            />
+          </div>
+
+          <div className="select-line mar-bottom-16">
+            <h5 className="light contrast mar-bottom-16">
+              CITY <span className="light small">(OPTIONAL)</span>
+            </h5>
+            <Select
+              regions={cities}
+              value={city}
+              updateValue={updateRegion}
+              searchPlaceholder="Search"
+              options={cities}
+              setOptions={setCities}
+              name="city"
+            />
+          </div>
+        </div>
+        <input
+          placeholder="Title"
+          type="text"
+          className="white-input mar-bottom-16"
+        />
+        <Editor section={text} updateSection={setText} />
+        <div className="mar-bottom-16"></div>
+        <div className="flex justify-end">
+          <div className="blue-btn-one">
+            <h5>Create Post</h5>
+          </div>
+        </div>
+      </div>
     </Cont>
   );
 };
