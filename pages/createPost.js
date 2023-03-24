@@ -55,6 +55,7 @@ const Cont = styled.div`
 `;
 
 const CreatePost = () => {
+  const [file, setFile] = useState("");
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
@@ -127,12 +128,34 @@ const CreatePost = () => {
       updateCity(location);
     }
   }
+
+  const uploadImage = async () => {
+    let formData = new formData();
+    formData.append("image", file);
+    try {
+      const response = await fetch("https://api.imgur.com/3/upload", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Client-ID ${process.env.NEXT_PUBLIC_IMGUR_ID}`,
+        },
+      });
+      const res = await response.json();
+      if (res.status == 200) {
+        const uploadState = await createImage(
+          res.data.link,
+          res.data.deletehash,
+          location_id
+        );
+      }
+    } catch (error) {}
+  };
   return (
     <Cont colors={COLORS}>
       <h5 className="light black mar-bottom-8">CREATE POST</h5>
       <div className="grey-line mar-bottom-16"></div>
       <div className="grey-border box-shadow">
-        <div className="flex mar-bottom-32">
+        <div className="flex flex-wrap justify-center mar-bottom-32">
           <div className="select-line mar-bottom-16">
             <h5 className="light contrast mar-bottom-16">COUNTRY *</h5>
             <Select
@@ -180,8 +203,9 @@ const CreatePost = () => {
           type="text"
           className="white-input mar-bottom-16"
         />
+
         <div className="mar-bottom-16">
-          <ImageDropper />
+          <ImageDropper file={file} setFile={setFile} />
         </div>
         <Editor section={text} updateSection={setText} />
         <div className="mar-bottom-16"></div>
