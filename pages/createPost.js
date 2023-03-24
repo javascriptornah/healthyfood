@@ -12,6 +12,26 @@ const Cont = styled.div`
   width: 90%;
   margin: 0 auto;
   padding: 40px 16px 16px;
+  @media only screen and (max-width: 800px) {
+    width: 100%;
+  }
+  @media only screen and (max-width: 400px) {
+    width: 100%;
+    padding: 40px 0;
+    .grey-border {
+      border-radius: 0;
+    }
+  }
+  input {
+    min-width: 0px !important;
+  }
+  @media only screen and (max-width: 300px) {
+    .dropdown__selected,
+    .dropdown__menu {
+      width: 100% !important;
+      min-width: 0;
+    }
+  }
   .mde__textarea {
     height: 30vh;
     background-color: ${(props) => props.colors.lightGrey2};
