@@ -5,6 +5,7 @@ import COLORS from "../data/colors";
 import Editor from "../components/Editor";
 import Select from "../components/google/Select";
 import ImageDropper from "../components/inputs/ImageDropper";
+import toast, { Toaster } from "react-hot-toast";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   min-height: 100vh;
@@ -88,6 +89,8 @@ const CreatePost = () => {
   const [regions, setRegions] = useState([]);
 
   const [text, setText] = useState("");
+  const [title, setTitle] = useState("");
+
   useEffect(() => {
     axios
       .get(
@@ -170,8 +173,20 @@ const CreatePost = () => {
       }
     } catch (error) {}
   };
+
+  const createPostFunctional = async () => {
+    if (title == "") {
+      toast.error("Empty title");
+      document.getElementById("title").focus();
+    } else if (text == "") {
+      toast.error("Empty content");
+      document.querySelector(".mde__textarea").focus();
+    }
+  };
+
   return (
     <Cont colors={COLORS}>
+      <Toaster />
       <h5 className="light black mar-bottom-8">CREATE POST</h5>
       <div className="grey-line mar-bottom-16"></div>
       <div className="grey-border box-shadow">
@@ -222,6 +237,8 @@ const CreatePost = () => {
           placeholder="Title"
           type="text"
           className="white-input mar-bottom-16"
+          onChange={(e) => setTitle(e.target.value)}
+          id="title"
         />
 
         <div className="mar-bottom-16">
@@ -230,7 +247,7 @@ const CreatePost = () => {
         <Editor section={text} updateSection={setText} />
         <div className="mar-bottom-16"></div>
         <div className="flex justify-end">
-          <div className="blue-btn-one">
+          <div onClick={createPostFunctional} className="blue-btn-one">
             <h5>Create Post</h5>
           </div>
         </div>

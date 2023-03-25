@@ -1,97 +1,82 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 
 const Cont = styled.div`
-  border: 1px dotted rgba(0, 0, 0, 0.1);
-  height: 120px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @property --x {
-    syntax: "<percentage>";
-    inherits: false;
-    initial-value: 0%;
+  .drop-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border: 1px dotted ${(props) => props.colors.grey};
+    height: 120px;
+    position: relative;
   }
-  @keyframes colorChange {
-    0% {
-      --x: 0%;
-    }
-    50% {
-      --x: 50%;
-    }
-    100% {
-      --x: 100%;
-    }
-  }
-
-  & * {
-    pointer-events: none;
-  }
-  .upload-state {
-    background: rgb(39, 143, 253);
+  .cover-image {
     width: 100%;
     height: 100%;
-    background: radial-gradient(
-      circle,
-      rgba(39, 143, 253, 1) 2%,
-      rgba(124, 187, 254, 1) 23%,
-      rgba(255, 255, 255, 1) 44%,
-      rgba(124, 187, 254, 1) 74%,
-      rgba(39, 143, 253, 1) 100%
-    );
-    background: radial-gradient(
-      ellipse farthest-corner at var(--x) 0%,
-      rgba(39, 143, 253, 1) 0%,
-      rgba(124, 187, 254, 1) 8%,
-      rgba(255, 255, 255, 1) 25%,
-      rgba(124, 187, 254, 1) 62.5%,
-      rgba(39, 143, 253, 1) 100%
-    );
-    animation: colorChange 5s infinite alternate;
+    position: absolute;
+    object-fit: cover;
   }
-  .center {
-    flex-direction: row;
-    text-align: center;
+  .input-section {
+    z-index: 1;
+    p {
+      padding: 8px;
+      background-color: #fff;
+      border-radius: 8px;
+    }
   }
 `;
 
 const ImageDropper = () => {
-  const [hoverState, setHoverState] = useState(false);
-  const dropFile = (e) => {
-    e.stopPropagation();
+  const [image, setImage] = useState("");
+  const fileRef = useRef(null);
+  const imgRef = useRef(null);
+  const dragFunc = (e) => {
     e.preventDefault();
   };
 
+  const dropFunc = (e) => {
+    e.preventDefault();
+    alert(":)");
+  };
+
+  const uploadImage = async (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      throw new Error("You must select an image to upload.");
+    }
+    const file = e.target.files[0];
+    console.log(file);
+    imgRef.current.src = URL.createObjectURL(file);
+  };
+
   return (
-    <Cont
-      colors={COLORS}
-      onDragOver={() => {}}
-      onDragEnter={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        setHoverState(true);
-      }}
-      onDragLeave={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        setHoverState(false);
-      }}
-      onDrop={dropFile}
-    >
-      {hoverState ? (
-        <div className="upload-state"></div>
-      ) : (
-        <div className="flex-inline center flex-wrap align-center justify-center">
-          <p className="light-blue-2  mar-right-16 mar-bottom-8">
-            Drag and drop image or{" "}
+    <Cont colors={COLORS}>
+      <div
+        className="drop-holder"
+        onDragOver={(e) => dragFunc(e)}
+        onDrop={(e) => dropFunc(e)}
+      >
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={(e) => uploadImage(e)}
+          hidden
+        />
+        <img ref={imgRef} src="/images/white.jpg" className="cover-image" />
+        <div className=" input-section flex flex-wrap align-center justify-center text-center">
+          <p className="light-blue-2 mar-right-8 mar-bottom-8">
+            Drag and drop images or
           </p>
-          <div className="blue-btn-one mar-bottom-8 ">
-            <p className="bold">Upload</p>
+          <div
+            onClick={() => fileRef.current.click()}
+            className="blue-btn-one mar-bottom-8"
+          >
+            <h5>Upload</h5>
           </div>
         </div>
-      )}
+      </div>
     </Cont>
   );
 };
