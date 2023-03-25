@@ -28,8 +28,7 @@ const Cont = styled.div`
   }
 `;
 
-const ImageDropper = () => {
-  const [image, setImage] = useState("");
+const ImageDropper = ({ image, setImage }) => {
   const fileRef = useRef(null);
   const imgRef = useRef(null);
   const dragFunc = (e) => {
@@ -46,6 +45,7 @@ const ImageDropper = () => {
       throw new Error("You must select an image to upload.");
     }
     const file = e.target.files[0];
+    setImage(file);
     console.log(file);
     imgRef.current.src = URL.createObjectURL(file);
   };

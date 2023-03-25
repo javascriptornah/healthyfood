@@ -6,6 +6,9 @@ import Editor from "../components/Editor";
 import Select from "../components/google/Select";
 import ImageDropper from "../components/inputs/ImageDropper";
 import toast, { Toaster } from "react-hot-toast";
+import { createPost } from "../utils/supabaseFunctions";
+import { useRouter } from "next/router";
+import supabase from "../utils/supabaseClient";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   min-height: 100vh;
@@ -76,6 +79,7 @@ const Cont = styled.div`
 `;
 
 const CreatePost = () => {
+  const router = useRouter();
   const [file, setFile] = useState("");
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
@@ -87,9 +91,30 @@ const CreatePost = () => {
   const [locations, setLocations] = useState([]);
   const [options, setOptions] = useState([]);
   const [regions, setRegions] = useState([]);
-
+  const [image, setImage] = useState(null);
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
+
+  const [loading, setLoading] = useState({ state: false, msg: "" });
+
+  const [user, setUser] = useState(null);
+  const [isLogged, setIsLogged] = useState(false);
+  const fetchUser = async () => {
+    const { data: session } = await supabase.auth.getSession();
+    if (session.session != null) {
+      setUser(session.session.user);
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+      toast.error("Please login to post");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     axios
@@ -153,8 +178,10 @@ const CreatePost = () => {
   }
 
   const uploadImage = async () => {
-    let formData = new formData();
-    formData.append("image", file);
+    setLoading({ state: true, msg: "uploading image..." });
+    // post to imgur and return response
+    let formData = new FormData();
+    formData.append("image", image);
     try {
       const response = await fetch("https://api.imgur.com/3/upload", {
         method: "POST",
@@ -165,16 +192,40 @@ const CreatePost = () => {
       });
       const res = await response.json();
       if (res.status == 200) {
-        const uploadState = await createImage(
-          res.data.link,
-          res.data.deletehash,
-          location_id
-        );
+        return { state: true, url: res.data.link };
+      } else {
+        toast("Error uploading image", {
+          duration: 4000,
+          position: "top-center",
+
+          // Styling
+          style: { border: "1px solid #E52323" },
+          className: "",
+
+          // Custom Icon
+          icon: "⚠️",
+
+          // Change colors of success/error/loading icon
+          iconTheme: {
+            primary: "#000",
+            secondary: "#fff",
+          },
+
+          // Aria
+          ariaProps: {
+            role: "status",
+            "aria-live": "polite",
+          },
+        });
+        return { state: false };
       }
-    } catch (error) {}
+    } catch (error) {
+      return { state: false, error };
+    }
   };
 
   const createPostFunctional = async () => {
+    // check if title and content is empty
     if (title == "") {
       toast.error("Empty title");
       document.getElementById("title").focus();
@@ -182,11 +233,40 @@ const CreatePost = () => {
       toast.error("Empty content");
       document.querySelector(".mde__textarea").focus();
     }
+    if (image !== null) {
+      // upload image and return url
+      const { state, url, error } = await uploadImage();
+      console.log("..");
+      console.log(error);
+      console.log("..");
+      // if image successfully uploaded then create post
+      if (!state) {
+        setLoading({ state: false, msg: "" });
+      } else {
+        setLoading({ state: true, msg: "Uploading post..." });
+        //const { state } = await createPost(title, text, user.id);
+      }
+    } else {
+      //const { state } = await createPost(title, text, user.id);
+    }
   };
 
   return (
     <Cont colors={COLORS}>
       <Toaster />
+      {loading.state && (
+        <div className="loading-screen">
+          <div className="loading-items">
+            <div className="lds-ring-green">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <p className="bold green">{loading.msg}</p>
+          </div>
+        </div>
+      )}
       <h5 className="light black mar-bottom-8">CREATE POST</h5>
       <div className="grey-line mar-bottom-16"></div>
       <div className="grey-border box-shadow">
@@ -242,7 +322,12 @@ const CreatePost = () => {
         />
 
         <div className="mar-bottom-16">
-          <ImageDropper file={file} setFile={setFile} />
+          <ImageDropper
+            file={file}
+            setFile={setFile}
+            image={image}
+            setImage={setImage}
+          />
         </div>
         <Editor section={text} updateSection={setText} />
         <div className="mar-bottom-16"></div>
