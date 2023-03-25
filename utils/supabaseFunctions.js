@@ -1040,9 +1040,52 @@ export const logout = async (content, name, email, post_id, comment_id) => {
   }
 };
 
-export const createPost = async (title, content, user_id) => {
+export const createPost = async (
+  title,
+  content,
+  user_id,
+  img_url,
+  country,
+  state,
+  city
+) => {
   try {
-    const { error } = await supabase.auth.signOut();
+    const { data, error } = await supabase
+      .from("posts")
+      .insert({ title, content, user_id, img_url });
+    if (error) throw error;
+
+    return { state: true };
+  } catch (error) {
+    return { state: false, error };
+  }
+};
+
+export const createPostWithImage = async (
+  title,
+  content,
+  user_id,
+  img_url,
+  country,
+  state,
+  city
+) => {
+  try {
+    const country_id = await fetchCountryByName(country);
+    const state_id =
+      (await state) !== null ? await fetchStateByName(state) : null;
+    const city_id = city == null ? await fetchCityByName(city) : null;
+    const { data, error } = await supabase
+      .from("posts")
+      .insert({
+        title,
+        content,
+        user_id,
+        img_url,
+        country_id,
+        state_id,
+        city_id,
+      });
     if (error) throw error;
 
     return { state: true };

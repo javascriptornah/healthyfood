@@ -6,7 +6,7 @@ import Editor from "../components/Editor";
 import Select from "../components/google/Select";
 import ImageDropper from "../components/inputs/ImageDropper";
 import toast, { Toaster } from "react-hot-toast";
-import { createPost } from "../utils/supabaseFunctions";
+import { createPost, createPostWithImage } from "../utils/supabaseFunctions";
 import { useRouter } from "next/router";
 import supabase from "../utils/supabaseClient";
 const Cont = styled.div`
@@ -237,17 +237,38 @@ const CreatePost = () => {
       // upload image and return url
       const { state, url, error } = await uploadImage();
       console.log("..");
-      console.log(error);
+      console.log(url);
       console.log("..");
       // if image successfully uploaded then create post
       if (!state) {
         setLoading({ state: false, msg: "" });
       } else {
         setLoading({ state: true, msg: "Uploading post..." });
-        //const { state } = await createPost(title, text, user.id);
+        const { state } = await createPostWithImage(
+          title,
+          text,
+          user.id,
+          url,
+          country !== "" ? country : null,
+          state !== "" ? state : null,
+          city !== "" ? city : null
+        );
+      }
+      setLoading({ state: false, msg: "" });
+      if (state) {
+        toast.success("Post uploaded!");
+      } else {
+        toast.error("Error upoading post");
       }
     } else {
-      //const { state } = await createPost(title, text, user.id);
+      const { state } = await createPost(
+        title,
+        text,
+        user.id,
+        country !== "" ? country : null,
+        state !== "" ? state : null,
+        city !== "" ? city : null
+      );
     }
   };
 
