@@ -205,7 +205,7 @@ const CreatePost = () => {
       });
       const res = await response.json();
       if (res.status == 200) {
-        return { state: true, url: res.data.link };
+        return { status: true, url: res.data.link };
       } else {
         toast("Error uploading image", {
           duration: 4000,
@@ -230,10 +230,10 @@ const CreatePost = () => {
             "aria-live": "polite",
           },
         });
-        return { state: false };
+        return { status: false };
       }
     } catch (error) {
-      return { state: false, error };
+      return { status: false, error };
     }
   };
 
@@ -253,13 +253,15 @@ const CreatePost = () => {
     }
     if (image !== null) {
       // upload image and return url
-      const { state, url, error } = await uploadImage();
+      const { status, url, error } = await uploadImage();
+      console.log(status);
       // if image successfully uploaded then create post
-      if (!state) {
-        setLoading({ state: false, msg: "" });
+      if (!status) {
+        setLoading({ status: false, msg: "" });
       } else {
-        setLoading({ state: true, msg: "Uploading post..." });
-        const { state } = await createPostWithImage(
+        alert("hello");
+        setLoading({ status: true, msg: "Uploading post..." });
+        const { status } = await createPostWithImage(
           title,
           text,
           user.id,
@@ -268,20 +270,18 @@ const CreatePost = () => {
           state !== "" ? state : null,
           city !== "" ? city : null
         );
-      }
-      setLoading({ state: false, msg: "" });
-      if (state) {
-        toast.success("Post uploaded!");
-        clearFields();
-      } else {
-        toast.error("Error uploading post");
+        setLoading({ state: false, msg: "" });
+        if (status) {
+          toast.success("Post uploaded!");
+          clearFields();
+        } else {
+          toast.error("Error uploading post");
+        }
       }
     } else {
       setLoading({ state: true, msg: "Uploading post..." });
-      console.log("ajksdjasdj");
-      console.log(state);
-      console.log(city);
-      const { data, state, error } = await createPost(
+
+      const { data, status, error } = await createPost(
         title,
         text,
         user.id,
@@ -291,11 +291,11 @@ const CreatePost = () => {
       );
 
       setLoading({ state: false, msg: "" });
-      if (state) {
+      if (status) {
         toast.success("Post uploaded!");
         console.log("2222");
         console.log(data);
-        clearFields();
+        //clearFields();
       } else {
         console.log(error);
         console.log(data);

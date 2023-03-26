@@ -945,16 +945,16 @@ export const fetchForumProvinceByName = async (name) => {
   }
 };
 
-export const fetchForumStateByNameAndInsert = async (name) => {
+export const fetchForumStateByNameAndInsert = async (name, country_id) => {
   try {
     const { data, error } = await supabase
-      .from("forumCountries")
+      .from("forumStates")
       .select()
       .eq("name", name);
     if (data.length === 0) {
       const { data, error2 } = await supabase
-        .from("forumCountries")
-        .insert({ name })
+        .from("forumStates")
+        .insert({ name, country_id })
         .select();
       return data[0].id;
     }
@@ -967,7 +967,7 @@ export const fetchForumStateByNameAndInsert = async (name) => {
   }
 };
 
-export const fetchForumCityByName = async (name) => {
+export const fetchForumCityByName = async (name, state_id) => {
   try {
     const { data, error } = await supabase
       .from("forumCities")
@@ -977,8 +977,9 @@ export const fetchForumCityByName = async (name) => {
     if (data.length === 0) {
       const { data, error2 } = await supabase
         .from("forumCities")
-        .insert({ name })
+        .insert({ name, state_id })
         .select();
+
       return data[0].id;
     }
 
@@ -1113,13 +1114,16 @@ export const createPost = async (
   state,
   city
 ) => {
-  const city_id = city == null ? await fetchForumCityByName(city) : null;
-  return { state: true, data: city };
-  /*
+  const country_id = await fetchForumCountryByNameAndInsert(country);
+  const state_id =
+    state !== null
+      ? await fetchForumStateByNameAndInsert(state, country_id)
+      : null;
+
+  const city_id =
+    city !== null ? await fetchForumCityByName(city, state_id) : null;
+
   try {
-    const country_id = await fetchForumCountryByName(country);
-    const state_id = state !== null ? await fetchForumStateByName(state) : null;
-    const city_id = city == null ? await fetchForumCityByName(city) : null;
     const { data, error } = await supabase
       .from("posts")
       .insert({
@@ -1133,10 +1137,10 @@ export const createPost = async (
       .select();
     if (error) throw error;
 
-    return { state: true, data: data };
+    return { status: true, data: data };
   } catch (error) {
-    return { state: false, error: error };
-  } */
+    return { status: false, error: error };
+  }
 };
 
 export const createPostWithImage = async (
@@ -1148,24 +1152,32 @@ export const createPostWithImage = async (
   state,
   city
 ) => {
+  const country_id = await fetchForumCountryByNameAndInsert(country);
+  const state_id =
+    state !== null
+      ? await fetchForumStateByNameAndInsert(state, country_id)
+      : null;
+
+  const city_id =
+    city !== null ? await fetchForumCityByName(city, state_id) : null;
+
   try {
-    const country_id = await fetchCountryByName(country);
-    const state_id =
-      (await state) !== null ? await fetchStateByName(state) : null;
-    const city_id = city == null ? await fetchCityByName(city) : null;
-    const { data, error } = await supabase.from("posts").insert({
-      title,
-      content,
-      user_id,
-      img_url,
-      country_id,
-      state_id,
-      city_id,
-    });
+    const { data, error } = await supabase
+      .from("posts")
+      .insert({
+        title,
+        content,
+        user_id,
+        img_url,
+        country_id,
+        state_id,
+        city_id,
+      })
+      .select();
     if (error) throw error;
 
-    return { state: true };
+    return { status: true, data: data };
   } catch (error) {
-    return { state: false, error };
+    return { status: false, error: error };
   }
 };
