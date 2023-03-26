@@ -17,6 +17,7 @@ const Cont = styled.div`
     height: 100%;
     position: absolute;
     object-fit: cover;
+    animation: opacity 1s;
   }
   .input-section {
     z-index: 1;
@@ -27,8 +28,25 @@ const Cont = styled.div`
     }
   }
   .animation-holder {
+    background: rgb(39, 143, 253);
+    background: radial-gradient(
+      circle,
+      rgba(39, 143, 253, 1) 2%,
+      rgba(124, 187, 254, 1) 6%,
+      rgba(255, 255, 255, 1) 44%,
+      rgba(124, 187, 254, 1) 94%,
+      rgba(39, 143, 253, 1) 100%
+    );
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .blue-ball {
-      background-color: ${(props) => props.colors.grey};
+      background-color: ${(props) => props.colors.lightBlue};
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
     }
   }
 `;
@@ -37,11 +55,13 @@ const ImageDropper = ({ image, setImage }) => {
   const [hoverState, setHoverState] = useState(false);
   const fileRef = useRef(null);
   const imgRef = useRef(null);
+  const [imgSrc, setImgSrc] = useState("/images/white.jpg");
   const dragFunc = (e) => {
     e.preventDefault();
   };
 
   const dropFunc = (ev) => {
+    setHoverState(false);
     console.log("File(s) dropped");
     ev.preventDefault();
     if (ev.dataTransfer.items) {
@@ -51,7 +71,8 @@ const ImageDropper = ({ image, setImage }) => {
         if (item.kind === "file") {
           const file = item.getAsFile();
           console.log(`… file[${i}].name = ${file.name}`);
-          imgRef.current.src = URL.createObjectURL(file);
+          let blob = URL.createObjectURL(file);
+          setImgSrc(blob);
           setImage(file);
         }
       });
@@ -70,15 +91,18 @@ const ImageDropper = ({ image, setImage }) => {
     const file = e.target.files[0];
     setImage(file);
     console.log(file);
-    imgRef.current.src = URL.createObjectURL(file);
+    setImgSrc(URL.createObjectURL(file));
   };
 
   const startDrag = (e) => {
-    console.log(e.target);
+    setHoverState(true);
+    console.log("??");
   };
 
   const endDrag = (e) => {
-    //console.log(e.target);
+    if (e.target.id == "hover-section") {
+      setHoverState(false);
+    }
   };
   return (
     <Cont colors={COLORS}>
@@ -90,9 +114,9 @@ const ImageDropper = ({ image, setImage }) => {
         onDragEnter={(e) => startDrag(e)}
         onDragLeave={(e) => endDrag(e)}
       >
-        {!hoverState ? (
+        {hoverState ? (
           <div className="animation-holder">
-            <div className="blue-ball"></div>
+            <div className="blue-ball color-blue-scale"></div>
           </div>
         ) : (
           <>
@@ -103,7 +127,7 @@ const ImageDropper = ({ image, setImage }) => {
               onChange={(e) => uploadImage(e)}
               hidden
             />
-            <img ref={imgRef} src="/images/white.jpg" className="cover-image" />
+            <img ref={imgRef} src={imgSrc} className="cover-image" />
             <div className=" input-section flex flex-wrap align-center justify-center text-center">
               <p className="light-blue-2 mar-right-8 mar-bottom-8">
                 Drag and drop images or

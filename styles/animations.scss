@@ -63,7 +63,7 @@ $red: rgb(236, 41, 41);
 }
 
 
-@keyframes color-blue-scale {
+@keyframes color {
   0% {
     background-color:#278ffd;
     transform: scale(1);
@@ -76,4 +76,8 @@ $red: rgb(236, 41, 41);
     background-color: #278ffd;
     transform: scale(1);
   }
+}
+
+.color-blue-scale{
+  animation: color 5s infinite;
 }
