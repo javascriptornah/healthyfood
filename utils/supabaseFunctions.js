@@ -896,6 +896,22 @@ export const fetchForumCountryByName = async (name) => {
   try {
     const { data, error } = await supabase
       .from("forumCountries")
+      .select("*, forumStates(*)")
+      .eq("name", name)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const fetchForumCountryByNameAndInsert = async (name) => {
+  try {
+    const { data, error } = await supabase
+      .from("forumCountries")
       .select()
       .eq("name", name);
     if (data.length === 0) {
@@ -913,8 +929,23 @@ export const fetchForumCountryByName = async (name) => {
     console.log(error.message);
   }
 };
+export const fetchForumProvinceByName = async (name) => {
+  try {
+    const { data, error } = await supabase
+      .from("forumStates")
+      .select("*, forumCities(*)")
+      .eq("name", name)
+      .maybeSingle();
 
-export const fetchForumStateByName = async (name) => {
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const fetchForumStateByNameAndInsert = async (name) => {
   try {
     const { data, error } = await supabase
       .from("forumCountries")
@@ -964,9 +995,7 @@ export const fetchPostById = async (id) => {
   try {
     const { data, error } = await supabase
       .from("posts")
-      .select(
-        "*, city_id(name), state_id(name), country_id(name),user_id(username)"
-      )
+      .select("*, state_id(name), country_id(name),user_id(username)")
       .eq("id", id)
       .maybeSingle();
 

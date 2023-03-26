@@ -43,7 +43,7 @@ export async function getServerSideProps(params) {
 const Post = ({ post }) => {
   const router = useRouter();
   const backLink = router.query.backLink;
-  console.log(backLink);
+  console.log(post);
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2 forum-page">
@@ -63,16 +63,16 @@ const Post = ({ post }) => {
         <PostSection
           content={post.content}
           title={post.title}
-          username={post.user_id.username}
-          country={post.country_id.name}
-          province={post.state_id.name}
+          username={post?.user_id?.username}
+          country={post.country_id?.name}
+          province={post.state_id?.name}
           city={post.city_id?.name}
           date={post.created_at}
           views={434}
           replies={34}
         />
         <div className="ssm-spacer"></div>
-        <ReplySection username={post.user_id.username} />
+        <ReplySection username={post?.user_id?.username} />
         <div className="ssm-spacer"></div>
         <CommentSection comments={comments} />
       </div>
