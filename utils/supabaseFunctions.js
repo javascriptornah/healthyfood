@@ -896,31 +896,67 @@ export const fetchForumCountryByName = async (name) => {
   try {
     const { data, error } = await supabase
       .from("forumCountries")
-      .select("*, forumStates(*)")
-      .eq("name", name)
-      .maybeSingle();
+      .select()
+      .eq("name", name);
+    if (data.length === 0) {
+      const { data, error2 } = await supabase
+        .from("forumCountries")
+        .insert({ name })
+        .select();
+      return data[0].id;
+    }
 
     if (error) throw error;
-    return data;
+
+    return data[0].id;
   } catch (error) {
-    console.log(error);
-    return error;
+    console.log(error.message);
   }
 };
 
-export const fetchForumProvinceByName = async (name) => {
+export const fetchForumStateByName = async (name) => {
   try {
     const { data, error } = await supabase
-      .from("forumStates")
-      .select("*, forumCities(*)")
-      .eq("name", name)
-      .maybeSingle();
+      .from("forumCountries")
+      .select()
+      .eq("name", name);
+    if (data.length === 0) {
+      const { data, error2 } = await supabase
+        .from("forumCountries")
+        .insert({ name })
+        .select();
+      return data[0].id;
+    }
 
     if (error) throw error;
-    return data;
+
+    return data[0].id;
   } catch (error) {
-    console.log(error);
-    return error;
+    console.log(error.message);
+  }
+};
+
+export const fetchForumCityByName = async (name) => {
+  try {
+    const { data, error } = await supabase
+      .from("forumCities")
+      .select()
+      .eq("name", name);
+
+    if (data.length === 0) {
+      const { data, error2 } = await supabase
+        .from("forumCities")
+        .insert({ name })
+        .select();
+      return data[0].id;
+    }
+
+    if (error) throw error;
+
+    return data[0].id;
+  } catch (error) {
+    console.log(error.message);
+    return "fagot fuck";
   }
 };
 
@@ -1044,21 +1080,34 @@ export const createPost = async (
   title,
   content,
   user_id,
-  img_url,
   country,
   state,
   city
 ) => {
+  const city_id = city == null ? await fetchForumCityByName(city) : null;
+  return { state: true, data: city };
+  /*
   try {
+    const country_id = await fetchForumCountryByName(country);
+    const state_id = state !== null ? await fetchForumStateByName(state) : null;
+    const city_id = city == null ? await fetchForumCityByName(city) : null;
     const { data, error } = await supabase
       .from("posts")
-      .insert({ title, content, user_id, img_url });
+      .insert({
+        title,
+        content,
+        user_id,
+        country_id,
+        state_id,
+        city_id,
+      })
+      .select();
     if (error) throw error;
 
-    return { state: true };
+    return { state: true, data: data };
   } catch (error) {
-    return { state: false, error };
-  }
+    return { state: false, error: error };
+  } */
 };
 
 export const createPostWithImage = async (
@@ -1075,17 +1124,15 @@ export const createPostWithImage = async (
     const state_id =
       (await state) !== null ? await fetchStateByName(state) : null;
     const city_id = city == null ? await fetchCityByName(city) : null;
-    const { data, error } = await supabase
-      .from("posts")
-      .insert({
-        title,
-        content,
-        user_id,
-        img_url,
-        country_id,
-        state_id,
-        city_id,
-      });
+    const { data, error } = await supabase.from("posts").insert({
+      title,
+      content,
+      user_id,
+      img_url,
+      country_id,
+      state_id,
+      city_id,
+    });
     if (error) throw error;
 
     return { state: true };

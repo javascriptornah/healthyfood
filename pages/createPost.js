@@ -6,7 +6,11 @@ import Editor from "../components/Editor";
 import Select from "../components/google/Select";
 import ImageDropper from "../components/inputs/ImageDropper";
 import toast, { Toaster } from "react-hot-toast";
-import { createPost, createPostWithImage } from "../utils/supabaseFunctions";
+import {
+  createPost,
+  createPostWithImage,
+  fetchCountryByName,
+} from "../utils/supabaseFunctions";
 import { useRouter } from "next/router";
 import supabase from "../utils/supabaseClient";
 const Cont = styled.div`
@@ -81,9 +85,9 @@ const Cont = styled.div`
 const CreatePost = () => {
   const router = useRouter();
   const [file, setFile] = useState("");
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("Canada");
+  const [state, setState] = useState("Ontario");
+  const [city, setCity] = useState("Ottawa");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -99,6 +103,15 @@ const CreatePost = () => {
 
   const [user, setUser] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
+
+  const clearFields = () => {
+    setImage("");
+    setCountry("");
+    setState("");
+    setCity("");
+    setTitle("");
+    setText("");
+  };
   const fetchUser = async () => {
     const { data: session } = await supabase.auth.getSession();
     if (session.session != null) {
@@ -229,16 +242,18 @@ const CreatePost = () => {
     if (title == "") {
       toast.error("Empty title");
       document.getElementById("title").focus();
+      return;
     } else if (text == "") {
       toast.error("Empty content");
       document.querySelector(".mde__textarea").focus();
+      return;
+    } else if (country == "") {
+      toast.error("Please select a country");
+      return;
     }
     if (image !== null) {
       // upload image and return url
       const { state, url, error } = await uploadImage();
-      console.log("..");
-      console.log(url);
-      console.log("..");
       // if image successfully uploaded then create post
       if (!state) {
         setLoading({ state: false, msg: "" });
@@ -257,11 +272,16 @@ const CreatePost = () => {
       setLoading({ state: false, msg: "" });
       if (state) {
         toast.success("Post uploaded!");
+        clearFields();
       } else {
-        toast.error("Error upoading post");
+        toast.error("Error uploading post");
       }
     } else {
-      const { state } = await createPost(
+      setLoading({ state: true, msg: "Uploading post..." });
+      console.log("ajksdjasdj");
+      console.log(state);
+      console.log(city);
+      const { data, state, error } = await createPost(
         title,
         text,
         user.id,
@@ -269,6 +289,18 @@ const CreatePost = () => {
         state !== "" ? state : null,
         city !== "" ? city : null
       );
+
+      setLoading({ state: false, msg: "" });
+      if (state) {
+        toast.success("Post uploaded!");
+        console.log("2222");
+        console.log(data);
+        clearFields();
+      } else {
+        console.log(error);
+        console.log(data);
+        toast.error("Error uploading post");
+      }
     }
   };
 
@@ -295,7 +327,7 @@ const CreatePost = () => {
           <div className="select-line mar-bottom-16">
             <h5 className="light contrast mar-bottom-16">COUNTRY *</h5>
             <Select
-              regions={countries}
+              regions={regions}
               value={country}
               updateValue={updateRegion}
               searchPlaceholder="Search"
@@ -340,6 +372,7 @@ const CreatePost = () => {
           className="white-input mar-bottom-16"
           onChange={(e) => setTitle(e.target.value)}
           id="title"
+          value={title}
         />
 
         <div className="mar-bottom-16">
