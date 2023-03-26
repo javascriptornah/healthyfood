@@ -12,7 +12,7 @@ const Cont = styled.div`
     border-radius: 0px;
   }
 `;
-const ForumContent = () => {
+const ForumContent = ({ postsFetch }) => {
   const [states, setStates] = useState(statesFetch.map((state) => state.name));
   const [provinces, setProvinces] = useState(
     Object.entries(provincesFetch).map(([key, val]) => val)
@@ -67,7 +67,7 @@ const ForumContent = () => {
         provinces={provinces}
         euroCountries={euroCountries}
       />
-      <PostsSection title="Recent Posts" posts={posts} />
+      <PostsSection title="Recent Posts" posts={postsFetch} />
     </Cont>
   );
 };

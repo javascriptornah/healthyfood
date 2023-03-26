@@ -11,6 +11,7 @@ const Cont = styled.div`
 `;
 
 const PostsSection = ({ title, posts }) => {
+  /*
   const [postLines, setPostLines] = useState(
     posts.map((post, index) => {
       return (
@@ -23,13 +24,14 @@ const PostsSection = ({ title, posts }) => {
         />
       );
     })
-  );
+  ); */
+
   return (
     <Cont colors={COLORS}>
       <div className="title-spec">
         <h5 className="red text-shadow-red">{title}</h5>
       </div>
-      <div>{postLines}</div>
+      <div>{/*postLines*/}</div>
     </Cont>
   );
 };

@@ -1181,3 +1181,15 @@ export const createPostWithImage = async (
     return { status: false, error: error };
   }
 };
+
+export const fetchPosts = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*, user_id(name), city_id(*), state_id(*), country_id(*)");
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};

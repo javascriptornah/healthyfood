@@ -195,45 +195,44 @@ const CreatePost = () => {
     // post to imgur and return response
     let formData = new FormData();
     formData.append("image", image);
-    try {
-      const response = await fetch("https://api.imgur.com/3/upload", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Client-ID ${process.env.NEXT_PUBLIC_IMGUR_ID}`,
+
+    const response = await fetch("https://api.imgur.com/3/upload", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Client-ID ${process.env.NEXT_PUBLIC_IMGUR_ID}`,
+      },
+    });
+
+    const res = await response.json();
+    console.log(res);
+    if (res.status == 200) {
+      return { status: true, url: res.data.link };
+    } else {
+      toast("Error uploading image", {
+        duration: 4000,
+        position: "top-center",
+
+        // Styling
+        style: { border: "1px solid #E52323" },
+        className: "",
+
+        // Custom Icon
+        icon: "⚠️",
+
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: "#000",
+          secondary: "#fff",
+        },
+
+        // Aria
+        ariaProps: {
+          role: "status",
+          "aria-live": "polite",
         },
       });
-      const res = await response.json();
-      if (res.status == 200) {
-        return { status: true, url: res.data.link };
-      } else {
-        toast("Error uploading image", {
-          duration: 4000,
-          position: "top-center",
-
-          // Styling
-          style: { border: "1px solid #E52323" },
-          className: "",
-
-          // Custom Icon
-          icon: "⚠️",
-
-          // Change colors of success/error/loading icon
-          iconTheme: {
-            primary: "#000",
-            secondary: "#fff",
-          },
-
-          // Aria
-          ariaProps: {
-            role: "status",
-            "aria-live": "polite",
-          },
-        });
-        return { status: false };
-      }
-    } catch (error) {
-      return { status: false, error };
+      return { status: false };
     }
   };
 
@@ -254,7 +253,7 @@ const CreatePost = () => {
     if (image !== null) {
       // upload image and return url
       const { status, url, error } = await uploadImage();
-      console.log(status);
+
       // if image successfully uploaded then create post
       if (!status) {
         setLoading({ status: false, msg: "" });
