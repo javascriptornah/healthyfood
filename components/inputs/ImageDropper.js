@@ -26,18 +26,41 @@ const Cont = styled.div`
       border-radius: 8px;
     }
   }
+  .animation-holder {
+    .blue-ball {
+      background-color: ${(props) => props.colors.grey};
+    }
+  }
 `;
 
 const ImageDropper = ({ image, setImage }) => {
+  const [hoverState, setHoverState] = useState(false);
   const fileRef = useRef(null);
   const imgRef = useRef(null);
   const dragFunc = (e) => {
     e.preventDefault();
   };
 
-  const dropFunc = (e) => {
-    e.preventDefault();
-    alert(":)");
+  const dropFunc = (ev) => {
+    console.log("File(s) dropped");
+    ev.preventDefault();
+    if (ev.dataTransfer.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      [...ev.dataTransfer.items].forEach((item, i) => {
+        // If dropped items aren't files, reject them
+        if (item.kind === "file") {
+          const file = item.getAsFile();
+          console.log(`… file[${i}].name = ${file.name}`);
+          imgRef.current.src = URL.createObjectURL(file);
+          setImage(file);
+        }
+      });
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      [...ev.dataTransfer.files].forEach((file, i) => {
+        console.log(`… file[${i}].name = ${file.name}`);
+      });
+    }
   };
 
   const uploadImage = async (e) => {
@@ -50,32 +73,50 @@ const ImageDropper = ({ image, setImage }) => {
     imgRef.current.src = URL.createObjectURL(file);
   };
 
+  const startDrag = (e) => {
+    console.log(e.target);
+  };
+
+  const endDrag = (e) => {
+    //console.log(e.target);
+  };
   return (
     <Cont colors={COLORS}>
       <div
         className="drop-holder"
+        id="hover-section"
         onDragOver={(e) => dragFunc(e)}
         onDrop={(e) => dropFunc(e)}
+        onDragEnter={(e) => startDrag(e)}
+        onDragLeave={(e) => endDrag(e)}
       >
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/png, image/jpeg"
-          onChange={(e) => uploadImage(e)}
-          hidden
-        />
-        <img ref={imgRef} src="/images/white.jpg" className="cover-image" />
-        <div className=" input-section flex flex-wrap align-center justify-center text-center">
-          <p className="light-blue-2 mar-right-8 mar-bottom-8">
-            Drag and drop images or
-          </p>
-          <div
-            onClick={() => fileRef.current.click()}
-            className="blue-btn-one mar-bottom-8"
-          >
-            <h5>Upload</h5>
+        {!hoverState ? (
+          <div className="animation-holder">
+            <div className="blue-ball"></div>
           </div>
-        </div>
+        ) : (
+          <>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/png, image/jpeg"
+              onChange={(e) => uploadImage(e)}
+              hidden
+            />
+            <img ref={imgRef} src="/images/white.jpg" className="cover-image" />
+            <div className=" input-section flex flex-wrap align-center justify-center text-center">
+              <p className="light-blue-2 mar-right-8 mar-bottom-8">
+                Drag and drop images or
+              </p>
+              <div
+                onClick={() => fileRef.current.click()}
+                className="blue-btn-one mar-bottom-8"
+              >
+                <h5>Upload</h5>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </Cont>
   );
