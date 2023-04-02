@@ -23,9 +23,16 @@ const Cont = styled.div`
     justify-items: center;
     & > div {
       max-width: 480px;
+      @media only screen and (max-width: 600px) {
+        max-width: 100%;
+        width: 100%;
+      }
     }
     @media only screen and (max-width: 1200px) {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media only screen and (max-width: 900px) {
+      grid-template-columns: 1fr;
     }
   }
   .recent-posts {
@@ -35,16 +42,31 @@ const Cont = styled.div`
       grid-column-end: 3;
       margin: 0;
     }
+    @media only screen and (max-width: 900px) {
+      grid-column: 1/2;
+    }
   }
   .post-activity {
+    margin-right: 16px;
     @media only screen and (max-width: 1200px) {
       grid-row-start: 1;
       grid-row-end: 10;
+      grid-column: 1/2;
+    }
+    @media only screen and (max-width: 900px) {
+      grid-column: 1/2;
+      grid-row: 2/3;
+      margin-bottom: 32px;
+      margin-right: 0;
     }
   }
   .bio {
     @media only screen and (max-width: 1200px) {
       grid-row-start: 1;
+      margin-bottom: 32px;
+    }
+    @media only screen and (max-width: 900px) {
+      grid-column: 1/2;
     }
   }
 `;
@@ -84,6 +106,7 @@ const UserPage = ({ user, fetchUser }) => {
       comments: 42,
     },
   ];
+  console.log(user);
   return (
     <Cont colors={COLORS}>
       <div className="default-page">
@@ -93,7 +116,10 @@ const UserPage = ({ user, fetchUser }) => {
               className="mar-right-32"
               src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}${user.user_metadata.avatar_url}`}
             />
-            <h5 className="blue">{user.user_metadata.username}</h5>
+            <div>
+              <h5 className="blue">{user.user_metadata.username}</h5>
+              <p className="contrast">{user.email}</p>
+            </div>
           </div>
           <div className="red-btn-one" onClick={logout}>
             <h5>Sign Out</h5>
@@ -105,7 +131,7 @@ const UserPage = ({ user, fetchUser }) => {
           <div className=" recent-posts">
             <PostPreview title="Recent Posts" locations={locations} />
           </div>
-          <div className="mar-right-16 post-activity">
+          <div className=" post-activity">
             <RecentPosts posts={postsX} />
           </div>
           <div className="bio">

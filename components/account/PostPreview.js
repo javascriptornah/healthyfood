@@ -8,6 +8,7 @@ const Cont = styled.div`
   background-color: ${(props) => props.colors.lightWhite};
   border-radius: 8px;
   padding: 8px 12px;
+
   .overscroll {
     max-height: 800px;
     overflow: auto;
