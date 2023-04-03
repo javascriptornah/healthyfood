@@ -4,6 +4,7 @@ import COLORS from "../data/colors";
 import Header from "../components/forum/Header";
 import ForumContent from "../components/forum/ForumContent";
 import { fetchPosts } from "../utils/supabaseFunctions";
+import CreatePostIconTwo from "../components/forum/CreatePostIconTwo";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   padding-top: 40px;
@@ -36,7 +37,10 @@ const Forum = ({ postsFetch }) => {
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
         <Header />
-
+        <div className="mar-bottom-16">
+          <CreatePostIconTwo />
+        </div>
+        <div className="mar-bottom-16"></div>
         <ForumContent posts={postsFetch} />
       </div>
     </Cont>

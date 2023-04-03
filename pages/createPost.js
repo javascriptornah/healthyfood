@@ -17,7 +17,7 @@ const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   min-height: 100vh;
   padding-top: 40px;
-  width: 90%;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 40px 16px 16px;
   @media only screen and (max-width: 800px) {
@@ -205,7 +205,7 @@ const CreatePost = () => {
     });
 
     const res = await response.json();
-    console.log(res);
+
     if (res.status == 200) {
       return { status: true, url: res.data.link };
     } else {
