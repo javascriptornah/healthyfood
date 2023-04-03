@@ -1187,7 +1187,7 @@ export const fetchPosts = async () => {
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "*, user_id(name), city_id(name), state_id(name), country_id(name)"
+        "*, user_id(username), city_id(name), state_id(name), country_id(name)"
       );
     if (error) throw error;
     return data;

@@ -32,7 +32,14 @@ export async function getServerSideProps() {
 }
 
 const Forum = ({ postsFetch }) => {
-  console.log(postsFetch);
+  const [posts, setPosts] = useState(
+    postsFetch.sort((a, b) => {
+      let aDate = new Date(a.created_at).getTime();
+      let bDate = new Date(b.created_at).getTime();
+      return aDate > bDate ? 1 : aDate < bDate ? 0 : -1;
+    })
+  );
+
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
@@ -41,7 +48,7 @@ const Forum = ({ postsFetch }) => {
           <CreatePostIconTwo />
         </div>
         <div className="mar-bottom-16"></div>
-        <ForumContent posts={postsFetch} />
+        <ForumContent posts={posts} />
       </div>
     </Cont>
   );
