@@ -28,7 +28,7 @@ const ForumContent = ({ posts }) => {
         provinces={provinces}
         euroCountries={euroCountries}
       />
-      <PostsSection title="Recent Posts" posts={postsFetch} />
+      <PostsSection title="Recent Posts" posts={posts} />
     </Cont>
   );
 };
