@@ -12,7 +12,7 @@ const Cont = styled.div`
     border-radius: 0px;
   }
 `;
-const ForumContent = ({ postsFetch }) => {
+const ForumContent = ({ posts }) => {
   const [states, setStates] = useState(statesFetch.map((state) => state.name));
   const [provinces, setProvinces] = useState(
     Object.entries(provincesFetch).map(([key, val]) => val)
@@ -20,45 +20,6 @@ const ForumContent = ({ postsFetch }) => {
   const [euroCountries, setEuroCountries] = useState(
     euroCountriesFetch.map((country) => country.name)
   );
-
-  const posts = [
-    {
-      title: "Where to find meat in germany",
-      forum: "Germany",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in canada",
-      forum: "Canada",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in canada",
-      forum: "Canada",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in germany",
-      forum: "Germany",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in germany",
-      forum: "Germany",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in germany",
-      forum: "Germany",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-  ];
 
   return (
     <Cont colors={COLORS}>
