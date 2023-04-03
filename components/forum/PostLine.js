@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 import COLORS from "../../data/colors";
 import styled from "styled-components";
@@ -17,20 +18,32 @@ const Cont = styled.div`
   @media only screen and (max-width: 400px) {
     flex-direction: column;
   }
+  .title {
+    width: 33%;
+  }
 `;
 
 const PostLine = ({ title, forum, username, date }) => {
+  date = new Date(date);
+  let hoursMin = date.getHours() + ":" + date.getMinutes();
+
   return (
-    <Cont colors={COLORS}>
-      <div>
-        <p className="bold blue inline-block mar-right-4 text-spec">{title}</p>
-        <p className="inline-block">
-          by <span className="green underline-hover">{username}</span>{" "}
+    <Link href={``}>
+      <Cont colors={COLORS}>
+        <div className="title">
+          <p className="bold blue inline-block mar-right-4 text-spec">
+            {title}
+          </p>
+          <p className="inline-block">
+            by <span className="green underline-hover">{username}</span>{" "}
+          </p>
+        </div>
+        <p className="mar-right-8">{forum}</p>
+        <p className="small">
+          {new Date(date).toLocaleDateString() + " - " + hoursMin}
         </p>
-      </div>
-      <p className="mar-right-8">{forum}</p>
-      <p className="small">{date.toDateString()}</p>
-    </Cont>
+      </Cont>
+    </Link>
   );
 };
 
