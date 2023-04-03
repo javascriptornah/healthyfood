@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLORS from "../data/colors";
 import Searchbar from "../components/nutritionsearch/Searchbar";
@@ -52,6 +52,7 @@ const Nutritionsearch = ({
   grainsFetch,
   porkFetch,
 }) => {
+  // sort all the categories alphabetically
   const [allFoods, setAllFoods] = useState(
     allFoodCategories.sort((a, b) =>
       a.name > b.name ? 1 : a.name < b.name ? -1 : 0
@@ -103,6 +104,7 @@ const Nutritionsearch = ({
     )
   );
 
+  // food object for rendering and sort
   const [foodsObject, setFoodsObject] = useState({
     "All Food Categories": allFoods,
     "Dairy and Eggs": dairy,
@@ -115,10 +117,7 @@ const Nutritionsearch = ({
     Beef: beef,
   });
 
-  console.log("fish");
-  console.log(fish);
-  console.log("beef");
-  console.log(beef);
+  // default selection
   const [selectedFoods, setSelectedFoods] = useState(
     foodsObject["All Food Categories"]
   );
@@ -126,22 +125,53 @@ const Nutritionsearch = ({
     foodsObject["All Food Categories"]
   );
   const [value, setValue] = useState("All Food Categories");
+
+  // when category is selected
   const updateValue = (val) => {
+    alert("k");
     setSelectedFoods(foodsObject[val]);
     setSelectedFoodsCopy(foodsObject[val]);
-    console.log(foodsObject[val]);
     setValue(val);
   };
 
   const [searchText, setSearchText] = useState("");
 
+  // filter foods on search
   const filterFoods = (val) => {
-    setSelectedFoods(
-      selectedFoodsCopy.filter((food) => {
+    setSelectedFoods(() => {
+      let sortedFoods = selectedFoodsCopy.filter((food) => {
         return food.name.toLowerCase().includes(val.toLowerCase());
-      })
-    );
+      });
+
+      if (nutrientValue !== "Unselected") {
+        let x = sortedFoods.sort((a, b) => {
+          let aVal =
+            a.nutrients_id[
+              `${nutrientValue.replaceAll(" ", "_")}_daily_value`
+            ] /
+            (a.nutrients_id.quantity / 100);
+
+          let bVal =
+            b.nutrients_id[
+              `${nutrientValue.replaceAll(" ", "_")}_daily_value`
+            ] /
+            (b.nutrients_id.quantity / 100);
+
+          console.log("a val");
+          console.log(aVal);
+          console.log("b val");
+          console.log(bVal);
+
+          return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+        });
+        console.log("2/3/12/123");
+        console.log(x);
+        return x;
+      }
+      return sortedFoods;
+    });
   };
+
   const updateSearchText = (e) => {
     const val = e.target.value;
 
@@ -161,11 +191,8 @@ const Nutritionsearch = ({
   const updateFilterValue = (val) => {
     setFilterValue(val);
   };
-  console.log("??");
-  console.log(selectedFoods);
-  const sortFoods = (val) => {
-    console.log(selectedFoods[0]);
 
+  const sortFoods = (val) => {
     const sortHighest = () => {
       setSelectedFoods((foods) => {
         return foods.sort((a, b) => {

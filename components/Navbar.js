@@ -4,7 +4,12 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLORS from "../data/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faComment,
+  faLocationDot,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "./navbar/Dropdown.js";
 import supabase from "../utils/supabaseClient";
 
@@ -79,6 +84,24 @@ const Cont = styled.div`
       .red {
         color: ${(props) => props.colors.black};
       }
+    }
+  }
+  .mobile-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-left: 16px;
+    cursor: pointer;
+    border: 1px solid ${(props) => props.colors.darkPink};
+    &:hover {
+      border: 2px solid ${(props) => props.colors.darkPink};
+    }
+    &:active {
+      border: 2px solid ${(props) => props.colors.darkPink};
+      box-shadow: none;
     }
   }
 `;
@@ -177,7 +200,7 @@ const Navbar = () => {
           <div className="flex align-center flex-wrap">
             <Link
               href="/"
-              className="no-color-link text-shadow-red mar-right-16"
+              className="no-color-link text-shadow-red mar-right-16 mar-bottom-8"
             >
               <Image
                 src="/icons/logo_sm.png"
@@ -188,19 +211,37 @@ const Navbar = () => {
             </Link>
             {user !== null ? (
               <Link href="/account">
-                <h5 className="black text-shadow">
+                <h5 className="black text-shadow mar-bottom-8">
                   {user.user_metadata.username}
                 </h5>
               </Link>
             ) : (
               <Link href="/login">
-                <h5 className="black text-shadow">Sign Up</h5>
+                <h5 className="black text-shadow mar-bottom-8">Sign Up</h5>
               </Link>
             )}
+            <Link href="/nutritionSearch">
+              <div className="mobile-icon box-shadow mar-bottom-8">
+                <FontAwesomeIcon icon={faSearch} className="icon-ssm red" />
+              </div>
+            </Link>
+            <Link href="/farmmap">
+              <div className="mobile-icon box-shadow mar-bottom-8">
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  className="icon-ssm red"
+                />
+              </div>
+            </Link>
+            <Link href="/forum">
+              <div className="mobile-icon box-shadow mar-bottom-8">
+                <FontAwesomeIcon icon={faComment} className="icon-ssm red" />
+              </div>
+            </Link>
           </div>
           <div
             onClick={() => setMobileActive(true)}
-            className="menu-bars cursor"
+            className="menu-bars cursor mar-bottom-8"
           >
             <FontAwesomeIcon icon={faBars} className="icon-sm red" />
           </div>

@@ -5,11 +5,21 @@ import COLORS from "../../data/colors";
 
 const Cont = styled.div`
   background: #fff;
+  position: relative;
   display: flex;
   position: relative;
   justify-content: space-between;
   padding: 4px 0px 4px 4px;
+  overflow: hidden;
   border-bottom: 1px solid ${(props) => props.colors.grey};
+  @keyframes opacity-anim {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.5;
+    }
+  }
   p {
     z-index: 1;
   }
@@ -34,21 +44,38 @@ const Cont = styled.div`
   .green-bg {
     position: absolute;
     height: 100%;
-    background-color: ${(props) => props.colors.lightGreen};
+    //background-color: ${(props) => props.colors.lightGreen};
     top: 0;
     opacity: 0.5;
   }
+  .background {
+    position: absolute;
+    background-color: ${(props) => props.color};
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    right: calc(100% - ${(props) => props.dv});
+    animation: opacity-anim 1s;
+    transition: right 0.25s ease;
+  }
 `;
 const NutrientLine = ({ name, units, dv }) => {
+  console.log(dv <= 100);
+
   return (
-    <Cont colors={COLORS}>
+    <Cont
+      colors={COLORS}
+      color={dv <= 100 ? COLORS.lightGreen : COLORS.lightRed}
+      dv={dv > 100 ? 100 + "%" : dv + "%"}
+    >
       <div
         className="green-bg"
         style={{
           width: dv <= 100 ? `${dv}%` : "100%",
-          backgroundColor: dv <= 100 ? COLORS.lightGreen : COLORS.lightRed,
+          /*backgroundColor: dv <= 100 ? COLORS.lightGreen : COLORS.lightRed,*/
         }}
       ></div>
+      <div className="background opacity-anim-spec"></div>
       <p>{name}</p>
       <div className="flex line-content">
         <p className="units"> {units}</p>
