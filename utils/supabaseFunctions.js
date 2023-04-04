@@ -996,7 +996,9 @@ export const fetchPostById = async (id) => {
   try {
     const { data, error } = await supabase
       .from("posts")
-      .select("*, state_id(name), country_id(name),user_id(username)")
+      .select(
+        "*, state_id(name), country_id(name),user_id(username), comments(*), upvotes(id), downvotes(id)"
+      )
       .eq("id", id)
       .maybeSingle();
 

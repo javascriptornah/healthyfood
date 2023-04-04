@@ -43,6 +43,7 @@ export async function getServerSideProps(params) {
 const Post = ({ post }) => {
   const router = useRouter();
   const backLink = router.query.backLink;
+  console.log("----");
   console.log(post);
   return (
     <Cont colors={COLORS}>
@@ -69,7 +70,9 @@ const Post = ({ post }) => {
           city={post.city_id?.name}
           date={post.created_at}
           views={434}
-          replies={34}
+          comments={post.comments.length}
+          upvotes={post.upvotes}
+          downvotes={post.downvotes}
         />
         <div className="ssm-spacer"></div>
         <ReplySection username={post?.user_id?.username} />

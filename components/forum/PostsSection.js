@@ -16,6 +16,7 @@ const PostsSection = ({ title, posts }) => {
       return (
         <PostLine
           key={index}
+          id={post.id}
           title={post.title}
           username={post.user_id.username}
           forum={`${post.country_id.name}, ${post.state_id?.name}, ${post.city_id?.name} `}

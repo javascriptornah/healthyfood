@@ -23,12 +23,12 @@ const Cont = styled.div`
   }
 `;
 
-const PostLine = ({ title, forum, username, date }) => {
+const PostLine = ({ title, forum, username, date, id }) => {
   date = new Date(date);
   let hoursMin = date.getHours() + ":" + date.getMinutes();
 
   return (
-    <Link href={``}>
+    <Link href={`/post/${id}`}>
       <Cont colors={COLORS}>
         <div className="title">
           <p className="bold blue inline-block mar-right-4 text-spec">

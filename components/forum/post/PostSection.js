@@ -16,11 +16,15 @@ const PostSection = ({
   city,
   date,
   views,
-  replies,
+  comments,
+  upvotes,
+  downvotes,
 }) => {
+  date = new Date(date);
+  let hoursMin = date.getHours() + ":" + date.getMinutes();
   return (
     <Cont colors={COLORS} className="grey-border box-shadow-2">
-      <div className="flex align-center space-between mar-bottom-4">
+      <div className="flex align-center space-between">
         <div>
           <p className="inline-block mar-right-8 bold">{title}</p>
           <p className="inline-block">
@@ -29,6 +33,9 @@ const PostSection = ({
         </div>
         <FontAwesomeIcon icon={faBookmark} className=" cursor grey" />
       </div>
+      <p className="small mar-bottom-4">
+        {new Date(date).toLocaleDateString() + " - " + hoursMin}
+      </p>
       <div className="grey-line "></div>
       <ReactMarkdown className="padding-16">{content}</ReactMarkdown>
       <div className="flex-inline align-center">
@@ -39,7 +46,7 @@ const PostSection = ({
           icon={faComment}
           className="black mar-right-8 icon-ssm"
         />
-        <p className="black bold">{replies}</p>
+        <p className="black bold">{comments}</p>
       </div>
     </Cont>
   );
