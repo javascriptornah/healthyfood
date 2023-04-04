@@ -22,6 +22,7 @@ const PostSection = ({
 }) => {
   date = new Date(date);
   let hoursMin = date.getHours() + ":" + date.getMinutes();
+  let dateString = new Date(date).toLocaleDateString();
   return (
     <Cont colors={COLORS} className="grey-border box-shadow-2">
       <div className="flex align-center space-between">
@@ -33,9 +34,7 @@ const PostSection = ({
         </div>
         <FontAwesomeIcon icon={faBookmark} className=" cursor grey" />
       </div>
-      <p className="small mar-bottom-4">
-        {new Date(date).toLocaleDateString() + " - " + hoursMin}
-      </p>
+      <p className="small mar-bottom-4">{dateString + " - "}</p>
       <div className="grey-line "></div>
       <ReactMarkdown className="padding-16">{content}</ReactMarkdown>
       <div className="flex-inline align-center">

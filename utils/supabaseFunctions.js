@@ -997,7 +997,7 @@ export const fetchPostById = async (id) => {
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "*, state_id(name), country_id(name),user_id(username), comments(*), upvotes(id), downvotes(id)"
+        "*, state_id(name), country_id(name),user_id(*), comments(*, upvotes(id), downvotes(id), users(*)), upvotes(id), downvotes(id)"
       )
       .eq("id", id)
       .maybeSingle();
@@ -1191,6 +1191,20 @@ export const fetchPosts = async () => {
       .select(
         "*, user_id(username), city_id(name), state_id(name), country_id(name)"
       );
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const createPostComment = async (content, user_id, post_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .insert({ content, user_id, post_id })
+      .select("*, users(*), upvotes(id), downvotes(id)")
+      .maybeSingle();
     if (error) throw error;
     return data;
   } catch (error) {

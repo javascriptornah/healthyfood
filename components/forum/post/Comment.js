@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../../data/colors";
@@ -28,7 +29,7 @@ const Cont = styled.div`
   }
 `;
 
-const Comment = ({ username, content, upvotes, downvotes, replies }) => {
+const Comment = ({ username, content, upvotes, downvotes, replies, user }) => {
   let replyElems = [];
   let [repliesRender, setRepliesRender] = useState(
     replies.length > 3 ? 3 : replies.length
@@ -61,12 +62,20 @@ const Comment = ({ username, content, upvotes, downvotes, replies }) => {
       </Cont>
     );
   }
-
+  console.log("123123123");
+  console.log(user);
   return (
     <Cont colors={COLORS}>
       <div className="flex flex-column align-center avatar mar-right-32 x">
-        <p className="green bold mar-bottom-8">{username}</p>
-        <div className="grey-circle"></div>
+        <Image
+          className="mar-bottom-8"
+          src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${user.avatar_url}`}
+          style={{ objectFit: "cover" }}
+          quality="100"
+          width={40}
+          height={40}
+        />
+        <p className="green bold ">{user.username}</p>
       </div>
       <div>
         <ReactMarkdown className="markdown">{content}</ReactMarkdown>

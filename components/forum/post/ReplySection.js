@@ -4,16 +4,24 @@ import Editor from "../../Editor";
 import COLORS from "../../../data/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+
 const Cont = styled.div`
   .blue-btn-one {
     @media only screen and (max-width: 400px) {
       width: 100%;
     }
   }
+  .mde__textarea {
+    background-color: ${(props) => props.colors.lightGrey3};
+    &:focus {
+      background-color: #fff;
+    }
+  }
 `;
 
-const ReplySection = ({ username }) => {
+const ReplySection = ({ username, createPostCommentFunctional }) => {
   const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
   return (
     <Cont colors={COLORS}>
       <p>
@@ -22,10 +30,22 @@ const ReplySection = ({ username }) => {
 
       <Editor section={text} updateSection={setText} />
       <div className="mar-bottom-16"></div>
-      <div className="blue-btn-one flex-inline justify-center align-center">
-        <h5 className="mar-right-8">Comment</h5>
-        <FontAwesomeIcon icon={faPaperPlane} className="white" />
-      </div>
+      {loading ? (
+        <div class="lds-ring-green">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      ) : (
+        <div
+          onClick={() => createPostCommentFunctional(text, setLoading)}
+          className="blue-btn-one flex-inline justify-center align-center"
+        >
+          <h5 className="mar-right-8">Comment</h5>
+          <FontAwesomeIcon icon={faPaperPlane} className="white" />
+        </div>
+      )}
     </Cont>
   );
 };

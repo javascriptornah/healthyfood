@@ -15,7 +15,8 @@ const CommentSection = ({ comments }) => {
         content={comment.content}
         upvotes={comment.upvotes}
         downvotes={comment.downvotes}
-        replies={comment.replies}
+        replies={[]}
+        user={comment.users}
       />
     );
   });

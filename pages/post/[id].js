@@ -1,16 +1,20 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowTurnDown } from "@fortawesome/free-solid-svg-icons";
 import COLORS from "../../data/colors";
-import { fetchPostById } from "../../utils/supabaseFunctions";
+import {
+  fetchPostById,
+  createPostComment,
+} from "../../utils/supabaseFunctions";
 import Header from "../../components/forum/Header";
 import PostSection from "../../components/forum/post/PostSection";
 import ReplySection from "../../components/forum/post/ReplySection";
 import CommentSection from "../../components/forum/post/CommentSection";
-import comments from "../../data/comments.json";
+import supabase from "../../utils/supabaseClient";
+import toast, { Toaster } from "react-hot-toast";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   padding-top: 40px;
@@ -32,21 +36,56 @@ const Cont = styled.div`
 `;
 
 export async function getServerSideProps(params) {
-  const post = await fetchPostById(params.query.id);
+  const postFetch = await fetchPostById(params.query.id);
   return {
     props: {
-      post,
+      postFetch,
     },
   };
 }
 
-const Post = ({ post }) => {
+const Post = ({ postFetch }) => {
+  const [post, setPost] = useState(postFetch);
+  const [user, setUser] = useState(null);
+  const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
   const backLink = router.query.backLink;
   console.log("----");
-  console.log(post);
+  console.log(postFetch);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: session } = await supabase.auth.getSession();
+      if (session.session != null) {
+        setUser(session.session.user);
+        setIsLogged(true);
+      } else {
+        setIsLogged(false);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  console.log("user--");
+  console.log(user);
+  const createPostCommentFunctional = async (content, setLoading) => {
+    setLoading(true);
+    const comment = await createPostComment(content, user.id, post.id);
+    console.log(comment);
+    setLoading(false);
+    toast.success("Comment posted!");
+
+    setPost((post) => {
+      return {
+        ...post,
+        comments: [comment, ...post.comments],
+      };
+    });
+    return true;
+  };
   return (
     <Cont colors={COLORS}>
+      <Toaster />
       <div className="content-holder box-shadow-2 forum-page">
         <Header />
         <div className="flex justify-end mar-bottom-16">
@@ -75,9 +114,12 @@ const Post = ({ post }) => {
           downvotes={post.downvotes}
         />
         <div className="ssm-spacer"></div>
-        <ReplySection username={post?.user_id?.username} />
+        <ReplySection
+          username={user?.user_metadata.username}
+          createPostCommentFunctional={createPostCommentFunctional}
+        />
         <div className="ssm-spacer"></div>
-        <CommentSection comments={comments} />
+        <CommentSection comments={post.comments} />
       </div>
     </Cont>
   );
