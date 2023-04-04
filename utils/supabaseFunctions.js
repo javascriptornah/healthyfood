@@ -1211,3 +1211,59 @@ export const createPostComment = async (content, user_id, post_id) => {
     return error;
   }
 };
+
+export const createCommentUpvote = async (comment_id, user_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("upvotes")
+      .insert({ comment_id, user_id });
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteCommentUpvote = async (comment_id, user_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("upvotes")
+      .delete()
+      .eq("comment_id", comment_id)
+      .eq("user_id", user_id);
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const createCommentDownVote = async (comment_id, user_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("downvotes")
+      .insert({ comment_id, user_id });
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteCommentDownvote = async (comment_id, user_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("downvotes")
+      .delete()
+      .eq("comment_id", comment_id)
+      .eq("user_id", user_id);
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
