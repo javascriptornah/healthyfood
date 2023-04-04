@@ -4,6 +4,7 @@ import styled from "styled-components";
 import COLORS from "../../../data/colors";
 import ReactMarkdown from "react-markdown";
 import Upvotes from "./Upvotes";
+
 const Cont = styled.div`
   padding: 8px 12px;
   border-bottom: 1px solid ${(props) => props.colors.ultraLightGrey};
@@ -62,8 +63,7 @@ const Comment = ({ username, content, upvotes, downvotes, replies, user }) => {
       </Cont>
     );
   }
-  console.log("123123123");
-  console.log(user);
+
   return (
     <Cont colors={COLORS}>
       <div className="flex flex-column align-center avatar mar-right-32 x">

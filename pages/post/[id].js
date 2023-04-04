@@ -50,8 +50,6 @@ const Post = ({ postFetch }) => {
   const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
   const backLink = router.query.backLink;
-  console.log("----");
-  console.log(postFetch);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -66,8 +64,6 @@ const Post = ({ postFetch }) => {
     fetchUser();
   }, []);
 
-  console.log("user--");
-  console.log(user);
   const createPostCommentFunctional = async (content, setLoading) => {
     setLoading(true);
     const comment = await createPostComment(content, user.id, post.id);
