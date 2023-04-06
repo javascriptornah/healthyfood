@@ -24,9 +24,10 @@ const Cont = styled.div`
 `;
 
 const PostLine = ({ title, forum, username, date, id }) => {
-  date = new Date(date);
   let hoursMin = date.getUTCHours() + ":" + date.getUTCMinutes();
-
+  const [dateString, setDateString] = useState(
+    new Date(date).toLocaleDateString("en-US")
+  );
   return (
     <Link href={`/post/${id}`}>
       <Cont colors={COLORS}>
@@ -39,9 +40,7 @@ const PostLine = ({ title, forum, username, date, id }) => {
           </p>
         </div>
         <p className="mar-right-8">{forum}</p>
-        <p className="small">
-          {new Date(date).toLocaleDateString("en-US") + " - " + hoursMin}
-        </p>
+        <p className="small">{dateString + " - " + hoursMin}</p>
       </Cont>
     </Link>
   );
