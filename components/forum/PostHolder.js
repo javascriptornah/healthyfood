@@ -20,11 +20,11 @@ const PostsSection = ({ title, posts }) => {
         <FullPostLine
           key={index}
           title={post.title}
-          username={post.username}
-          forum={post.forum}
-          date={post.date}
-          replies={post.replies}
-          views={post.views}
+          username={post.user_id.username}
+          forum={"forum"}
+          date={post.created_at}
+          replies={post.comments[0].count}
+          views={200}
           lastComment={post.lastComment}
           region="province"
           province={title}

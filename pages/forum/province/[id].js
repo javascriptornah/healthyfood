@@ -4,7 +4,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../../data/colors";
 import Header from "../../../components/forum/Header";
-import { fetchForumProvinceByName } from "../../../utils/supabaseFunctions";
+import {
+  fetchForumProvincePostsById,
+  fetchForumProvinceIdByName,
+} from "../../../utils/supabaseFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowTurnDown } from "@fortawesome/free-solid-svg-icons";
 import ProvinceHolder from "../../../components/forum/province/ProvinceHolder";
@@ -30,66 +33,20 @@ const Cont = styled.div`
 `;
 
 export async function getServerSideProps(params) {
-  const fetchProvince = await fetchForumProvinceByName(params.query.id);
+  const { id } = await fetchForumProvinceIdByName(params.query.id);
+  const fetchPosts = await fetchForumProvincePostsById(id);
   return {
     props: {
-      fetchProvince,
+      fetchPosts,
     },
   };
 }
 
-const Province = ({ fetchProvince }) => {
+const Province = ({ fetchPosts }) => {
   const nothing = "deleteme";
-  const posts = [
-    {
-      title: "Why does raw meat make me feel so good?",
-      username: "rawfatgod",
-      replies: 42,
-      views: 2323,
-      date: new Date(),
-      forum: "Ottawa",
-      lastComment: { date: new Date(), username: "admin1" },
-    },
-    {
-      title: "Why does raw meat make me feel so good?",
-      username: "rawfatgod",
-      replies: 42,
-      views: 2323,
-      date: new Date(),
-      forum: "Ottawa",
-      lastComment: { date: new Date(), username: "admin1" },
-    },
-    {
-      title: "Why does raw meat make me feel so good?",
-      username: "rawfatgod",
-      replies: 42,
-      views: 2323,
-      date: new Date(),
-      forum: "Ottawa",
-      lastComment: { date: new Date(), username: "admin1" },
-    },
-    {
-      title: "Why does raw meat make me feel so good?",
-      username: "rawfatgod",
-      replies: 42,
-      views: 2323,
-      date: new Date(),
-      forum: "Ottawa",
-      lastComment: { date: new Date(), username: "admin1" },
-    },
-    {
-      title: "Why does raw meat make me feel so good?",
-      username: "rawfatgod",
-      replies: 42,
-      views: 2323,
-      date: new Date(),
-      forum: "Ottawa",
-      lastComment: { date: new Date(), username: "admin1" },
-    },
-  ];
-
   const router = useRouter();
   const backLink = router.query.backLink;
+  const [name, setName] = useState(router.query.id);
 
   return (
     <Cont colors={COLORS}>
@@ -107,7 +64,7 @@ const Province = ({ fetchProvince }) => {
             </div>
           </Link>
         </div>
-        <ProvinceHolder province={fetchProvince.name} posts={posts} />
+        <ProvinceHolder province={name} posts={fetchPosts} />
       </div>
     </Cont>
   );

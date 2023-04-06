@@ -14,7 +14,7 @@ const Cont = styled.div`
     }
   }
 `;
-const CountryHolder = ({ province, posts }) => {
+const ProvinceHolder = ({ province, posts }) => {
   return (
     <Cont colors={COLORS}>
       <PostHolder posts={posts} title={province} />
@@ -22,4 +22,4 @@ const CountryHolder = ({ province, posts }) => {
   );
 };
 
-export default CountryHolder;
+export default ProvinceHolder;
