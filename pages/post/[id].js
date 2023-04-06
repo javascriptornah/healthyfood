@@ -8,6 +8,7 @@ import COLORS from "../../data/colors";
 import {
   fetchPostById,
   createPostComment,
+  deleteComment,
 } from "../../utils/supabaseFunctions";
 import Header from "../../components/forum/Header";
 import PostSection from "../../components/forum/post/PostSection";
@@ -50,9 +51,10 @@ const Post = ({ postFetch }) => {
   const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
   const backLink = router.query.backLink;
+  const [comments, setComments] = useState([...postFetch.comments].reverse());
+  console.log("comments");
+  console.log([...postFetch.comments].reverse());
 
-  console.log("post");
-  console.log(post);
   useEffect(() => {
     const fetchUser = async () => {
       const { data: session } = await supabase.auth.getSession();
@@ -73,14 +75,26 @@ const Post = ({ postFetch }) => {
     setLoading(false);
     toast.success("Comment posted!");
 
-    setPost((post) => {
-      return {
-        ...post,
-        comments: [comment, ...post.comments],
-      };
+    setComments((comments) => {
+      return [comment, ...comments];
     });
     return true;
   };
+
+  const deleteCommentFunctional = async (id, setLoading) => {
+    setLoading(true);
+    const res = await deleteComment(id);
+    if (res) {
+      toast.success("Comment deleted");
+      setComments((comments) => {
+        return comments.filter((comment) => comment.id !== id);
+      });
+    } else {
+      toast.error("Error deleting comment");
+    }
+    setLoading(false);
+  };
+
   return (
     <Cont colors={COLORS}>
       <Toaster />
@@ -117,7 +131,11 @@ const Post = ({ postFetch }) => {
           createPostCommentFunctional={createPostCommentFunctional}
         />
         <div className="ssm-spacer"></div>
-        <CommentSection comments={post.comments} post_id={post.id} />
+        <CommentSection
+          comments={comments}
+          post_id={post.id}
+          deleteCommentFunctional={deleteCommentFunctional}
+        />
       </div>
     </Cont>
   );
