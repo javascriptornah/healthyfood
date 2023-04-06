@@ -896,7 +896,7 @@ export const fetchForumCountryByName = async (name) => {
   try {
     const { data, error } = await supabase
       .from("forumCountries")
-      .select("*, forumStates(*)")
+      .select("*, forumStates(*, posts(count))")
       .eq("name", name)
       .maybeSingle();
 
@@ -1286,7 +1286,7 @@ export const deleteCommentDownvote = async (comment_id, user_id) => {
     return error;
   }
 };
-("*, state_id(name), country_id(name),user_id(*), comments(*, upvotes(id), downvotes(id), users(*), comments(*,  upvotes(id), downvotes(id), users(*))), upvotes(id), downvotes(id)");
+
 export const fetchPostsByCountryName = async (name) => {
   try {
     const { data, error } = await supabase
@@ -1296,6 +1296,22 @@ export const fetchPostsByCountryName = async (name) => {
       )
       .eq("name", name)
       .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const fetchStateLastPostByName = async (state_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("title, users(username), created_at, city_id(name)")
+      .eq("state_id", state_id)
+      .limit(1)
+      .order("id", { ascending: false });
 
     if (error) throw error;
     return data;

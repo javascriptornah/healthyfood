@@ -28,14 +28,17 @@ const ForumContent = ({ country, provinces }) => {
     category: "California",
     date: new Date(),
   });
-  console.log(country);
+  console.log("provinces");
+  console.log(provinces);
+
   const provinceLines = provinces.map((province, index) => {
     return (
       <Mainline
         key={index}
+        state_id={province.id}
         title={province.name}
         link="province"
-        postsX={24}
+        postsX={province.posts[0].count}
         lastPostDetails={postObj}
         subTitles={null}
         backLink={country}

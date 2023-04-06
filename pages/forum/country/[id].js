@@ -43,8 +43,8 @@ export async function getServerSideProps(params) {
 }
 
 const Country = ({ fetchCountry, fetchCountryPosts }) => {
-  console.log("fetch posts");
-  console.log(fetchCountryPosts);
+  console.log("fetch country");
+  console.log(fetchCountry);
   useEffect(() => {}, []);
   return (
     <Cont colors={COLORS}>

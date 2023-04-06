@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTurnUp } from "@fortawesome/free-solid-svg-icons";
+import { fetchStateLastPostByName } from "../../utils/supabaseFunctions";
 const Cont = styled.div`
   border-bottom: 1px solid ${(props) => props.colors.grey};
   border-right: 1px solid ${(props) => props.colors.grey};
@@ -33,14 +34,36 @@ const Cont = styled.div`
     width: 33%;
   }
 `;
-const ForumContent = ({
+
+const MainLine = ({
   title,
   subTitles,
   postsX,
   lastPostDetails,
   link,
   backLink,
+  state_id,
 }) => {
+  const [lastPost, setLastPost] = useState({
+    title: "",
+    created_at: "",
+    username: "",
+    city: "",
+  });
+  useEffect(() => {
+    const getLastPost = async () => {
+      const res = await fetchStateLastPostByName(state_id);
+      setLastPost((prev) => {
+        return {
+          title: res[0]?.title,
+          created_at: res[0]?.created_at,
+          username: res[0]?.users.username,
+          city: res[0]?.city_id.name,
+        };
+      });
+    };
+    getLastPost();
+  }, []);
   return (
     <Link
       href={{
@@ -87,4 +110,4 @@ const ForumContent = ({
   );
 };
 
-export default ForumContent;
+export default MainLine;

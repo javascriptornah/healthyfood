@@ -28,7 +28,9 @@ const PostsSection = ({ title, posts }) => {
           id={post.id}
           title={post.title}
           username={post.users.username}
-          forum={`${post.country_id.name}, ${post.state_id?.name}, ${post.city_id?.name} `}
+          forum={`${post.country_id.name}, ${
+            post.state_id?.name ? post.state_id?.name + "," : ""
+          } ${post.city_id?.name || ""} `}
           date={post.created_at}
         />
       );

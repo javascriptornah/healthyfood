@@ -24,7 +24,9 @@ const Cont = styled.div`
 `;
 
 const PostLine = ({ title, forum, username, date, id }) => {
-  let hoursMin = date.getUTCHours() + ":" + date.getUTCMinutes();
+  let date2 = new Date(date);
+  let hoursMin = date2.getUTCHours() + ":" + date2.getUTCMinutes();
+
   const [dateString, setDateString] = useState(
     new Date(date).toLocaleDateString("en-US")
   );
@@ -40,7 +42,7 @@ const PostLine = ({ title, forum, username, date, id }) => {
           </p>
         </div>
         <p className="mar-right-8">{forum}</p>
-        <p className="small">{dateString + " - " + hoursMin}</p>
+        <p className="small">{hoursMin} -</p>
       </Cont>
     </Link>
   );
