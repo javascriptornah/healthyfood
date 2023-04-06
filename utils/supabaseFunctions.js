@@ -1256,7 +1256,8 @@ export const createCommentUpvote = async (comment_id, user_id) => {
   try {
     const { data, error } = await supabase
       .from("upvotes")
-      .insert({ comment_id, user_id });
+      .insert({ comment_id, user_id })
+      .select();
 
     if (error) throw error;
     return data;

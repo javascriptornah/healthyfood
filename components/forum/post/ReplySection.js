@@ -40,7 +40,9 @@ const ReplySection = ({ username, createPostCommentFunctional }) => {
       ) : (
         <div className="flex flex-end">
           <div
-            onClick={() => createPostCommentFunctional(text, setLoading)}
+            onClick={() =>
+              createPostCommentFunctional(text, setLoading, setText)
+            }
             className="blue-btn-one flex-inline justify-center align-center"
           >
             <h5 className="mar-right-8">Comment</h5>

@@ -68,13 +68,13 @@ const Post = ({ postFetch }) => {
     fetchUser();
   }, []);
 
-  const createPostCommentFunctional = async (content, setLoading) => {
+  const createPostCommentFunctional = async (content, setLoading, setText) => {
     setLoading(true);
     const comment = await createPostComment(content, user.id, post.id);
     console.log(comment);
     setLoading(false);
     toast.success("Comment posted!");
-
+    setText("");
     setComments((comments) => {
       return [comment, ...comments];
     });

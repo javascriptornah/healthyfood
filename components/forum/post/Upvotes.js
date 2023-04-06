@@ -55,7 +55,7 @@ const Upvotes = ({
     const fetchUser = async () => {
       const { data: session } = await supabase.auth.getSession();
       if (session.session != null) {
-        setUser(session.session.user.id);
+        setUser(session.session.user);
         setIsLogged(true);
       } else {
         setIsLogged(false);
@@ -78,8 +78,11 @@ const Upvotes = ({
       return;
     }
 
-    const res = await createCommentUpvote(comment_id, user.id);
+    //const res = await createCommentUpvote(comment_id, user.id);
+
     if (upvoteState.upvote == true) {
+      let res = await deleteCommentUpvote(comment_id, user.id);
+      console.log(res);
       setUpvoteState((prev) => {
         return {
           ...prev,
@@ -88,6 +91,9 @@ const Upvotes = ({
       });
       setUpvoteCount((prev) => prev - 1);
     } else if (upvoteState.downvote == true) {
+      let res = await deleteCommentDownvote(comment_id, user.id);
+      let res2 = await createCommentUpvote(comment_id, user.id);
+      console.log(res);
       setUpvoteState((prev) => {
         return {
           upvote: true,
@@ -96,6 +102,8 @@ const Upvotes = ({
       });
       setUpvoteCount((prev) => prev + 2);
     } else if (upvoteState.upvote == false) {
+      let res = await deleteCommentDownvote(comment_id, user.id);
+      console.log(res);
       setUpvoteState((prev) => {
         return {
           upvote: true,
@@ -113,6 +121,8 @@ const Upvotes = ({
     }
 
     if (upvoteState.downvote == true) {
+      let res = await deleteCommentDownvote(comment_id, user.id);
+      console.log(res);
       setUpvoteState((prev) => {
         return {
           ...prev,
@@ -121,6 +131,9 @@ const Upvotes = ({
       });
       setUpvoteCount((prev) => prev + 1);
     } else if (upvoteState.upvote == true) {
+      let res = await deleteCommentUpvote(comment_id, user.id);
+      let res2 = await createCommentDownvote(comment_id, user.id);
+      console.log(res);
       setUpvoteState((prev) => {
         return {
           upvote: false,
@@ -129,6 +142,8 @@ const Upvotes = ({
       });
       setUpvoteCount((prev) => prev - 2);
     } else if (upvoteState.downvote == false) {
+      let res = await createCommentDownvote(comment_id, user.id);
+      console.log(res);
       setUpvoteState((prev) => {
         return {
           upvote: false,

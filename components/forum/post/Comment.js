@@ -153,7 +153,7 @@ const Comment = ({
             upvotes={replies[i].upvotes}
             downvotes={replies[i].downvotes}
             user={user}
-            comment_id={comment_id}
+            comment_id={"???????????????"}
           />
           <p className="bold contrast inline-block underline-hover cursor reply">
             reply
@@ -213,7 +213,11 @@ const Comment = ({
         <ReactMarkdown className="markdown">{content}</ReactMarkdown>
       </div>
       <div className="flex">
-        <Upvotes upvotes={upvotes} downvotes={downvotes} />
+        <Upvotes
+          upvotes={upvotes}
+          downvotes={downvotes}
+          comment_id={comment_id}
+        />
         {replying ? (
           <p
             onClick={() => setReplying(false)}
@@ -233,19 +237,20 @@ const Comment = ({
           <DeletePopup
             text="comment"
             deleteFunction={() =>
-              deleteCommentFunctional(comment_id, setLoading)
+              deleteCommentFunctional(comment_id, setLoading, hidePopup)
             }
             cancelFunction={() => setDeleting(false)}
             hidePopup={hidePopup}
           />
         )}
-
-        <p
-          onClick={() => setDeleting(true)}
-          className="bold inline-block contrast underline-hover cursor delete"
-        >
-          delete
-        </p>
+        {isUser && (
+          <p
+            onClick={() => setDeleting(true)}
+            className="bold inline-block contrast underline-hover cursor delete"
+          >
+            delete
+          </p>
+        )}
       </div>
       {replying && (
         <div className="reply-section mar-top-16 box-shadow opacity-anim">
