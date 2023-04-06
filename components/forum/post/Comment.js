@@ -12,10 +12,14 @@ import {
   faArrowTurnDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { createPostCommentReply } from "../../../utils/supabaseFunctions";
+import { fetchDaysDiff } from "../../../utils/functions";
+import DeletePopup from "../../popups/DeletePopup";
 const Cont = styled.div`
+  position: relative;
   padding: 8px 12px;
   border-bottom: 1px solid ${(props) => props.colors.ultraLightGrey};
   overflow: auto;
+
   .grey-circle {
     width: 40px;
     height: 40px;
@@ -50,6 +54,16 @@ const Cont = styled.div`
     height: 50%;
     overflow: hidden;
   }
+  .delete {
+    &:active {
+      color: ${(props) => props.colors.black};
+    }
+  }
+  .lds-ring-green {
+    position: absolute !important;
+    left: calc(50% - 32px);
+    top: calc(50% - 32px);
+  }
 `;
 
 const Comment = ({
@@ -60,6 +74,8 @@ const Comment = ({
   comment_user,
   comment_id,
   post_id,
+  created_at,
+  deleteCommentFunctional,
 }) => {
   const [user, setUser] = useState(null);
   const [isUser, setIsUser] = useState(null);
@@ -67,7 +83,8 @@ const Comment = ({
   const [replyText, setReplyText] = useState("");
   const [replyLoading, setReplyLoading] = useState(false);
   const [replying, setReplying] = useState(false);
-
+  const [deleting, setDeleting] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
       const { data: session } = await supabase.auth.getSession();
@@ -89,8 +106,7 @@ const Comment = ({
   let [repliesRender, setRepliesRender] = useState(
     replies.length > 3 ? 3 : replies.length
   );
-  console.log("replies");
-  console.log(replies);
+
   for (let i = 0; i < repliesRender; i++) {
     replyElems.push(
       <Cont colors={COLORS} className="comment-reply">
@@ -144,8 +160,6 @@ const Comment = ({
     );
   }
 
-  console.log("-------");
-  console.log(replyElems);
   const createPostCommentReplyFunctional = async () => {
     if (replyText == "") {
       toast.error("Comment can't be empty");
@@ -165,6 +179,15 @@ const Comment = ({
 
   return (
     <Cont colors={COLORS}>
+      {loading && (
+        <div class="lds-ring-green">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      )}
+
       <div className="flex flex-column align-center avatar mar-right-32 float-left">
         <Image
           className="mar-bottom-8"
@@ -182,6 +205,7 @@ const Comment = ({
           {comment_user.username}
         </p>
       </div>
+      <p className="small contrast">{fetchDaysDiff(new Date(created_at))}</p>
       <div>
         <ReactMarkdown className="markdown">{content}</ReactMarkdown>
       </div>
@@ -190,18 +214,34 @@ const Comment = ({
         {replying ? (
           <p
             onClick={() => setReplying(false)}
-            className="bold  inline-block underline-hover cursor reply"
+            className="bold mar-right-16  inline-block underline-hover cursor reply"
           >
             cancel reply
           </p>
         ) : (
           <p
             onClick={() => setReplying(true)}
-            className="bold contrast inline-block underline-hover cursor reply"
+            className="mar-right-16 bold contrast inline-block underline-hover cursor reply"
           >
             reply
           </p>
         )}
+        {deleting && (
+          <DeletePopup
+            text="comment"
+            deleteFunction={() =>
+              deleteCommentFunctional(comment_id, setLoading)
+            }
+            cancelFunction={() => setDeleting(false)}
+          />
+        )}
+
+        <p
+          onClick={() => setDeleting(true)}
+          className="bold inline-block contrast underline-hover cursor delete"
+        >
+          delete
+        </p>
       </div>
       {replying && (
         <div className="reply-section mar-top-16 box-shadow opacity-anim">

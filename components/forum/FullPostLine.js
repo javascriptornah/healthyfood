@@ -45,7 +45,7 @@ const FullPostLine = ({
   replies,
   views,
   lastComment,
-  id = 2,
+  id,
   province,
   region,
 }) => {

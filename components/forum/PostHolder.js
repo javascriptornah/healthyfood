@@ -18,10 +18,11 @@ const PostsSection = ({ title, posts }) => {
     posts.map((post, index) => {
       return (
         <FullPostLine
+          id={post.id}
           key={index}
           title={post.title}
           username={post.user_id.username}
-          forum={"forum"}
+          forum={post.city_id?.name}
           date={post.created_at}
           replies={post.comments[0].count}
           views={200}

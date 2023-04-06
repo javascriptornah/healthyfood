@@ -6,7 +6,7 @@ const Cont = styled.div`
   padding: 0;
 `;
 
-const CommentSection = ({ comments, post_id }) => {
+const CommentSection = ({ comments, post_id, deleteCommentFunctional }) => {
   const commentElems = comments.map((comment, index) => {
     console.log(comment);
     return (
@@ -20,6 +20,8 @@ const CommentSection = ({ comments, post_id }) => {
         replies={comment.comments}
         comment_user={comment.users}
         post_id={post_id}
+        created_at={comment.created_at}
+        deleteCommentFunctional={deleteCommentFunctional}
       />
     );
   });

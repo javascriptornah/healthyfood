@@ -949,7 +949,7 @@ export const fetchForumProvincePostsById = async (state_id) => {
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "created_at, title, city_id(name), user_id(username), upvotes(count), downvotes(count), comments(count)"
+        "id, created_at, title, city_id(name), user_id(username), upvotes(count), downvotes(count), comments(count)"
       )
       .eq("state_id", state_id)
       .order("id", { ascending: false });
@@ -1005,7 +1005,7 @@ export const fetchForumCityByName = async (name, state_id) => {
     return data[0].id;
   } catch (error) {
     console.log(error.message);
-    return "fagot fuck";
+    return false;
   }
 };
 
@@ -1220,7 +1220,9 @@ export const createPostComment = async (content, user_id, post_id) => {
     const { data, error } = await supabase
       .from("comments")
       .insert({ content, user_id, post_id })
-      .select("*, users(*), upvotes(id), downvotes(id)")
+      .select(
+        "*, users(*), upvotes(id), downvotes(id), comments(*,  upvotes(id), downvotes(id), users(*))"
+      )
       .maybeSingle();
     if (error) throw error;
     return data;
@@ -1239,7 +1241,9 @@ export const createPostCommentReply = async (
     const { data, error } = await supabase
       .from("comments")
       .insert({ content, user_id, post_id, comment_id })
-      .select("*, users(*), upvotes(id), downvotes(id)")
+      .select(
+        "*, users(*), upvotes(id), downvotes(id), comments(*,  upvotes(id), downvotes(id), users(*))"
+      )
       .maybeSingle();
     if (error) throw error;
     return { state: true, data };
@@ -1256,6 +1260,20 @@ export const createCommentUpvote = async (comment_id, user_id) => {
 
     if (error) throw error;
     return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteComment = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+    return true;
   } catch (error) {
     return error;
   }

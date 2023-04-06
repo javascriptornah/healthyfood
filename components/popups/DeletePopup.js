@@ -65,7 +65,7 @@ const Cont = styled.div`
 `;
 const DeletePopup = ({ text, deleteFunction, cancelFunction }) => {
   return (
-    <Cont colors={COLORS} className="rounded-shadow">
+    <Cont colors={COLORS} className="rounded-shadow opacity-anim">
       <h4 className="red ssm-spacer text-shadow-red">
         Are you sure you want to delete this {text}?
         <p className="small">It can't be undone</p>
