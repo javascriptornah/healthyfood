@@ -929,13 +929,30 @@ export const fetchForumCountryByNameAndInsert = async (name) => {
     console.log(error.message);
   }
 };
-export const fetchForumProvinceByName = async (name) => {
+export const fetchForumProvinceIdByName = async (name) => {
   try {
     const { data, error } = await supabase
       .from("forumStates")
-      .select("*, forumCities(*)")
+      .select("id")
       .eq("name", name)
       .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+export const fetchForumProvincePostsById = async (state_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select(
+        "created_at, title, city_id(name), user_id(username), upvotes(count), downvotes(count), comments(count)"
+      )
+      .eq("state_id", state_id)
+      .order("id", { ascending: false });
 
     if (error) throw error;
     return data;

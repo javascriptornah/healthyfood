@@ -27,7 +27,7 @@ const PostsSection = ({ title, posts }) => {
           key={index}
           id={post.id}
           title={post.title}
-          username={post.users.username}
+          username={post.user_id.username}
           forum={`${post.country_id.name}, ${
             post.state_id?.name ? post.state_id?.name + "," : ""
           } ${post.city_id?.name || ""} `}

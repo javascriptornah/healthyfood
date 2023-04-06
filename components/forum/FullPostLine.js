@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import COLORS from "../../data/colors";
 import styled from "styled-components";
+import { fetchDaysDiff } from "../../utils/functions";
 const Cont = styled.div`
   display: flex;
   align-items: center;
@@ -73,14 +74,14 @@ const FullPostLine = ({
           <div className="flex  hide-400">
             <div className=" recent mar-right-4 mar-right-8">
               <p className="bold small">Last activity</p>
-              <p className="small">{lastComment.date.toDateString()}</p>
+              <p className="small">{/*lastComment.date.toDateString()*/}</p>
               <p className=" small">
-                by <span className="green">{lastComment.username} </span>
+                by <span className="green">{/*lastComment.username*/} </span>
               </p>
             </div>
           </div>
           <div className="flex align-center">
-            <p className="small">{date.toDateString()}</p>
+            <p className="small">{fetchDaysDiff(new Date(date))}</p>
           </div>
         </div>
       </Cont>

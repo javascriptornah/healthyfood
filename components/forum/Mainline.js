@@ -5,6 +5,7 @@ import COLORS from "../../data/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTurnUp } from "@fortawesome/free-solid-svg-icons";
 import { fetchStateLastPostByName } from "../../utils/supabaseFunctions";
+import {fetchDaysDiff} from '../../utils/functions';
 const Cont = styled.div`
   border-bottom: 1px solid ${(props) => props.colors.grey};
   border-right: 1px solid ${(props) => props.colors.grey};
@@ -64,6 +65,8 @@ const MainLine = ({
     };
     getLastPost();
   }, []);
+  console.log('??');
+  console.log(lastPost);
   return (
     <Link
       href={{
@@ -93,11 +96,11 @@ const MainLine = ({
             <p className="inline-block small">
               by{" "}
               <span className="green underline-hover">
-                {lastPostDetails.username}
+                {lastPost.username}
               </span>
             </p>
-            <p className="small">{lastPostDetails.category}</p>
-            <p className="small">{lastPostDetails.date.toDateString()}</p>
+            <p className="small">{lastPost.city}</p>
+            <p className="small">{lastPost.created_at !== undefined && fetchDaysDiff(lastPost.created_at)}</p>
           </div>
         </div>
         <FontAwesomeIcon

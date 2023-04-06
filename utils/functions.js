@@ -68,3 +68,27 @@ export const getRandomColor = () => {
   ];
   return colors[Math.round(Math.random() * colors.length)];
 };
+
+export const fetchDaysDiff = (dateProp) => {
+  const userDate = new Date(dateProp);
+  const nowDate = new Date();
+  const microSecondsDiff = nowDate.getTime() - userDate.getTime();
+  const daysDiff = Math.round(microSecondsDiff / (1000 * 60 * 60 * 24));
+  // if longer than an hour
+  if (Math.round(microSecondsDiff / (1000 * 60)) > 59) {
+    //if longer than a day
+    if (Math.round(microSecondsDiff / (1000 * 60 * 60)) > 24) {
+      return `${Math.round(microSecondsDiff / (1000 * 60 * 60 * 24))}d`;
+    } else {
+      // less than a day
+      return `${Math.round(microSecondsDiff / (1000 * 60 * 60))}h`;
+    }
+  } else {
+    // if less than a minute ago
+    if (Math.round(microSecondsDiff / 1000) < 59) {
+      return "JUST NOW";
+    }
+    // less than an hour
+    return `${Math.round(microSecondsDiff / (1000 * 60))}m`;
+  }
+};
