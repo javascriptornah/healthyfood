@@ -85,6 +85,9 @@ const Comment = ({
   const [replying, setReplying] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const hidePopup = () => {
+    setDeleting(false);
+  };
   useEffect(() => {
     const fetchUser = async () => {
       const { data: session } = await supabase.auth.getSession();
@@ -233,6 +236,7 @@ const Comment = ({
               deleteCommentFunctional(comment_id, setLoading)
             }
             cancelFunction={() => setDeleting(false)}
+            hidePopup={hidePopup}
           />
         )}
 

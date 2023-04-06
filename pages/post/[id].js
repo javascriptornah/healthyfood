@@ -81,7 +81,7 @@ const Post = ({ postFetch }) => {
     return true;
   };
 
-  const deleteCommentFunctional = async (id, setLoading) => {
+  const deleteCommentFunctional = async (id, setLoading, hidePopup) => {
     setLoading(true);
     const res = await deleteComment(id);
     if (res) {
@@ -92,6 +92,7 @@ const Post = ({ postFetch }) => {
     } else {
       toast.error("Error deleting comment");
     }
+    hidePopup();
     setLoading(false);
   };
 
