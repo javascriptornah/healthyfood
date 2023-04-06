@@ -17,6 +17,9 @@ const Cont = styled.div`
   .province-holder {
     max-height: 600px;
     overflow: auto;
+    @media only screen and (max-width: 600px) {
+      max-height: 50vh;
+    }
   }
 `;
 const ForumContent = ({ country, provinces }) => {
@@ -44,7 +47,7 @@ const ForumContent = ({ country, provinces }) => {
       <div className="title-spec">
         <h5 className="red text-shadow-red">{country}</h5>
       </div>
-      <div className="province-holder">{provinceLines}</div>
+      <div className="province-holder small-scrollbar">{provinceLines}</div>
     </Cont>
   );
 };

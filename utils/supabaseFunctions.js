@@ -1286,3 +1286,20 @@ export const deleteCommentDownvote = async (comment_id, user_id) => {
     return error;
   }
 };
+("*, state_id(name), country_id(name),user_id(*), comments(*, upvotes(id), downvotes(id), users(*), comments(*,  upvotes(id), downvotes(id), users(*))), upvotes(id), downvotes(id)");
+export const fetchPostsByCountryName = async (name) => {
+  try {
+    const { data, error } = await supabase
+      .from("forumCountries")
+      .select(
+        "name, posts(*, country_id(name), state_id(name), city_id(name), users(*), upvotes(id), downvotes(id), comments(*, upvotes(id), downvotes(id), users(*), comments(*,  upvotes(id), downvotes(id), users(*))))"
+      )
+      .eq("name", name)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};

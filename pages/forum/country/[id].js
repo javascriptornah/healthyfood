@@ -2,7 +2,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../../data/colors";
-import { fetchForumCountryByName } from "../../../utils/supabaseFunctions";
+import {
+  fetchForumCountryByName,
+  fetchPostsByCountryName,
+} from "../../../utils/supabaseFunctions";
 import CountryHolder from "../../../components/forum/country/CountryHolder";
 import Header from "../../../components/forum/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,22 +26,25 @@ const Cont = styled.div`
     @media only screen and (max-width: 600px) {
       width: 100%;
       border-radius: 0px;
-      padding: 0;
+      padding: 0 16px 0 0;
     }
   }
 `;
 
 export async function getServerSideProps(params) {
   const fetchCountry = await fetchForumCountryByName(params.query.id);
+  const fetchCountryPosts = await fetchPostsByCountryName(params.query.id);
   return {
     props: {
       fetchCountry,
+      fetchCountryPosts,
     },
   };
 }
 
-const Country = ({ fetchCountry }) => {
-  console.log(fetchCountry);
+const Country = ({ fetchCountry, fetchCountryPosts }) => {
+  console.log("fetch posts");
+  console.log(fetchCountryPosts);
   useEffect(() => {}, []);
   return (
     <Cont colors={COLORS}>
@@ -64,9 +70,11 @@ const Country = ({ fetchCountry }) => {
             </Link>
           </div>
         </div>
+
         <CountryHolder
           country={fetchCountry.name}
           provinces={fetchCountry.forumStates}
+          posts={fetchCountryPosts.posts}
         />
       </div>
     </Cont>

@@ -9,46 +9,7 @@ const Cont = styled.div`
     border-radius: 0px;
   }
 `;
-const CountryHolder = ({ country, provinces }) => {
-  const posts = [
-    {
-      title: "Where to find meat in germany",
-      forum: "Germany",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in canada",
-      forum: "Canada",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in canada",
-      forum: "Canada",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in germany",
-      forum: "Germany",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in germany",
-      forum: "Germany",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-    {
-      title: "Where to find meat in germany",
-      forum: "Germany",
-      poster: "rawfatgod",
-      date: new Date(),
-    },
-  ];
-
+const CountryHolder = ({ country, provinces, posts }) => {
   return (
     <Cont colors={COLORS}>
       <CountrySection country={country} provinces={provinces} />
