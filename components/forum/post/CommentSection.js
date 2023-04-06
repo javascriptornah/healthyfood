@@ -17,7 +17,7 @@ const CommentSection = ({ comments, post_id }) => {
         content={comment.content}
         upvotes={comment.upvotes}
         downvotes={comment.downvotes}
-        replies={[]}
+        replies={comment.comments}
         comment_user={comment.users}
         post_id={post_id}
       />

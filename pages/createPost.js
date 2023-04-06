@@ -85,9 +85,9 @@ const Cont = styled.div`
 const CreatePost = () => {
   const router = useRouter();
   const [file, setFile] = useState("");
-  const [country, setCountry] = useState("Canada");
-  const [state, setState] = useState("Ontario");
-  const [city, setCity] = useState("Ottawa");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);

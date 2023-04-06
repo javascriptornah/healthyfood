@@ -38,12 +38,14 @@ const ReplySection = ({ username, createPostCommentFunctional }) => {
           <div></div>
         </div>
       ) : (
-        <div
-          onClick={() => createPostCommentFunctional(text, setLoading)}
-          className="blue-btn-one flex-inline justify-center align-center"
-        >
-          <h5 className="mar-right-8">Comment</h5>
-          <FontAwesomeIcon icon={faPaperPlane} className="white" />
+        <div className="flex flex-end">
+          <div
+            onClick={() => createPostCommentFunctional(text, setLoading)}
+            className="blue-btn-one flex-inline justify-center align-center"
+          >
+            <h5 className="mar-right-8">Comment</h5>
+            <FontAwesomeIcon icon={faPaperPlane} className="white" />
+          </div>
         </div>
       )}
     </Cont>

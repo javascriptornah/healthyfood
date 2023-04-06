@@ -21,7 +21,7 @@ const PostSection = ({
   downvotes,
 }) => {
   let date2 = new Date(date);
-  let hoursMin = date2.getHours() + ":" + date2.getMinutes();
+  let hoursMin = date2.getUTCHours() + ":" + date2.getUTCMinutes();
   //let dateString = new Date(date).toLocaleDateString();
   const [dateString, setDateString] = useState(
     new Date(date).toLocaleDateString("en-US")

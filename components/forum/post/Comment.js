@@ -24,7 +24,7 @@ const Cont = styled.div`
   }
   .avatar {
   }
-  .x {
+  .float-left {
     float: left;
   }
   &:nth-of-type(2n) {
@@ -89,17 +89,41 @@ const Comment = ({
   let [repliesRender, setRepliesRender] = useState(
     replies.length > 3 ? 3 : replies.length
   );
+  console.log("replies");
+  console.log(replies);
   for (let i = 0; i < repliesRender; i++) {
     replyElems.push(
       <Cont colors={COLORS} className="comment-reply">
-        <div className="flex flex-column align-center avatar mar-right-32 x">
-          <p className="green bold mar-bottom-8">{replies[i].username}</p>
-          <div className="grey-circle"></div>
+        <div className="flex-inline float-left align-start">
+          <FontAwesomeIcon
+            icon={faArrowTurnDown}
+            style={{ transform: "rotate(180deg)" }}
+            className="black icon-med mar-right-16"
+          />
+
+          <div className="flex flex-column align-center avatar mar-right-32 ">
+            <Image
+              className="mar-bottom-8"
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${replies[i].users.avatar_url}`}
+              style={{
+                objectFit: "cover",
+                border: "2px solid #88c1ff",
+                borderRadius: "50%",
+              }}
+              quality="100"
+              width={40}
+              height={40}
+            />
+
+            <p className={isUser ? "light-blue-2 bold" : "green bold"}>
+              {replies[i].users.username}
+            </p>
+          </div>
         </div>
         <div>
           <p className="bold inline-block mar-right-4">Replying to: </p>
           <p className="green underline-hover inline-block bold cursor">
-            {username}{" "}
+            {comment_user.username}
           </p>
           <ReactMarkdown className="markdown">
             {replies[i].content}
@@ -120,6 +144,8 @@ const Comment = ({
     );
   }
 
+  console.log("-------");
+  console.log(replyElems);
   const createPostCommentReplyFunctional = async () => {
     if (replyText == "") {
       toast.error("Comment can't be empty");
@@ -139,7 +165,7 @@ const Comment = ({
 
   return (
     <Cont colors={COLORS}>
-      <div className="flex flex-column align-center avatar mar-right-32 x">
+      <div className="flex flex-column align-center avatar mar-right-32 float-left">
         <Image
           className="mar-bottom-8"
           src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${comment_user.avatar_url}`}
