@@ -51,6 +51,8 @@ const Post = ({ postFetch }) => {
   const router = useRouter();
   const backLink = router.query.backLink;
 
+  console.log("post");
+  console.log(post);
   useEffect(() => {
     const fetchUser = async () => {
       const { data: session } = await supabase.auth.getSession();
@@ -115,7 +117,7 @@ const Post = ({ postFetch }) => {
           createPostCommentFunctional={createPostCommentFunctional}
         />
         <div className="ssm-spacer"></div>
-        <CommentSection comments={post.comments} />
+        <CommentSection comments={post.comments} post_id={post.id} />
       </div>
     </Cont>
   );

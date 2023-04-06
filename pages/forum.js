@@ -24,6 +24,7 @@ const Cont = styled.div`
 
 export async function getServerSideProps() {
   const postsFetch = await fetchPosts();
+
   return {
     props: {
       postsFetch,
@@ -41,7 +42,7 @@ const Forum = ({ postsFetch }) => {
   );
 
   return (
-    <Cont colors={COLORS}>
+    <Cont colors={COLORS}>        
       <div className="content-holder box-shadow-2">
         <Header />
         <div className="mar-bottom-16">

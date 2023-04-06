@@ -6,17 +6,20 @@ const Cont = styled.div`
   padding: 0;
 `;
 
-const CommentSection = ({ comments }) => {
+const CommentSection = ({ comments, post_id }) => {
   const commentElems = comments.map((comment, index) => {
+    console.log(comment);
     return (
       <Comment
+        comment_id={comment.id}
         key={index}
         username={comment.username}
         content={comment.content}
         upvotes={comment.upvotes}
         downvotes={comment.downvotes}
         replies={[]}
-        user={comment.users}
+        comment_user={comment.users}
+        post_id={post_id}
       />
     );
   });

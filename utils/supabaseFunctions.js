@@ -1212,6 +1212,25 @@ export const createPostComment = async (content, user_id, post_id) => {
   }
 };
 
+export const createPostCommentReply = async (
+  content,
+  user_id,
+  post_id,
+  comment_id
+) => {
+  try {
+    const { data, error } = await supabase
+      .from("comments")
+      .insert({ content, user_id, post_id, comment_id })
+      .select("*, users(*), upvotes(id), downvotes(id)")
+      .maybeSingle();
+    if (error) throw error;
+    return { state: true, data };
+  } catch (error) {
+    return { state: false, error };
+  }
+};
+
 export const createCommentUpvote = async (comment_id, user_id) => {
   try {
     const { data, error } = await supabase

@@ -2,6 +2,7 @@ export default {
   tan: "#EDC7B7",
   lightBeige: "#EEE2DC",
   grey: "#BAB2B5",
+  grey2: "#D8DDE3",
   lightGrey: "#C6CACF",
   ultraLightGrey: "#e8d6ce",
   lightGrey2: "#fafafa",

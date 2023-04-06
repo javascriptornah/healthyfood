@@ -195,16 +195,18 @@ const CreatePost = () => {
     // post to imgur and return response
     let formData = new FormData();
     formData.append("image", image);
+    console.log("123");
+    console.log(image);
 
-    const response = await fetch("https://api.imgur.com/3/upload", {
+    const response = await fetch("https://api.imgur.com/3/image", {
       method: "POST",
       body: formData,
       headers: {
         Authorization: `Client-ID ${process.env.NEXT_PUBLIC_IMGUR_ID}`,
       },
     });
-
     const res = await response.json();
+    console.log(res);
 
     if (res.status == 200) {
       return { status: true, url: res.data.link };
@@ -252,8 +254,9 @@ const CreatePost = () => {
     }
     if (image !== null) {
       // upload image and return url
-      const { status, url, error } = await uploadImage();
-
+      //const { status, url, error } = await uploadImage();
+      uploadImage();
+      return;
       // if image successfully uploaded then create post
       if (!status) {
         setLoading({ status: false, msg: "" });
