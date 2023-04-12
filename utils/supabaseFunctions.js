@@ -1355,3 +1355,54 @@ export const fetchStateLastPostByName = async (state_id) => {
     return error;
   }
 };
+
+export const fetchForumCountries = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("forumCountries")
+      .select("*, forumStates(*), posts(count)")
+      .or("name.eq.Canada,name.eq.United States");
+
+    const { data: data2, error: error2 } = await supabase
+      .from("continent")
+      .select("*, forumCountries(*)")
+      .eq("name", "Europe")
+      .maybeSingle();
+
+    if (error) throw error;
+    if (error2) throw error2;
+    return { data, data2 };
+  } catch (error) {
+    return error;
+  }
+};
+
+export const fetchRecentCountryPosts = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("created_at, users(username), country_id(name)")
+      .or("country_id.eq.1, country_id.eq.2")
+      .order("created_at", { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const fetchCountryLastPosts = async (name) => {
+  try {
+    const { data, error } = await supabase
+      .from("forumCountry")
+      .select("posts(created_at, users(username), state_id(name))")
+      .eq("name", name)
+      .order("created_at", { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};

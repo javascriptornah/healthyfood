@@ -14,11 +14,20 @@ const Cont = styled.div`
     }
   }
 `;
-const ForumContent = ({ states, provinces, euroCountries }) => {
-  const [showStates, setShowStates] = useState(states.slice(0, 6));
-  const [showProvinces, setShowProvinces] = useState(provinces.slice(0, 6));
+const ForumContent = ({ countries, europe, recentPosts }) => {
+  const [res, setRes] = useState(recentPosts);
+  console.log("resss");
+  console.log(res);
+  console.log("resss");
+
+  const [showStates, setShowStates] = useState(
+    countries[1].forumStates.slice(0, 6)
+  );
+  const [showProvinces, setShowProvinces] = useState(
+    countries[0].forumStates.slice(0, 6)
+  );
   const [showEuroCountries, setShowEuroCountries] = useState(
-    euroCountries.slice(0, 6)
+    europe.forumCountries.slice(0, 6)
   );
 
   const [postObj, setPostObj] = useState({
@@ -36,15 +45,15 @@ const ForumContent = ({ states, provinces, euroCountries }) => {
       <Mainline
         title="United States"
         subTitles={showStates}
-        postsX={56}
+        postsX={countries[1].posts[0].count}
         lastPostDetails={postObj}
         link="country"
       />
       <Mainline
         title="Canada"
         subTitles={showProvinces}
-        postsX={32}
-        lastPostDetails={postObj}
+        postsX={countries[0].posts[0].count}
+        lastPostDetails={recentPosts}
         link="country"
       />
       <Mainline

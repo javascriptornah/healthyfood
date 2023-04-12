@@ -5,7 +5,7 @@ import COLORS from "../../data/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTurnUp } from "@fortawesome/free-solid-svg-icons";
 import { fetchStateLastPostByName } from "../../utils/supabaseFunctions";
-import {fetchDaysDiff} from '../../utils/functions';
+import { fetchDaysDiff } from "../../utils/functions";
 const Cont = styled.div`
   border-bottom: 1px solid ${(props) => props.colors.grey};
   border-right: 1px solid ${(props) => props.colors.grey};
@@ -65,7 +65,7 @@ const MainLine = ({
     };
     getLastPost();
   }, []);
-  console.log('??');
+  console.log("??");
   console.log(lastPost);
   return (
     <Link
@@ -79,10 +79,10 @@ const MainLine = ({
           <p className="blue bold">{title}</p>
           {subTitles !== null && (
             <div className="subtitles">
-              {subTitles.map((title, index) => {
+              {subTitles.map((subTitle, index) => {
                 return (
                   <p key={index} className="inline-block mar-right-4">
-                    {title},{" "}
+                    {subTitle.name},{" "}
                   </p>
                 );
               })}
@@ -95,12 +95,13 @@ const MainLine = ({
             <p className="inline-block bold mar-right-4 small">Last post</p>
             <p className="inline-block small">
               by{" "}
-              <span className="green underline-hover">
-                {lastPost.username}
-              </span>
+              <span className="green underline-hover">{lastPost.username}</span>
             </p>
             <p className="small">{lastPost.city}</p>
-            <p className="small">{lastPost.created_at !== undefined && fetchDaysDiff(lastPost.created_at)}</p>
+            <p className="small">
+              {lastPost.created_at !== undefined &&
+                fetchDaysDiff(lastPost.created_at)}
+            </p>
           </div>
         </div>
         <FontAwesomeIcon

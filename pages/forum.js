@@ -3,7 +3,11 @@ import styled from "styled-components";
 import COLORS from "../data/colors";
 import Header from "../components/forum/Header";
 import ForumContent from "../components/forum/ForumContent";
-import { fetchPosts } from "../utils/supabaseFunctions";
+import {
+  fetchPosts,
+  fetchForumCountries,
+  fetchRecentCountryPosts,
+} from "../utils/supabaseFunctions";
 import CreatePostIconTwo from "../components/forum/CreatePostIconTwo";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
@@ -24,15 +28,19 @@ const Cont = styled.div`
 
 export async function getServerSideProps() {
   const postsFetch = await fetchPosts();
-
+  const { data, data2 } = await fetchForumCountries();
+  const recentPosts = await fetchRecentCountryPosts();
   return {
     props: {
       postsFetch,
+      data,
+      data2,
+      recentPosts,
     },
   };
 }
 
-const Forum = ({ postsFetch }) => {
+const Forum = ({ postsFetch, data, data2, recentPosts }) => {
   const [posts, setPosts] = useState(
     postsFetch.sort((a, b) => {
       let aDate = new Date(a.created_at).getTime();
@@ -40,16 +48,27 @@ const Forum = ({ postsFetch }) => {
       return aDate > bDate ? 1 : aDate < bDate ? 0 : -1;
     })
   );
-
+  console.log("data");
+  console.log(data);
+  console.log("data2");
+  console.log(data2);
+  console.log("data3");
+  console.log(recentPosts);
+  console.log(recentPosts);
   return (
-    <Cont colors={COLORS}>        
+    <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
         <Header />
         <div className="mar-bottom-16">
           <CreatePostIconTwo />
         </div>
         <div className="mar-bottom-16"></div>
-        <ForumContent posts={posts} />
+        <ForumContent
+          posts={posts}
+          countries={data}
+          europe={data2}
+          recentPosts={recentPosts}
+        />
       </div>
     </Cont>
   );
