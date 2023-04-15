@@ -48,13 +48,7 @@ const Forum = ({ postsFetch, data, data2, recentPosts }) => {
       return aDate > bDate ? 1 : aDate < bDate ? 0 : -1;
     })
   );
-  console.log("data");
-  console.log(data);
-  console.log("data2");
-  console.log(data2);
-  console.log("data3");
-  console.log(recentPosts);
-  console.log(recentPosts);
+
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">

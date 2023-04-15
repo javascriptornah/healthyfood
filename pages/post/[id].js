@@ -50,6 +50,9 @@ const Post = ({ postFetch }) => {
   const [user, setUser] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
+  const pageId = router.query.id;
+
+  console.log(postFetch);
   const backLink = router.query.backLink;
   const [comments, setComments] = useState([...postFetch.comments].reverse());
   console.log("comments");
@@ -68,9 +71,19 @@ const Post = ({ postFetch }) => {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    const func = async () => {
+      const { data, error } = await supabase.rpc("increment_post_view", {
+        page_id: Number(pageId),
+      });
+    };
+    func();
+  }, [pageId]);
+
   const createPostCommentFunctional = async (content, setLoading, setText) => {
     setLoading(true);
     const comment = await createPostComment(content, user.id, post.id);
+    console.log("comment xd");
     console.log(comment);
     setLoading(false);
     toast.success("Comment posted!");
@@ -121,7 +134,7 @@ const Post = ({ postFetch }) => {
           province={post.state_id?.name}
           city={post.city_id?.name}
           date={post.created_at}
-          views={434}
+          views={post.page_views[0].view_count}
           comments={post.comments.length}
           upvotes={post.upvotes}
           downvotes={post.downvotes}

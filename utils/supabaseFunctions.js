@@ -1014,7 +1014,7 @@ export const fetchPostById = async (id) => {
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "*, state_id(name), country_id(name),user_id(*), comments(*, upvotes(id), downvotes(id), users(*), comments(*,  upvotes(id), downvotes(id), users(*))), upvotes(id), downvotes(id)"
+        "*, page_views(view_count), state_id(name), country_id(name),user_id(*), comments(*, comment_id(id), upvotes(id, users(id)), downvotes(id, users(id)), users(*), comments(*,  upvotes(id), downvotes(id), users(*))), upvotes(id), downvotes(id)"
       )
       .eq("id", id)
       .maybeSingle();
@@ -1153,7 +1153,8 @@ export const createPost = async (
         state_id,
         city_id,
       })
-      .select();
+      .select()
+      .maybeSingle();
     if (error) throw error;
 
     return { status: true, data: data };
@@ -1221,7 +1222,7 @@ export const createPostComment = async (content, user_id, post_id) => {
       .from("comments")
       .insert({ content, user_id, post_id })
       .select(
-        "*, users(*), upvotes(id), downvotes(id), comments(*,  upvotes(id), downvotes(id), users(*))"
+        "*,comment_id(id), users(*), upvotes(id), downvotes(id), comments(*,  upvotes(id), downvotes(id), users(*))"
       )
       .maybeSingle();
     if (error) throw error;
@@ -1295,7 +1296,7 @@ export const deleteCommentUpvote = async (comment_id, user_id) => {
   }
 };
 
-export const createCommentDownVote = async (comment_id, user_id) => {
+export const createCommentDownvote = async (comment_id, user_id) => {
   try {
     const { data, error } = await supabase
       .from("downvotes")

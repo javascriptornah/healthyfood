@@ -87,10 +87,13 @@ const CreatePost = () => {
   const [file, setFile] = useState("");
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
+
   const [city, setCity] = useState("");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
+  const [statesStale, setStatesStale] = useState([]);
   const [cities, setCities] = useState([]);
+  const [citiesStale, setCitiesStale] = useState([]);
   const [data, setData] = useState([]);
   const [locations, setLocations] = useState([]);
   const [options, setOptions] = useState([]);
@@ -157,6 +160,7 @@ const CreatePost = () => {
     });
     states = [...new Set(states.map((item) => item.subcountry))];
     states.sort();
+    setStatesStale(states);
     setStates((prevStates) => {
       return states;
     });
@@ -171,7 +175,9 @@ const CreatePost = () => {
     let cities = data.filter((city) => city.subcountry === value);
     cities = cities.map((city) => city.name);
     cities.sort();
+    setCitiesStale(cities);
     setCities(cities);
+    setCity("");
   }
 
   function updateCity(value) {
@@ -297,7 +303,8 @@ const CreatePost = () => {
         toast.success("Post uploaded!");
         console.log("2222");
         console.log(data);
-        //clearFields();
+        clearFields();
+        router.push(`/post/${data.id}`);
       } else {
         console.log(error);
         console.log(data);
@@ -344,7 +351,7 @@ const CreatePost = () => {
               STATE <span className="light small">(OPTIONAL)</span>
             </h5>
             <Select
-              regions={states}
+              regions={statesStale}
               value={state}
               updateValue={updateRegion}
               options={states}
@@ -358,7 +365,7 @@ const CreatePost = () => {
               CITY <span className="light small">(OPTIONAL)</span>
             </h5>
             <Select
-              regions={cities}
+              regions={citiesStale}
               value={city}
               updateValue={updateRegion}
               searchPlaceholder="Search"

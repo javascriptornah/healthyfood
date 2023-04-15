@@ -6,7 +6,7 @@ import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import supabase from "../../../utils/supabaseClient";
 import {
   createCommentUpvote,
-  createCommentDownVote,
+  createCommentDownvote,
   deleteCommentDownvote,
   deleteCommentUpvote,
 } from "../../../utils/supabaseFunctions";
@@ -49,6 +49,34 @@ const Upvotes = ({
 }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState(false);
+  const [upvoteState, setUpvoteState] = useState({
+    upvote: false,
+    downvote: false,
+  });
+
+  useEffect(() => {
+    let upvotedState = upvotes.some((upvote) => upvote.users.id == user.id);
+    if (upvotedState) {
+      setUpvoteState((prev) => {
+        return {
+          ...prev,
+          upvote: true,
+        };
+      });
+    } else {
+      let downvotedState = downvotes.some(
+        (upvote) => upvote.users.id == user.id
+      );
+      if (downvotedState) {
+        setUpvoteState((prev) => {
+          return {
+            ...prev,
+            downvote: true,
+          };
+        });
+      }
+    }
+  }, [user]);
   const upvoteRef = useRef(null);
   const downvoteRef = useRef(null);
   useEffect(() => {
@@ -64,21 +92,17 @@ const Upvotes = ({
     fetchUser();
   }, []);
 
+  console.log("upvotes");
+  console.log(upvotes);
   const [upvoteCount, setUpvoteCount] = useState(
     upvotes.length - downvotes.length
   );
 
-  const [upvoteState, setUpvoteState] = useState({
-    upvote: false,
-    downvote: false,
-  });
   const increaseUpvoteFunctional = async () => {
     if (isLogged == false) {
       toast.error("Please login to upvote");
       return;
     }
-
-    //const res = await createCommentUpvote(comment_id, user.id);
 
     if (upvoteState.upvote == true) {
       let res = await deleteCommentUpvote(comment_id, user.id);
@@ -102,7 +126,7 @@ const Upvotes = ({
       });
       setUpvoteCount((prev) => prev + 2);
     } else if (upvoteState.upvote == false) {
-      let res = await deleteCommentDownvote(comment_id, user.id);
+      let res = await createCommentUpvote(comment_id, user.id);
       console.log(res);
       setUpvoteState((prev) => {
         return {

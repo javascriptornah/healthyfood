@@ -12,7 +12,9 @@ const Cont = styled.div`
     border-radius: 0px;
   }
 `;
-const ForumContent = ({ posts, countries, europe }) => {
+const ForumContent = ({ posts, countries, europe, recentPosts }) => {
+  console.log("1231232");
+  console.log(recentPosts);
   const [states, setStates] = useState(statesFetch.map((state) => state.name));
   const [provinces, setProvinces] = useState(
     Object.entries(provincesFetch).map(([key, val]) => val)
