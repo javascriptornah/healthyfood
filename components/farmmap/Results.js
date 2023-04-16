@@ -9,14 +9,15 @@ const Cont = styled.div`
     }
   }
   @media only screen and (max-width: 600px) {
-    .btn-holder{
+    .btn-holder {
       justify-content: baseline;
     }
-    .blue-btn-one{
-      display:flex;
-      width:100%;
-      justify-content:center;
+    .blue-btn-one {
+      display: flex;
+      width: 100%;
+      justify-content: center;
     }
+  }
 `;
 const Results = ({ locations }) => {
   console.log(locations);
@@ -43,7 +44,7 @@ const Results = ({ locations }) => {
   }
 
   return (
-    <Cont colors={COLORS} className="tan-container">
+    <Cont colors={COLORS} className="tan-container box-shadow">
       <div className=" flex flex-wrap space-between align-start x">
         {locationElems}
       </div>

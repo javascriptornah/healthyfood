@@ -57,7 +57,7 @@ const Location = ({
   return (
     <Cont colors={COLORS}>
       <h5 className="mar-bottom-16">LOCATION</h5>
-      <div className="tan-container flex flex-wrap justify-center">
+      <div className="tan-container flex flex-wrap justify-center box-shadow">
         <div className="select-line mar-bottom-16">
           <h5 className="light contrast mar-bottom-16">COUNTRY</h5>
           <Select

@@ -22,6 +22,8 @@ const PostsSection = ({ title, posts }) => {
   console.log(posts);
   const [postLines, setPostLines] = useState(
     posts.map((post, index) => {
+      console.log("----");
+      console.log(post);
       return (
         <PostLine
           key={index}

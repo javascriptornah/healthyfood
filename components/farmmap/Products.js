@@ -247,7 +247,7 @@ const Products = ({ searchTags, setSearchTags, tagsFetch }) => {
   return (
     <Cont colors={COLORS}>
       <h5 className="mar-bottom-16">PRODUCTS</h5>
-      <div className="tan-container flex flex-wrap">
+      <div className="tan-container flex flex-wrap box-shadow">
         <div className="mar-right-32">
           <h5 className="mar-bottom-16">TAGS</h5>
           <Searchbar

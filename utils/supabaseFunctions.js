@@ -1329,7 +1329,7 @@ export const fetchPostsByCountryName = async (name) => {
     const { data, error } = await supabase
       .from("forumCountries")
       .select(
-        "name, posts(*, country_id(name), state_id(name), city_id(name), users(*), upvotes(id), downvotes(id), comments(*, upvotes(id), downvotes(id), users(*), comments(*,  upvotes(id), downvotes(id), users(*))))"
+        "name, posts(*, country_id(name), state_id(name), city_id(name), user_id(username), upvotes(id), downvotes(id), comments(*, upvotes(id), downvotes(id), users(*), comments(*,  upvotes(id), downvotes(id), users(*))))"
       )
       .eq("name", name)
       .maybeSingle();
