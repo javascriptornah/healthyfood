@@ -7,6 +7,7 @@ import Header from "../../../components/forum/Header";
 import {
   fetchForumProvincePostsById,
   fetchForumProvinceIdByName,
+  fetchCountryByStateName,
 } from "../../../utils/supabaseFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowTurnDown } from "@fortawesome/free-solid-svg-icons";
@@ -35,15 +36,16 @@ const Cont = styled.div`
 export async function getServerSideProps(params) {
   const { id } = await fetchForumProvinceIdByName(params.query.id);
   const fetchPosts = await fetchForumProvincePostsById(id);
+  const country = await fetchCountryByStateName(params.query.id);
   return {
     props: {
       fetchPosts,
+      country,
     },
   };
 }
 
-const Province = ({ fetchPosts }) => {
-  const nothing = "deleteme";
+const Province = ({ fetchPosts, country }) => {
   const router = useRouter();
   const backLink = router.query.backLink;
   const [name, setName] = useState(router.query.id);
@@ -53,7 +55,9 @@ const Province = ({ fetchPosts }) => {
       <div className="content-holder box-shadow-2">
         <Header />
         <div className="flex justify-end mar-bottom-16">
-          <Link href={{ pathname: `/forum/country/${backLink}` }}>
+          <Link
+            href={{ pathname: `/forum/country/${country.country_id.name}` }}
+          >
             <div className="black-gradient-btn flex-inline box-shadow align-center">
               <p className="blue bold mar-right-8">Back</p>
               <FontAwesomeIcon

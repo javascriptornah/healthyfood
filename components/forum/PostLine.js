@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import COLORS from "../../data/colors";
 import styled from "styled-components";
@@ -24,6 +25,9 @@ const Cont = styled.div`
 `;
 
 const PostLine = ({ title, forum, username, date, id }) => {
+  const router = useRouter();
+  const path = router.asPath;
+  console.log(router);
   let date2 = new Date(date);
   let hoursMin = date2.getUTCHours() + ":" + date2.getUTCMinutes();
 
@@ -31,7 +35,12 @@ const PostLine = ({ title, forum, username, date, id }) => {
     new Date(date).toLocaleDateString("en-US")
   );
   return (
-    <Link href={`/post/${id}`}>
+    <Link
+      href={{
+        pathname: `/post/${id}`,
+        query: { backLink: path.replace("%3", "?") },
+      }}
+    >
       <Cont colors={COLORS}>
         <div className="title">
           <p className="bold blue inline-block mar-right-4 text-spec">

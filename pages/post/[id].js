@@ -51,10 +51,15 @@ const Post = ({ postFetch }) => {
   const [user, setUser] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
+  console.log("query");
+  console.log(router.query.backLink);
   const pageId = router.query.id;
 
   console.log(postFetch);
-  const backLink = router.query.backLink;
+  let backLink = router.query.backLink;
+  backLink = backLink.replace(/\?.*/, "");
+  console.log("asdasd");
+  console.log(backLink);
   const [comments, setComments] = useState(
     [...postFetch.comments]
       .reverse()

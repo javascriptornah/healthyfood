@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
@@ -45,12 +46,16 @@ const MainLine = ({
   backLink,
   state_id,
 }) => {
+  const router = useRouter();
+  const path = router.asPath;
+
   const [lastPost, setLastPost] = useState({
     title: "",
     created_at: "",
     username: "",
     city: "",
   });
+  console.log("kapa");
   useEffect(() => {
     const getLastPost = async () => {
       const res = await fetchStateLastPostByName(state_id);
@@ -65,13 +70,12 @@ const MainLine = ({
     };
     getLastPost();
   }, []);
-  console.log("??");
-  console.log(lastPost);
+
   return (
     <Link
       href={{
         pathname: `/forum/${link}/${title}`,
-        query: { backLink: backLink },
+        query: { backLink: path },
       }}
     >
       <Cont colors={COLORS}>

@@ -1,8 +1,11 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import COLORS from "../../data/colors";
 import styled from "styled-components";
 import { fetchDaysDiff } from "../../utils/functions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment, faEye } from "@fortawesome/free-solid-svg-icons";
+import { fetchPostLastCommentById } from "../../utils/supabaseFunctions";
 const Cont = styled.div`
   display: flex;
   align-items: center;
@@ -44,11 +47,32 @@ const FullPostLine = ({
   date,
   replies,
   views,
-  lastComment,
   id,
   province,
   region,
 }) => {
+  const [lastComment, setLastComment] = useState({
+    created_at: "",
+    username: "",
+  });
+  useEffect(() => {
+    const getLastComment = async () => {
+      const res = await fetchPostLastCommentById(id);
+      console.log(title);
+      console.log("res");
+      console.log(res);
+      setLastComment((prev) => {
+        return {
+          created_at: res?.created_at || "",
+          username: res?.users?.username,
+        };
+      });
+    };
+    getLastComment();
+  }, []);
+
+  console.log("last comment");
+  console.log(lastComment);
   return (
     <Link
       href={{
@@ -67,16 +91,31 @@ const FullPostLine = ({
           <div className="flex  align-center mar-right-8">
             <div className="green small mar-right-8">{forum}</div>
             <div className="post-info">
-              <p className="small">{replies} replies</p>
-              <p className="small">{views} views</p>
+              <div className="flex-inline align-center">
+                <FontAwesomeIcon
+                  icon={faComment}
+                  className="icon-vsmall contrast mar-right-4"
+                />
+                <p className="small">{replies} replies</p>
+              </div>
+              <div className="flex-inline align-center">
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className="icon-vsmall contrast mar-right-4"
+                />
+                <p className="small">{views} views</p>
+              </div>
             </div>
           </div>
           <div className="flex  hide-400">
             <div className=" recent mar-right-4 mar-right-8">
               <p className="bold small">Last activity</p>
-              <p className="small">{/*lastComment.date.toDateString()*/}</p>
+              <p className="small">
+                {lastComment.created_at !== "" &&
+                  fetchDaysDiff(new Date(lastComment.created_at))}
+              </p>
               <p className=" small">
-                by <span className="green">{/*lastComment.username*/} </span>
+                by <span className="green">{lastComment.username} </span>
               </p>
             </div>
           </div>

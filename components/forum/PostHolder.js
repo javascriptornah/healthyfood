@@ -12,6 +12,7 @@ const Cont = styled.div`
 `;
 
 const PostsSection = ({ title, posts }) => {
+  console.log("posts");
   console.log(posts);
 
   const [postLines, setPostLines] = useState(
@@ -25,7 +26,7 @@ const PostsSection = ({ title, posts }) => {
           forum={post.city_id?.name}
           date={post.created_at}
           replies={post.comments[0].count}
-          views={200}
+          views={post.page_views[0]?.view_count || 0}
           lastComment={post.lastComment}
           region="province"
           province={title}
