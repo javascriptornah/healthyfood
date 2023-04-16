@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
   faArrowTurnDown,
+  faClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { createPostCommentReply } from "../../../utils/supabaseFunctions";
 import { fetchDaysDiff } from "../../../utils/functions";
@@ -76,7 +77,11 @@ const Comment = ({
   post_id,
   created_at,
   deleteCommentFunctional,
+  createPostCommentReplyFunctional,
+  deleteCommentReplyFunctional,
 }) => {
+  console.log("replies");
+
   const [user, setUser] = useState(null);
   const [isUser, setIsUser] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
@@ -85,6 +90,7 @@ const Comment = ({
   const [replying, setReplying] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [replyExtended, setReplyExtended] = useState(false);
   const hidePopup = () => {
     setDeleting(false);
   };
@@ -106,79 +112,90 @@ const Comment = ({
   }, []);
 
   let replyElems = [];
-  let [repliesRender, setRepliesRender] = useState(
-    replies.length > 3 ? 3 : replies.length
+  const [repliesRender, setRepliesRender] = useState(
+    replies.length > 3 ? (replyExtended ? replies.length : 3) : replies.length
   );
 
-  for (let i = 0; i < repliesRender; i++) {
-    replyElems.push(
-      <Cont colors={COLORS} className="comment-reply">
-        <div className="flex-inline float-left align-start">
-          <FontAwesomeIcon
-            icon={faArrowTurnDown}
-            style={{ transform: "rotate(180deg)" }}
-            className="black icon-med mar-right-16"
-          />
+  useEffect(() => {
+    setRepliesRender(replies.length > 3 ? 3 : replies.length);
+  }, [replies.length]);
 
-          <div className="flex flex-column align-center avatar mar-right-32 ">
-            <Image
-              className="mar-bottom-8"
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${replies[i].users.avatar_url}`}
-              style={{
-                objectFit: "cover",
-                border: "2px solid #88c1ff",
-                borderRadius: "50%",
-              }}
-              quality="100"
-              width={40}
-              height={40}
+  for (let i = 0; i < repliesRender; i++) {
+    if (replies[i] != undefined) {
+      replyElems.push(
+        <Cont colors={COLORS} className="comment-reply">
+          <div className="flex-inline float-left align-start">
+            <FontAwesomeIcon
+              icon={faArrowTurnDown}
+              style={{ transform: "rotate(180deg)" }}
+              className="black icon-med mar-right-16"
             />
 
-            <p className={isUser ? "light-blue-2 bold" : "green bold"}>
-              {replies[i].users.username}
-            </p>
-          </div>
-        </div>
-        <div>
-          <p className="bold inline-block mar-right-4">Replying to: </p>
-          <p className="green underline-hover inline-block bold cursor">
-            {comment_user.username}
-          </p>
-          <ReactMarkdown className="markdown">
-            {replies[i].content}
-          </ReactMarkdown>
-        </div>
-        <div className="flex">
-          <Upvotes
-            upvotes={replies[i].upvotes}
-            downvotes={replies[i].downvotes}
-            user={user}
-            comment_id={"???????????????"}
-          />
-          <p className="bold contrast inline-block underline-hover cursor reply">
-            reply
-          </p>
-        </div>
-      </Cont>
-    );
-  }
+            <div className="flex flex-column align-center avatar mar-right-32 ">
+              <Image
+                className="mar-bottom-8"
+                src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${replies[i].users.avatar_url}`}
+                style={{
+                  objectFit: "cover",
+                  border: "2px solid #88c1ff",
+                  borderRadius: "50%",
+                }}
+                quality="100"
+                width={40}
+                height={40}
+              />
 
-  const createPostCommentReplyFunctional = async () => {
-    if (replyText == "") {
-      toast.error("Comment can't be empty");
-      return false;
+              <p className={isUser ? "light-blue-2 bold" : "green bold"}>
+                {replies[i].users.username}
+              </p>
+            </div>
+          </div>
+          <div>
+            <p className="bold inline-block mar-right-4">Replying to: </p>
+            <p className="green underline-hover inline-block bold cursor">
+              {comment_user.username}
+            </p>
+            <ReactMarkdown className="markdown">
+              {replies[i].content}
+            </ReactMarkdown>
+          </div>
+          <div className="flex">
+            <Upvotes
+              upvotes={replies[i].upvotes}
+              downvotes={replies[i].downvotes}
+              user={user}
+              comment_id={"???????????????"}
+            />
+            <p className=" mar-right-16 bold contrast inline-block underline-hover cursor reply">
+              reply
+            </p>
+            {deleting && (
+              <DeletePopup
+                text="comment"
+                deleteFunction={() =>
+                  deleteCommentReplyFunctional(
+                    replies[i].id,
+                    comment_id,
+                    hidePopup
+                  )
+                }
+                cancelFunction={() => setDeleting(false)}
+                hidePopup={hidePopup}
+              />
+            )}
+            {isUser && (
+              <p
+                onClick={() => setDeleting(true)}
+                className="bold inline-block contrast underline-hover cursor delete"
+              >
+                delete
+              </p>
+            )}
+          </div>
+        </Cont>
+      );
     }
-    setReplyLoading(true);
-    const { state, data } = await createPostCommentReply(
-      replyText,
-      user.id,
-      post_id,
-      comment_id
-    );
-    if (state) {
-      setReplyLoading(false);
-    }
-  };
+  }
 
   return (
     <Cont colors={COLORS}>
@@ -267,16 +284,33 @@ const Comment = ({
                 <div></div>
               </div>
             ) : (
-              <div
-                onClick={createPostCommentReplyFunctional}
-                className="blue-btn-one mar-top-16 flex-inline align-center"
-              >
-                <h5 className="mar-right-8">Reply</h5>
-                <FontAwesomeIcon
-                  icon={faPaperPlane}
-                  className="white icon-ssm"
-                />
-              </div>
+              <>
+                <div
+                  onClick={() => setReplying(false)}
+                  className="red-btn-one mar-top-16 flex-inline align-center mar-right-16"
+                >
+                  <h5 className="mar-right-8">Cancel</h5>
+                  <FontAwesomeIcon icon={faClose} className="white icon-ssm" />
+                </div>
+                <div
+                  onClick={() =>
+                    createPostCommentReplyFunctional(
+                      replyText,
+                      comment_id,
+                      setLoading,
+                      setReplying,
+                      setReplyText
+                    )
+                  }
+                  className="blue-btn-one mar-top-16 flex-inline align-center"
+                >
+                  <h5 className="mar-right-8">Reply</h5>
+                  <FontAwesomeIcon
+                    icon={faPaperPlane}
+                    className="white icon-ssm"
+                  />
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -290,7 +324,13 @@ const Comment = ({
             {replies.length - repliesRender > 0 && (
               <>
                 <div className="mar-bottom-4"></div>
-                <p className="light-blue-2 bold underline-hover cursor">
+                <p
+                  onClick={() => {
+                    setReplyExtended(true);
+                    setRepliesRender(replies.length);
+                  }}
+                  className="light-blue-2 bold underline-hover cursor"
+                >
                   {replies.length - repliesRender} more replies
                 </p>
               </>

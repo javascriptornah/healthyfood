@@ -9,6 +9,7 @@ import {
   fetchPostById,
   createPostComment,
   deleteComment,
+  createPostCommentReply,
 } from "../../utils/supabaseFunctions";
 import Header from "../../components/forum/Header";
 import PostSection from "../../components/forum/post/PostSection";
@@ -54,7 +55,11 @@ const Post = ({ postFetch }) => {
 
   console.log(postFetch);
   const backLink = router.query.backLink;
-  const [comments, setComments] = useState([...postFetch.comments].reverse());
+  const [comments, setComments] = useState(
+    [...postFetch.comments]
+      .reverse()
+      .filter((comment) => comment.comment_id == null)
+  );
   console.log("comments");
   console.log([...postFetch.comments].reverse());
 
@@ -83,15 +88,50 @@ const Post = ({ postFetch }) => {
   const createPostCommentFunctional = async (content, setLoading, setText) => {
     setLoading(true);
     const comment = await createPostComment(content, user.id, post.id);
-    console.log("comment xd");
-    console.log(comment);
+
     setLoading(false);
-    toast.success("Comment posted!");
+
     setText("");
     setComments((comments) => {
       return [comment, ...comments];
     });
     return true;
+  };
+
+  const createPostCommentReplyFunctional = async (
+    text,
+    comment_id,
+    setLoading,
+    setReplying,
+    setReplyText
+  ) => {
+    if (text == "") {
+      toast.error("Comment can't be empty");
+      return false;
+    }
+    setLoading(true);
+    const { state, data: newComment } = await createPostCommentReply(
+      text,
+      user.id,
+      post.id,
+      comment_id
+    );
+    if (state) {
+      setReplyText("");
+      console.log("data");
+      console.log(newComment);
+      console.log(comments);
+
+      setComments((prev) => {
+        let index = prev.findIndex((comment) => comment.id == comment_id);
+        prev[index].comments.unshift(newComment);
+        return [...prev];
+      });
+    } else {
+      toast.error("Error creating reply");
+    }
+    setReplying(false);
+    setLoading(false);
   };
 
   const deleteCommentFunctional = async (id, setLoading, hidePopup) => {
@@ -107,6 +147,28 @@ const Post = ({ postFetch }) => {
     }
     hidePopup();
     setLoading(false);
+  };
+
+  const deleteCommentReplyFunctional = async (id, comment_id, hidePopup) => {
+    const res = await deleteComment(id);
+    if (res) {
+      toast.success("Reply deleted");
+      setComments((comments) => {
+        let index = comments.findIndex((comment) => comment.id == comment_id);
+
+        comments[index].comments = comments[index].comments.filter(
+          (comment) => comment.id != id
+        );
+        console.log("index");
+        console.log(index);
+        console.log("crak");
+        console.log(comments);
+        return [...comments];
+      });
+    } else {
+      toast.error("Error deleting reply");
+    }
+    hidePopup();
   };
 
   return (
@@ -134,7 +196,7 @@ const Post = ({ postFetch }) => {
           province={post.state_id?.name}
           city={post.city_id?.name}
           date={post.created_at}
-          views={post.page_views[0].view_count}
+          views={post.page_views[0]?.view_count || 1}
           comments={post.comments.length}
           upvotes={post.upvotes}
           downvotes={post.downvotes}
@@ -149,6 +211,8 @@ const Post = ({ postFetch }) => {
           comments={comments}
           post_id={post.id}
           deleteCommentFunctional={deleteCommentFunctional}
+          createPostCommentReplyFunctional={createPostCommentReplyFunctional}
+          deleteCommentReplyFunctional={deleteCommentReplyFunctional}
         />
       </div>
     </Cont>

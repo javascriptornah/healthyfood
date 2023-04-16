@@ -1243,7 +1243,7 @@ export const createPostCommentReply = async (
       .from("comments")
       .insert({ content, user_id, post_id, comment_id })
       .select(
-        "*, users(*), upvotes(id), downvotes(id), comments(*,  upvotes(id), downvotes(id), users(*))"
+        "*, comment_id(id), users(*), upvotes(id), downvotes(id), comments(*,  upvotes(id), downvotes(id), users(*))"
       )
       .maybeSingle();
     if (error) throw error;
