@@ -40,7 +40,9 @@ const Farmmap = ({ tagsFetch, locationsFetch }) => {
   const [farmLocations, setFarmLocations] = useState(locationsFetch);
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
+  const [statesStale, setStatesStale] = useState("");
   const [city, setCity] = useState("");
+  const [citiesStale, setCitiesStale] = useState("");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -100,11 +102,6 @@ const Farmmap = ({ tagsFetch, locationsFetch }) => {
       });
     });
   }, [country]);
-  console.log(": }");
-  console.log(farmLocations);
-  console.log(": x");
-  console.log(locations);
-  console.log(": x");
 
   useEffect(() => {
     setLocations((prevLocations) => {
@@ -113,6 +110,21 @@ const Farmmap = ({ tagsFetch, locationsFetch }) => {
       });
     });
   }, [state]);
+
+  useEffect(() => {
+    const func = async () => {
+      const dataFetch = await fetch("https://api.db-ip.com/v2/free/self").then(
+        (res) => res.json()
+      );
+      console.log("location");
+      console.log(dataFetch);
+      updateCountry(dataFetch.countryName);
+      setCountry(dataFetch.countryName);
+      //setState(dataFetch.stateProv);
+    };
+
+    func();
+  }, []);
   /*
   useEffect(() => {
     setLocations((prevLocations) => {
@@ -134,6 +146,9 @@ const Farmmap = ({ tagsFetch, locationsFetch }) => {
     setStates((prevStates) => {
       return states;
     });
+    setStatesStale((prevStates) => {
+      return states;
+    });
     setState("");
     setCity("");
   }
@@ -146,6 +161,7 @@ const Farmmap = ({ tagsFetch, locationsFetch }) => {
     cities = cities.map((city) => city.name);
     cities.sort();
     setCities(cities);
+    setCitiesStale(cities);
   }
 
   function updateCity(value) {
@@ -180,9 +196,11 @@ const Farmmap = ({ tagsFetch, locationsFetch }) => {
             options={options}
             setOptions={setOptions}
             states={states}
+            statesStale={statesStale}
             state={state}
             setStates={setStates}
             cities={cities}
+            citiesStale={citiesStale}
             city={city}
             setCities={setCities}
           />

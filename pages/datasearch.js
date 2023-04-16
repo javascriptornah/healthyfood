@@ -137,11 +137,12 @@ const Datasearch = ({ fishFetch, oceansFetch, seasFetch }) => {
   return (
     <Cont colors={COLORS}>
       <div className="center-inline mar-bottom-32">
-      <h3 className="blue text-shadow-blue">Data Search</h3>
+        <h3 className="blue text-shadow-blue">Data Search</h3>
       </div>
       <Searchbar text={text} updateText={updateText} />
       <div className="ssm-spacer-bot-res"></div>
       <SearchResults fish={fish} oceans={oceans} seas={seas} />
+      <div className="sm-spacer"></div>
     </Cont>
   );
 };

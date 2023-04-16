@@ -1367,7 +1367,7 @@ export const fetchPostLastCommentById = async (id) => {
       .maybeSingle();
 
     if (error) throw error;
-    return data.comments[0] || {};
+    return data.comments[data.comments.length - 1] || {};
   } catch (error) {
     return error;
   }

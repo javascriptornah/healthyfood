@@ -50,8 +50,10 @@ const Location = ({
   states,
   state,
   setStates,
+  statesStale,
   city,
   cities,
+  citiesStale,
   setCities,
 }) => {
   return (
@@ -73,7 +75,7 @@ const Location = ({
         <div className="select-line mar-bottom-16">
           <h5 className="light contrast mar-bottom-16">STATE</h5>
           <Select
-            regions={states}
+            regions={statesStale}
             value={state}
             updateValue={updateRegion}
             options={states}
@@ -84,7 +86,7 @@ const Location = ({
         <div className="select-line mar-bottom-16">
           <h5 className="light contrast mar-bottom-16">CITY</h5>
           <Select
-            regions={cities}
+            regions={citiesStale}
             value={city}
             updateValue={updateRegion}
             searchPlaceholder="Search"
