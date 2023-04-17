@@ -261,7 +261,7 @@ const CreatePost = () => {
     if (image !== null) {
       // upload image and return url
       //const { status, url, error } = await uploadImage();
-      const { status, url } = uploadImage();
+      const { status, url } = await uploadImage();
 
       // if image successfully uploaded then create post
       if (!status) {
