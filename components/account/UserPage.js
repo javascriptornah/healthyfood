@@ -88,6 +88,7 @@ const UserPage = ({ user, fetchUser }) => {
     };
     fetchLocationsWrapper();
   }, []);
+
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
     toast.success("You are no longer singed in");

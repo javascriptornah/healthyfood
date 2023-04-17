@@ -41,7 +41,9 @@ const PostSection = ({
         {hoursMin} - {dateString}
       </p>
       <div className="grey-line "></div>
-      <ReactMarkdown className="padding-16">{content}</ReactMarkdown>
+      <ReactMarkdown className="padding-16 base-markdown">
+        {content}
+      </ReactMarkdown>
       <div className="flex-inline align-center">
         <FontAwesomeIcon icon={faEye} className="black mar-right-8 icon-ssm" />
         <p className="black bold">{views}</p>

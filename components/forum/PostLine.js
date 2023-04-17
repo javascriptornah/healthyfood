@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import COLORS from "../../data/colors";
 import styled from "styled-components";
+import { fetchDaysDiff } from "../../utils/functions";
 const Cont = styled.div`
   display: flex;
   align-items: center;
@@ -51,7 +52,7 @@ const PostLine = ({ title, forum, username, date, id }) => {
           </p>
         </div>
         <p className="mar-right-8">{forum}</p>
-        <p className="small">{hoursMin} -</p>
+        <p className="small">{fetchDaysDiff(date2)}</p>
       </Cont>
     </Link>
   );

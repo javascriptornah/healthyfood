@@ -18,8 +18,6 @@ const Cont = styled.div`
 `;
 
 const PostsSection = ({ title, posts }) => {
-  console.log("posts");
-  console.log(posts);
   const [postLines, setPostLines] = useState(
     posts.map((post, index) => {
       console.log("----");

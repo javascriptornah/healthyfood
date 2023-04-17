@@ -268,7 +268,7 @@ const CreatePost = () => {
         setLoading({ status: false, msg: "" });
       } else {
         setLoading({ status: true, msg: "Uploading post..." });
-        const { status } = await createPostWithImage(
+        const { data, status, error } = await createPostWithImage(
           title,
           text,
           user.id,
@@ -281,11 +281,13 @@ const CreatePost = () => {
         if (status) {
           toast.success("Post uploaded!");
           clearFields();
+          router.push(`/post/${data.id}`);
         } else {
           toast.error("Error uploading post");
         }
       }
     } else {
+      // upload post without image
       setLoading({ state: true, msg: "Uploading post..." });
 
       const { data, status, error } = await createPost(

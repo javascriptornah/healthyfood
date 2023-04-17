@@ -1193,7 +1193,8 @@ export const createPostWithImage = async (
         state_id,
         city_id,
       })
-      .select();
+      .select()
+      .maybeSingle();
     if (error) throw error;
 
     return { status: true, data: data };
@@ -1208,7 +1209,8 @@ export const fetchPosts = async () => {
       .from("posts")
       .select(
         "*, user_id(username), city_id(name), state_id(name), country_id(name)"
-      );
+      )
+      .order("id", { ascending: false });
     if (error) throw error;
     return data;
   } catch (error) {
@@ -1431,6 +1433,21 @@ export const fetchCountryByStateName = async (name) => {
       .select("country_id(name)")
       .eq("name", name)
       .maybeSingle();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const fetchUserByName = async (username) => {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select(
+        "username, created_at, avatar_url, posts(title, content, created_at, img_url,  country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count), locations(*, address(*), products(*), images(*)))"
+      )
+      .eq("username", username);
     if (error) throw error;
     return data;
   } catch (error) {

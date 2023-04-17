@@ -124,59 +124,61 @@ const NotLogged = () => {
             <h3 className="blue text-shadow mar-bottom-16">
               Thanks For Signing Up!
             </h3>
-            <h4 className="light contrast mar-bottom-8">Login below</h4>
+            <div className="box-shadow features">
+              <h4 className="light contrast mar-bottom-8">Login below</h4>
 
-            <form onSubmit={submitForm}>
-              <div className="input-line">
-                <h5>EMAIL</h5>
-                <input
-                  {...register("email", {
-                    required: true,
-                  })}
-                  type="email"
-                  placeholder="example@gmail.com"
-                  name="email"
-                />
-                {errors.email?.type === "required" && (
-                  <p className="error">*Email is required</p>
-                )}
-              </div>
-
-              <div className="input-line">
-                <h5>PASSWORD</h5>
-                <div className="tags-input-box">
+              <form onSubmit={submitForm}>
+                <div className="input-line">
+                  <h5>EMAIL</h5>
                   <input
-                    {...register("password", {
+                    {...register("email", {
                       required: true,
-                      pattern: {
-                        value: /.{4,50}/,
-                        message: "Minimum of 4 letters",
-                      },
                     })}
-                    type={passwordState}
-                    placeholder="password"
-                    name="password"
+                    type="email"
+                    placeholder="example@gmail.com"
+                    name="email"
                   />
-                  <FontAwesomeIcon
-                    onClick={togglePasswordState}
-                    icon={passwordState === "password" ? faEye : faEyeSlash}
-                    className="blue icon-sm"
-                  />
+                  {errors.email?.type === "required" && (
+                    <p className="error">*Email is required</p>
+                  )}
                 </div>
 
-                {errors.password?.type === "required" && (
-                  <p className="error">*Password is required</p>
-                )}
-                {errors.password?.type === "pattern" && (
-                  <p className="error">*{errors.password.message}</p>
-                )}
-              </div>
-              <p ref={errorText} className="error"></p>
+                <div className="input-line">
+                  <h5>PASSWORD</h5>
+                  <div className="tags-input-box">
+                    <input
+                      {...register("password", {
+                        required: true,
+                        pattern: {
+                          value: /.{4,50}/,
+                          message: "Minimum of 4 letters",
+                        },
+                      })}
+                      type={passwordState}
+                      placeholder="password"
+                      name="password"
+                    />
+                    <FontAwesomeIcon
+                      onClick={togglePasswordState}
+                      icon={passwordState === "password" ? faEye : faEyeSlash}
+                      className="blue icon-sm"
+                    />
+                  </div>
 
-              <button className="blue-btn-one">
-                <h5>LOGIN</h5>
-              </button>
-            </form>
+                  {errors.password?.type === "required" && (
+                    <p className="error">*Password is required</p>
+                  )}
+                  {errors.password?.type === "pattern" && (
+                    <p className="error">*{errors.password.message}</p>
+                  )}
+                </div>
+                <p ref={errorText} className="error"></p>
+
+                <button className="blue-btn-one">
+                  <h5>LOGIN</h5>
+                </button>
+              </form>
+            </div>
           </div>
           <div className="flex flex-column">
             <div className="features box-shadow ssm-spacer center-inline ">

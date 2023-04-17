@@ -15,6 +15,7 @@ import {
 import { createPostCommentReply } from "../../../utils/supabaseFunctions";
 import { fetchDaysDiff } from "../../../utils/functions";
 import DeletePopup from "../../popups/DeletePopup";
+import Link from "next/link";
 const Cont = styled.div`
   position: relative;
   padding: 8px 12px;
@@ -221,6 +222,7 @@ const Comment = ({
           width={40}
           height={40}
         />
+
         <p className={isUser ? "light-blue-2 bold" : "green bold"}>
           {comment_user.username}
         </p>
