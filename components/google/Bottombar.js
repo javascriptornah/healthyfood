@@ -17,6 +17,8 @@ import {
   faFaceSmileBeam,
   faSmileBeam,
   faWeightScale,
+  faSearch,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import usePlacesAutocomplete, {
@@ -40,6 +42,7 @@ import countryCodes, {
   countryCodesOnly,
   measurements,
 } from "../../data/countryCodes";
+import { fetchAddresses } from "../../utils/functions";
 import Dropdown from "./Dropdown";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
@@ -135,6 +138,10 @@ const Bottombar = ({
     lat: "",
     lng: "",
   });
+
+  useEffect(() => {
+    console.log(address);
+  }, [address]);
 
   const updateProduct = (e, field) => {
     setProduct((prev) => {
@@ -1249,7 +1256,7 @@ const Bottombar = ({
 };
 
 export default Bottombar;
-
+/*
 export const PlacesAutocomplete = ({
   setSelected,
   location,
@@ -1358,5 +1365,172 @@ export const PlacesAutocomplete = ({
         </ul>
       )}
     </div>
+  );
+};
+ */
+
+const Container = styled.div`
+  .icon-ssm {
+    transition: transform 0.25s ease;
+  }
+  .show-more {
+    border: 1px solid ${(props) => props.colors.grey};
+    border-radius: 8px;
+    padding: 2px 4px;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid ${(props) => props.colors.black};
+    }
+  }
+  .google-dropdown {
+    overflow: auto;
+    z-index: 5;
+    max-height: 400px;
+  }
+  form {
+    @media only screen and (max-width: 400px) {
+      flex-direction: column;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    #address-input {
+      margin-right: 0px !important;
+      margin-bottom: 16px;
+    }
+    .blue-btn-one {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+`;
+export const PlacesAutocomplete = ({
+  setSelected,
+  location,
+  setLocation,
+  setAddress,
+  updateCoords = null,
+}) => {
+  const [text, setText] = useState("");
+  const [addresses, setAddresses] = useState([]);
+  const handleSelect = async (address) => {
+    setText(address.display_name);
+    setLocation(address.display_name);
+    const addressSplit = address.display_name.split(",");
+    const street = `${addressSplit[0]} ${addressSplit[1]}`;
+    const country = addressSplit[addressSplit.length - 1];
+    const state = addressSplit[addressSplit.length - 3];
+    const city = addressSplit[addressSplit.length - 5];
+
+    setAddress((prev) => {
+      return {
+        ...prev,
+        fullAddress: address.display_name,
+        lat: address.lat,
+        lng: address.lon,
+        street,
+        state,
+        country,
+        city,
+      };
+    });
+
+    if (updateCoords !== null) {
+      updateCoords({
+        coords: { latitude: address.lat, longitude: address.lon },
+      });
+    }
+  };
+
+  const showResults = async (e) => {
+    e.preventDefault();
+    let addresses = await fetchAddresses(text);
+
+    if (addresses.addresses.error) {
+      toast.error(addresses.addresses.error);
+      return;
+    }
+    setAddresses(addresses.addresses);
+  };
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  useEffect(() => {}, []);
+  const handleClickOutside = useCallback(
+    (e) => {
+      if (
+        showDropdown &&
+        e.target.closest(".dropdown-address") !== dropdownEl.current
+      ) {
+        setShowDropdown(false);
+      }
+    },
+    [showDropdown, setShowDropdown]
+  );
+
+  const dropdownEl = useRef(null);
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
+  return (
+    <Container className="relative" colors={COLORS}>
+      <div className="dropdown-address " ref={dropdownEl}>
+        <form onSubmit={showResults} className="flex align-center mar-bottom-8">
+          <input
+            value={text}
+            type="text"
+            placeholder="Search an address"
+            onChange={(e) => setText(e.target.value)}
+            id="address-input"
+            onFocus={() => setShowDropdown(true)}
+            autoComplete="off"
+            className="mar-right-16"
+          />
+          <button
+            type="submit"
+            className="blue-btn-one flex-inline align-center"
+            onClick={() => setShowDropdown(true)}
+          >
+            <FontAwesomeIcon
+              icon={faSearch}
+              className="icon-ssm white mar-right-4"
+            />
+            <h5>Search</h5>
+          </button>
+        </form>
+        <div
+          onClick={() => setShowDropdown(true)}
+          className="flex space-between show-more align-center"
+          style={{
+            border: showDropdown ? "1px solid #192430" : "1px solid #BAB2B5",
+          }}
+        >
+          <p>Show Results</p>
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className="icon-ssm"
+            style={{
+              transform: showDropdown ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          />
+        </div>
+      </div>
+
+      {showDropdown && (
+        <ul className="google-dropdown">
+          {addresses.map((address, index) => {
+            return (
+              <li key={index} onClick={() => handleSelect(address)}>
+                <p>{address.display_name}</p>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </Container>
   );
 };

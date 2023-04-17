@@ -92,3 +92,12 @@ export const fetchDaysDiff = (dateProp) => {
     return `${Math.round(microSecondsDiff / (1000 * 60))}m`;
   }
 };
+
+export const fetchAddresses = async (address) => {
+  let res = await fetch("/api/location/getAddress", {
+    method: "POST",
+    body: address,
+  });
+  let resJson = await res.json();
+  return resJson;
+};

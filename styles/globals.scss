@@ -245,6 +245,23 @@ $light-orange: #fd7d27;
     font-weight: 600;
   }
 }
+.leaflet-popup-content-wrapper{
+  overflow:auto;
+  
+  p{
+    margin-bottom:0px !important;
+    margin-top:0px !important;
+  }
+}
+.leaflet-popup-close-button{
+  margin-right:24px;
+  margin-top:8px;
+  
+ 
+    span{
+      font-size:36px;
+    }
+}
 .grey-line {
   height: 1px;
   width: 100%;

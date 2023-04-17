@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import dynamic from "next/dynamic";
 import { GoogleMap, useJsApiLoader, Circle } from "@react-google-maps/api";
 import Bottombar from "./Bottombar";
 import MarkerComponent from "./MarkerComponent";
@@ -12,6 +13,9 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
+const OpenStreetMap = dynamic(() => import("./OpenStreetMap"), {
+  ssr: false,
+});
 import latCountryCodes from "../../data/latCountryCodes.json";
 const Cont = styled.div`
   min-height: 100vh;
@@ -50,6 +54,7 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
     lat: 45.4215,
     lng: -75.695,
   });
+
   const [radiusValues, setRadiusValues] = useState([
     "5km",
     "10km",
@@ -166,6 +171,8 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
   };
 
   const updateCoords = (position) => {
+    console.log("position");
+    console.log(position);
     window.localStorage.setItem(
       "position",
       JSON.stringify({
@@ -190,10 +197,10 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(updateCoords);
     if (window !== undefined) {
-      let location = window.localStorage.getItem("position");
-      if (location == null) {
+      let location = JSON.parse(window.localStorage.getItem("position"));
+
+      if (location == null || location.lat == null || location.lng == null) {
       } else {
-        location = JSON.parse(location);
         setCenter((prev) => {
           return {
             lat: location.lat,
@@ -298,6 +305,7 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
           fetchLocation={fetchLocation}
           locationDistances={locationDistances}
         />{" "}
+        {/*
         <GoogleMap
           ref={mapRef}
           mapContainerStyle={containerStyle}
@@ -317,6 +325,14 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
 
           {markers}
         </GoogleMap>
+        
+  */}
+        <OpenStreetMap
+          locations={locations}
+          locationsFilter={locationsFilter}
+          center={center}
+          radius={radiusValue}
+        />
       </div>
 
       <Bottombar

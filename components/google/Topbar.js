@@ -98,6 +98,10 @@ const Topbar = ({
   };
 
   useEffect(() => {
+    console.log("???");
+    console.log(address);
+  }, [address]);
+  useEffect(() => {
     setTags((prev) => {
       return tagsFetch.sort(function (a, b) {
         var textA = a.name.toUpperCase();

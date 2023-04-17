@@ -5,7 +5,6 @@ import { Marker, InfoWindow, OverlayView } from "@react-google-maps/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faEye } from "@fortawesome/free-solid-svg-icons";
 import COLORS from "../../data/colors";
-import colors from "../../data/colors";
 
 const Cont = styled.div`
   max-width: 320px;
