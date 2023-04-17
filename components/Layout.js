@@ -13,9 +13,6 @@ const Center = styled.div`
 const Layout = ({ children, value }) => {
   return (
     <>
-      <Head>
-        <html lang="en"></html>
-      </Head>
       <Navbar />
 
       <Center>

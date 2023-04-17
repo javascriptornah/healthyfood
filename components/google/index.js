@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-import { GoogleMap, useJsApiLoader, Circle } from "@react-google-maps/api";
 import Bottombar from "./Bottombar";
 import MarkerComponent from "./MarkerComponent";
 import Alert from "../popups/alert";
@@ -9,10 +8,6 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { Toaster } from "react-hot-toast";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
 const OpenStreetMap = dynamic(() => import("./OpenStreetMap"), {
   ssr: false,
 });
@@ -26,16 +21,6 @@ const Cont = styled.div`
     }
   }
 `;
-
-const containerStyle = {
-  width: "100%",
-  height: "75vh",
-};
-
-const options = {
-  imagePath:
-    "'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-};
 
 function createKey(location) {
   return location.lat + location.lng;
@@ -75,79 +60,13 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
       };
     });
   }, [radiusValue]);
-  useEffect(() => {
-    setMarkers((prev) => {
-      return locationsFilter.map((location, index) => {
-        return (
-          <MarkerComponent
-            key={index}
-            latLong={{
-              lat: Number(location.address[0].lat),
-              lng: Number(location.address[0].lng),
-            }}
-            name={location.name}
-            description={location.description}
-            email={location.email}
-            number={location.number}
-            website={location.website}
-            pickup={location.pickup}
-            address={location.address[0].text_address}
-            hoursFrom={location.hoursFrom}
-            hoursTo={location.hoursTo}
-            tags={location.tags}
-            products={location.products}
-            icon={location.icon}
-          />
-        );
-      });
-    });
-  }, [locations, locationsFilter]);
+
   const [coords, setCoords] = useState(null);
 
-  const [libraries] = useState(["places"]);
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-    libraries,
-  });
   const [map, setMap] = useState(null);
-
-  const onLoad = useCallback(function callback(map) {
-    setMap(map);
-  }, []);
-
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null);
-  }, []);
 
   const updateLocation = (value) => {
     setLocation(value);
-  };
-
-  const addMarker = async (e) => {
-    //stopAdding();
-    focusSearchBar();
-    fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latLng.lat()},${e.latLng.lng()}&key=${
-        process.env.NEXT_PUBLIC_GOOGLE_API_KEY
-      }`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setLocation(data.results[0].formatted_address);
-      });
-    /*
-    setLocations((prev) => {
-      return [
-        ...prev,
-        {
-          coords: { lat: e.latLng.lat(), lng: e.latLng.lng() },
-          title: "beef",
-          textContent: "words",
-        },
-      ];
-    });
-    */
   };
 
   const [adding, setAdding] = useState(false);
@@ -187,13 +106,7 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
       };
     });
   };
-  const {
-    ready,
-    value,
-    setValue,
-    suggestions: { status, data },
-    clearSuggestions,
-  } = usePlacesAutocomplete();
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(updateCoords);
     if (window !== undefined) {
@@ -250,6 +163,7 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
       setValue(dataFetch.city);
     }
   };
+  /*
   useEffect(() => {
     const fetchLoc = async () => {
       if (data.length > 0) {
@@ -261,7 +175,7 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
       }
     };
     fetchLoc();
-  }, [data]);
+  }, []); */
 
   const [options, setOptions] = useState({
     strokeColor: "#FF0000",
@@ -278,10 +192,9 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
   });
   const mapRef = useRef(null);
 
-  //const isLoaded = true;
   const [locationDistances, setLocationDistances] = useState([]);
 
-  return isLoaded ? (
+  return (
     <Cont>
       <Toaster />
       <Topbar
@@ -305,28 +218,6 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
           fetchLocation={fetchLocation}
           locationDistances={locationDistances}
         />{" "}
-        {/*
-        <GoogleMap
-          ref={mapRef}
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          onClick={(e) => adding && addMarker(e)}
-          options={{ gestureHandling: "greedy" }}
-        >
-          <Circle
-            visible={false}
-            center={center}
-            options={options}
-            ref={circleRef}
-          />
-
-          {markers}
-        </GoogleMap>
-        
-  */}
         <OpenStreetMap
           locations={locations}
           locationsFilter={locationsFilter}
@@ -350,8 +241,6 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
       <div className="lg-spacer"></div>
       <Suppliers />
     </Cont>
-  ) : (
-    <> </>
   );
 };
 

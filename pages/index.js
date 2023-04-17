@@ -72,9 +72,9 @@ export default function Home({ locationsFetch, tagsFetch }) {
       "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder",
   };
   return (
-    <Cont colors={COLORS}>
-      {/*
+    <>
       <Head>
+        <title>{meta.title} </title>
         <meta name="robots" content="follow, index" />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Healthyfoodmap" />
@@ -88,14 +88,15 @@ export default function Home({ locationsFetch, tagsFetch }) {
 
         <meta name="description" content={meta.description} />
       </Head>
-  */}
-      <Google
-        locations={locations}
-        tagsFetch={tags}
-        addTag={addTag}
-        fetchNewLocation={fetchNewLocation}
-        user={user}
-      />
-    </Cont>
+      <Cont colors={COLORS}>
+        <Google
+          locations={locations}
+          tagsFetch={tags}
+          addTag={addTag}
+          fetchNewLocation={fetchNewLocation}
+          user={user}
+        />
+      </Cont>
+    </>
   );
 }
