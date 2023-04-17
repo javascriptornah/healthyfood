@@ -261,13 +261,12 @@ const CreatePost = () => {
     if (image !== null) {
       // upload image and return url
       //const { status, url, error } = await uploadImage();
-      uploadImage();
-      return;
+      const { status, url } = uploadImage();
+
       // if image successfully uploaded then create post
       if (!status) {
         setLoading({ status: false, msg: "" });
       } else {
-        alert("hello");
         setLoading({ status: true, msg: "Uploading post..." });
         const { status } = await createPostWithImage(
           title,
