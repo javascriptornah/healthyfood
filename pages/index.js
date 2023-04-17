@@ -73,6 +73,7 @@ export default function Home({ locationsFetch, tagsFetch }) {
   };
   return (
     <Cont colors={COLORS}>
+      {/*
       <Head>
         <meta name="robots" content="follow, index" />
         <meta property="og:type" content={meta.type} />
@@ -87,6 +88,7 @@ export default function Home({ locationsFetch, tagsFetch }) {
 
         <meta name="description" content={meta.description} />
       </Head>
+  */}
       <Google
         locations={locations}
         tagsFetch={tags}
