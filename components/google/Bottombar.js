@@ -25,6 +25,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
+
 import ProductTags from "../inputs/productTags";
 import ImageUpload from "../inputs/ImageUpload";
 import RenderImages from "../inputs/RenderImages";
@@ -278,7 +279,8 @@ const Bottombar = ({
 
   const checkAddressValid = async () => {
     try {
-      const results = await getGeocode({ address: location });
+      console.log(location);
+      const results = await fetchAddresses(location);
       return true;
     } catch (error) {
       toast("Please select an address from the dropdown.", {

@@ -12,7 +12,7 @@ const Cont = styled.div`
   overflow: auto;
   margin-bottom: 16px;
   transition: box-shadow 0.25s ease;
-  display: flex;
+
   @media only screen and (max-width: 600px) {
     flex-direction: column;
   }
@@ -22,6 +22,11 @@ const Cont = styled.div`
     h5 {
       text-decoration: underline;
     }
+  }
+  .image {
+    position: relative;
+    width: 100%;
+    height: 200px;
   }
   .markdown {
     max-height: 320px;
@@ -55,31 +60,30 @@ const Location = ({
       }}
     >
       <Cont colors={COLORS} className="box-shadow-2 cursor opacity-anim">
-        <p className="green bold green-circle mar-right-16 mar-bottom-8">
-          {index + 1}
-        </p>
-        <div>
+        <div className="flex align-center">
+          <p className="green bold green-circle mar-right-16 mar-bottom-8">
+            {index + 1}
+          </p>
           <div className="mar-bottom-8">
             <h5 className="black inline-block mar-right-16">{name}</h5>
             <p className="contrast inline-block">{address}</p>
           </div>
-
+        </div>
+        <div>
           <div className="grey-line mar-bottom-8"></div>
           <div className="">
             {url !== null && (
-              <Image
-                src={url}
-                width={200}
-                height={120}
-                style={{
-                  objectFit: "cover",
-                  borderRadius: "0 0 0 8px",
-                  flexShrink: "0",
-                  float: "left",
-                }}
-                className="mar-right-8 image-100"
-                alt={name}
-              />
+              <div className="image">
+                <Image
+                  src={url}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                  }}
+                  className="mar-right-8 image-100"
+                  alt={name}
+                />
+              </div>
             )}
             <ReactMarkdown className="markdown mar-bottom-16">
               {description}

@@ -196,7 +196,7 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
     formData.append("image", file);
 
     try {
-      const response = await fetch("https://api.imgur.com/3/upload", {
+      const response = await fetch("https://api.imgur.com/3/image", {
         method: "POST",
         body: formData,
         headers: {
@@ -211,14 +211,12 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
           res.data.deletehash,
           location_id
         );
-    
-      
+
         setImagesCopy((prev) => {
           return [...prev, uploadedImage[0]];
         });
         setLoading({ state: false, msg: "" });
       } else {
-     
         setLoading({ state: false, msg: "" });
         toast("Error uploading image", {
           duration: 4000,

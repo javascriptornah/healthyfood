@@ -220,7 +220,7 @@ const Navbar = () => {
                 <h5 className="black text-shadow mar-bottom-8">Sign Up</h5>
               </Link>
             )}
-            <Link href="/nutritionSearch">
+            <Link href="/nutritionsearch">
               <div className="mobile-icon box-shadow mar-bottom-8">
                 <FontAwesomeIcon icon={faSearch} className="icon-ssm red" />
               </div>
