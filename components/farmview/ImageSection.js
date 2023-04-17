@@ -196,6 +196,7 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
     formData.append("image", file);
 
     try {
+      console.log("tried");
       const response = await fetch("https://api.imgur.com/3/image", {
         method: "POST",
         body: formData,

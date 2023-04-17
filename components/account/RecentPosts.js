@@ -7,9 +7,10 @@ const Cont = styled.div`
 `;
 
 const RecentPosts = ({ posts }) => {
-  const postElems = posts.map((post) => {
+  const postElems = posts.map((post, index) => {
     return (
       <Post
+        key={index}
         title={post.title}
         forum={post.forum}
         username={post.username}
