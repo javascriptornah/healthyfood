@@ -19,6 +19,7 @@ import {
   faWeightScale,
   faSearch,
   faChevronDown,
+  faArrowTurnUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import usePlacesAutocomplete, {
@@ -1414,6 +1415,8 @@ export const PlacesAutocomplete = ({
 }) => {
   const [text, setText] = useState("");
   const [addresses, setAddresses] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const handleSelect = async (address) => {
     setText(address.display_name);
     setLocation(address.display_name);
@@ -1444,6 +1447,7 @@ export const PlacesAutocomplete = ({
   };
 
   const showResults = async (e) => {
+    setLoading(true);
     e.preventDefault();
     let addresses = await fetchAddresses(text);
 
@@ -1452,6 +1456,7 @@ export const PlacesAutocomplete = ({
       return;
     }
     setAddresses(addresses.addresses);
+    setLoading(false);
   };
 
   const [showDropdown, setShowDropdown] = useState(false);
@@ -1492,21 +1497,34 @@ export const PlacesAutocomplete = ({
             autoComplete="off"
             className="mar-right-16"
           />
-          <button
-            type="submit"
-            className="blue-btn-one flex-inline align-center"
-            onClick={() => setShowDropdown(true)}
-          >
-            <FontAwesomeIcon
-              icon={faSearch}
-              className="icon-ssm white mar-right-4"
-            />
-            <h5>Search</h5>
-          </button>
+          {loading ? (
+            <div class="lds-ring-green">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="blue-btn-one flex-inline align-center"
+              onClick={() => setShowDropdown(true)}
+            >
+              <FontAwesomeIcon
+                icon={faSearch}
+                className="icon-ssm white mar-right-4"
+              />
+              <h5>Search</h5>
+            </button>
+          )}
         </form>
         <div
           onClick={() => setShowDropdown(true)}
-          className="flex space-between show-more align-center"
+          className={
+            addresses.length > 0
+              ? "flex space-between show-more align-center box-shadow"
+              : "flex space-between show-more align-center"
+          }
           style={{
             border: showDropdown ? "1px solid #192430" : "1px solid #BAB2B5",
           }}
@@ -1523,11 +1541,20 @@ export const PlacesAutocomplete = ({
       </div>
 
       {showDropdown && (
-        <ul className="google-dropdown">
+        <ul className="google-dropdown box-shadow">
           {addresses.map((address, index) => {
             return (
-              <li key={index} onClick={() => handleSelect(address)}>
+              <li
+                key={index}
+                className="flex align-center padding-right-8 "
+                onClick={() => handleSelect(address)}
+              >
                 <p>{address.display_name}</p>
+                <FontAwesomeIcon
+                  icon={faArrowTurnUp}
+                  className="icon-sm red"
+                  style={{ transform: "rotate(90deg)" }}
+                />
               </li>
             );
           })}

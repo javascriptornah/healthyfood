@@ -112,6 +112,7 @@ const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
           width="32"
           height="32"
           quality="100"
+          alt={selectedIcon}
         />
       </div>
       <div className="icons-holder">{iconElems}</div>

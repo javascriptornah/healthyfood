@@ -39,6 +39,8 @@ const MarkerComponent = ({
   tags,
   products,
   icon,
+  id,
+  images,
 }) => {
   const [open, setOpen] = useState(false);
   const getPixelPositionOffset = (offsetWidth, offsetHeight, labelAnchor) => {
@@ -90,7 +92,7 @@ const MarkerComponent = ({
             </div>
             <Link
               href={{
-                pathname: `/farm/${name}`,
+                pathname: `/farm/${id}`,
               }}
             >
               <div className="blue-btn-one flex justify-center align-center mar-bottom-16">
@@ -213,7 +215,7 @@ const MarkerComponent = ({
             <div className="mar-bottom-16"></div>
             <Link
               href={{
-                pathname: `/farm/${name}`,
+                pathname: `/farm/${id}`,
               }}
             >
               <div className="blue-btn-one flex justify-center align-center mar-bottom-16">

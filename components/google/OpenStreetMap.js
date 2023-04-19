@@ -28,6 +28,7 @@ const OpenStreetMap = ({ locations, locationsFilter, center, radius }) => {
   useEffect(() => {
     setMarkers((prev) => {
       return locationsFilter.map((location, index) => {
+        console.log(location);
         return (
           <MarkerComponent
             key={index}
@@ -35,6 +36,7 @@ const OpenStreetMap = ({ locations, locationsFilter, center, radius }) => {
               lat: Number(location.address[0].lat),
               lng: Number(location.address[0].lng),
             }}
+            id={location.id}
             name={location.name}
             description={location.description}
             email={location.email}
@@ -47,6 +49,7 @@ const OpenStreetMap = ({ locations, locationsFilter, center, radius }) => {
             tags={location.tags}
             products={location.products}
             icon={location.icon}
+            images={location.images}
           />
         );
       });

@@ -14,9 +14,8 @@ import { toast, Toaster } from "react-hot-toast";
 import DeletePopup from "../../components/popups/DeletePopup";
 import { deleteLocation } from "../../utils/supabaseFunctions";
 const Cont = styled.div`
-
   background-color: #fff;
-  max-width:1600px;
+  max-width: 1600px;
   margin: 0 auto;
   .header {
     padding: 16px;
@@ -25,13 +24,13 @@ const Cont = styled.div`
 `;
 
 export const getServerSideProps = async (pageContext) => {
-  const title = pageContext.query.id;
+  const id = pageContext.query.id;
   const { data, error } = await supabase
     .from("locations")
     .select(
       "*, address(*,state_id(*), country_id(*)), products(*), images(*), user_id(id, username)"
     )
-    .eq("name", title)
+    .eq("id", id)
     .single();
   return {
     props: {
@@ -81,7 +80,7 @@ const Preview = ({ locationFetch, x }) => {
       )
       .eq("id", id)
       .single();
-      
+
     setLocation(data);
   };
   const [showDeletePopup, setShowDeletePopup] = useState(false);
