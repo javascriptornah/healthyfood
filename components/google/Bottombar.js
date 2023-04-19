@@ -1398,7 +1398,7 @@ const Container = styled.div`
   @media only screen and (max-width: 400px) {
     #address-input {
       margin-right: 0px !important;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
     .blue-btn-one {
       width: 100%;
@@ -1413,7 +1413,7 @@ export const PlacesAutocomplete = ({
   setAddress,
   updateCoords = null,
 }) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(location);
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -1447,8 +1447,14 @@ export const PlacesAutocomplete = ({
   };
 
   const showResults = async (e) => {
-    setLoading(true);
     e.preventDefault();
+    if (text == "") {
+      toast.error("Text can't be empty");
+
+      return;
+    }
+    setLoading(true);
+
     let addresses = await fetchAddresses(text);
 
     if (addresses.addresses.error) {
@@ -1486,7 +1492,10 @@ export const PlacesAutocomplete = ({
   return (
     <Container className="relative" colors={COLORS}>
       <div className="dropdown-address " ref={dropdownEl}>
-        <form onSubmit={showResults} className="flex align-center mar-bottom-8">
+        <form
+          onSubmit={showResults}
+          className="flex align-center mar-bottom-8 address-search"
+        >
           <input
             value={text}
             type="text"
@@ -1495,7 +1504,7 @@ export const PlacesAutocomplete = ({
             id="address-input"
             onFocus={() => setShowDropdown(true)}
             autoComplete="off"
-            className="mar-right-16"
+            className="mar-right-16 "
           />
           {loading ? (
             <div class="lds-ring-green">
@@ -1507,7 +1516,7 @@ export const PlacesAutocomplete = ({
           ) : (
             <button
               type="submit"
-              className="blue-btn-one flex-inline align-center"
+              className="blue-btn-one flex-inline align-center "
               onClick={() => setShowDropdown(true)}
             >
               <FontAwesomeIcon

@@ -32,6 +32,7 @@ import {
   updateLocation, //FIX THIS
   updateAddress,
 } from "../../utils/supabaseFunctions";
+import { fetchAddresses } from "../../utils/functions";
 const Cont = styled.div`
   form {
     display: grid;
@@ -50,6 +51,18 @@ const Cont = styled.div`
       }
     }
   }
+  .address-search {
+    flex-direction: column;
+    .blue-btn-one {
+      width: 100%;
+      justify-content: center;
+    }
+    #address-input {
+      margin-right: 0px !important;
+      margin-bottom: 8px;
+    }
+  }
+
   .radio-line {
     border-bottom: 1px solid ${(props) => props.colors.darkPink};
     margin-bottom: 16px;
@@ -225,6 +238,7 @@ const Sections = ({
   location_id,
   reFetchLocation,
   setEditMode,
+  titleText,
 }) => {
   const {
     handleSubmit,
@@ -237,9 +251,8 @@ const Sections = ({
   const [editDescription, setEditDescription] = useState(description);
   const updateDescription = (value) => {
     setEditDescription(value);
-  }
+  };
 
- 
   const [loading, setLoading] = useState({ state: false, msg: "" });
   const [libraries] = useState(["places"]);
   const { isLoaded } = useJsApiLoader({
@@ -263,7 +276,7 @@ const Sections = ({
   });
   const checkAddressValid = async () => {
     try {
-      const results = await getGeocode({ address: location });
+      const results = await fetchAddresses(location);
       return true;
     } catch (error) {
       toast("Please select an address from the dropdown.", {
@@ -309,7 +322,6 @@ const Sections = ({
     }
   };
   useEffect(() => {
-    
     setValue("address", address);
     setValue("website", website);
     setValue("email", email);
@@ -363,9 +375,11 @@ const Sections = ({
       numberOrganize.splice(4, 0, ")");
       numberOrganize.splice(5, 0, "-");
       numberOrganize.splice(9, 0, "-");
-    
+
+      console.log("???");
+      console.log(formData.name);
       const locationId = await updateLocation(
-        formData.name,
+        titleText,
         editDescription,
         formData.hoursFrom,
         formData.hoursTo,
@@ -437,7 +451,7 @@ const Sections = ({
   const [productsCopy, setProductsCopy] = useState(products);
   const [deletedProducts, setDeletedProducts] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
- 
+
   const addProduct = (e) => {
     e.preventDefault();
     if (product.name === "") {
@@ -805,10 +819,11 @@ const Sections = ({
             <div className="center-inline mar-bottom-16">
               <h4>DESCRIPTION</h4>
             </div>
-            <Editor id = 'description'
-              section = {editDescription}
-              updateSection = {updateDescription}
-              />
+            <Editor
+              id="description"
+              section={editDescription}
+              updateSection={updateDescription}
+            />
             <div
               onClick={() => focusField("description")}
               className="black-btn flex-inline align-center"

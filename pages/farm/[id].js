@@ -42,10 +42,11 @@ export const getServerSideProps = async (pageContext) => {
 const Preview = ({ locationFetch, x }) => {
   const [origPoster, setOrigPoster] = useState(false);
   const [user, setUser] = useState("null");
+  const [location, setLocation] = useState(locationFetch);
+  const [titleText, setTitleText] = useState(location.name);
   const router = useRouter();
   console.log(router.basePath);
   const title = router.query.title;
-  const [location, setLocation] = useState(locationFetch);
 
   const [loading, setLoading] = useState({ state: false, msg: "" });
   useEffect(() => {
@@ -133,7 +134,20 @@ const Preview = ({ locationFetch, x }) => {
       <Toaster />
       <div className="header flex flex-wrap space-between align-center">
         <div className="flex align-center mar-bottom-16">
-          <h3 className="text-shadow-red mar-right-16">{location.name}</h3>
+          {!editMode ? (
+            <h3 className="text-shadow-red mar-right-16">{location.name}</h3>
+          ) : (
+            <>
+              <input
+                type="text"
+                value={titleText}
+                onChange={(e) => setTitleText(e.target.value)}
+                placeholder="title"
+                style={{ fontSize: "2.827rem" }}
+              />
+            </>
+          )}
+
           <div className="flex flex-column ">
             <p className="mar-right-4 contrast">
               Posted- {new Date(location.created_at).toDateString()}
@@ -206,6 +220,7 @@ const Preview = ({ locationFetch, x }) => {
             location_id={location.id}
             reFetchLocation={reFetchLocation}
             setEditMode={setEditMode}
+            titleText={titleText}
           />
         </>
       ) : (

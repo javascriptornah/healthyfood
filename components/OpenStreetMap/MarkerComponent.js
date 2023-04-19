@@ -6,7 +6,7 @@ import { faExpand, faEye } from "@fortawesome/free-solid-svg-icons";
 import { Marker, Popup, Tooltip } from "react-leaflet";
 import COLORS from "../../data/colors";
 import L from "leaflet";
-
+import Slideshow from "./Slideshow";
 const Cont = styled.div`
   max-width: 320px;
   .tags-holder {
@@ -57,6 +57,8 @@ const MarkerComponent = ({
     popupAnchor: [-3, -76],
   });
 
+  console.log("images");
+  console.log(images);
   return (
     <>
       <Marker icon={iconItem} position={latLong} onClick={() => setOpen(true)}>
@@ -100,6 +102,8 @@ const MarkerComponent = ({
                 <FontAwesomeIcon icon={faEye} className="icon-sm white" />
               </div>
             </Link>
+            {images.length > 0 && <Slideshow images={images} />}
+
             <div className="field-line">
               <p className="black bold">Name</p>
               <div className="grey-line mar-bottom-4"></div>
