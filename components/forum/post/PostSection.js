@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faEye, faComment } from "@fortawesome/free-solid-svg-icons";
 import ReactMarkdown from "react-markdown";
+import Link from "next/link";
 
 const Cont = styled.div``;
 const PostSection = ({
@@ -32,7 +33,12 @@ const PostSection = ({
         <div>
           <p className="inline-block mar-right-8 bold">{title}</p>
           <p className="inline-block">
-            Posted by <span className="light-blue-2 bold">{username}</span>
+            Posted by{" "}
+            <Link href={`/user/${username}`}>
+              <span className="light-blue-2 bold underline-hover">
+                {username}
+              </span>
+            </Link>
           </p>
         </div>
         <FontAwesomeIcon icon={faBookmark} className=" cursor grey" />

@@ -38,7 +38,7 @@ const Account = () => {
     title: "Account",
     description:
       "Healthyfoodmap account page. See your saved posts, created posts and account details.",
-    link: "https://healthyfoodmap.com/",
+    link: "https://healthyfoodmap.com/account",
     type: "website",
     date: "2023-02-14 15:00:00.000",
     image: "/seo/account.PNG",
