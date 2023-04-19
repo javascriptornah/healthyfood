@@ -8,7 +8,7 @@ export default async (req, res) => {
       }
     );
     let jsonData = await response.json();
-    res.status(200).json({
+    return res.status(200).json({
       addresses: jsonData,
     });
   }

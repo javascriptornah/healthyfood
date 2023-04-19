@@ -96,6 +96,7 @@ const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
           height="32"
           quality="100"
           className="icon-img"
+          alt={icon}
         />
       </div>
     );

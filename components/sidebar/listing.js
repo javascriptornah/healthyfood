@@ -121,7 +121,7 @@ const Listing = ({
             <p className="contrast">{new Date(created_at).toDateString()} </p>
             <h5 className="black">{name}</h5>
           </div>
-          <Image src={icon} width={32} height={32} quality="100" />
+          <Image src={icon} width={32} height={32} quality="100" alt={icon} />
         </div>
         <div className="black-line-2 mar-bottom-8"></div>
         <p className="light black">{address}</p>
