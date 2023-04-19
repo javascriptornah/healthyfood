@@ -102,7 +102,7 @@ const UserPage = ({ user, fetchUser }) => {
       username: "rawfatgod",
       title: "Where do I find raw beef fat in Ottawa?",
       content:
-        "I’ve been l looking all over for grass fed/finished unfrozen beef fat and I cannot find it. \n Do you guys have any idea where I might be able to find some? \n I would really appreciate it and I would send you money in return for it...",
+        "I’ve been  looking all over for grass fed/finished unfrozen beef fat and I cannot find it. \n Do you guys have any idea where I might be able to find some? \n I would really appreciate it and I would send you money in return for it...",
       views: 646,
       comments: 42,
     },

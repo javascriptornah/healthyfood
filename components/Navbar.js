@@ -132,6 +132,7 @@ const Navbar = () => {
               width={68.333}
               height={43.666}
               quality="100"
+              alt="Healthy food map"
             />
           </Link>
           {user !== null ? (
@@ -207,6 +208,7 @@ const Navbar = () => {
                 width={50}
                 height={31.95}
                 quality="100"
+                alt="Healthy food map"
               />
             </Link>
             {user !== null ? (

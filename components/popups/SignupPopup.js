@@ -181,6 +181,7 @@ const Signup = ({ hideFunction }) => {
             height={85.666}
             quality="100"
             priority
+            alt="Healthy food map"
           />
         </div>
         <div className="sign-up-toggle">
