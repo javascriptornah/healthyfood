@@ -10,6 +10,7 @@ import {
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 import LinkBio from "./LinkBio";
+import Tooltip from "../inputs/Tooltip";
 const Cont = styled.div`
   padding: 0;
   background-color: ${(props) => props.colors.tan};
@@ -33,9 +34,6 @@ const Cont = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
-  .icon-med {
-    justify-self: end;
-  }
 `;
 
 const AccountPreview = ({
@@ -47,6 +45,12 @@ const AccountPreview = ({
   links,
   user,
 }) => {
+  const [toolTips, setToolTips] = useState({
+    edit: false,
+    upload: false,
+  });
+  const [editing, setEditing] = useState(false);
+
   return (
     <Cont colors={COLORS} className="grey-border-2 box-shadow-2">
       <div className="padding-x-12 padding-y-8 image-section">
@@ -57,9 +61,49 @@ const AccountPreview = ({
               src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}${user.user_metadata.avatar_url}`}
             />
           </div>
-          <p className="bold green cursor underline">Upload</p>
+          <div
+            className="relative"
+            onMouseOut={() =>
+              setToolTips((prev) => {
+                return { ...prev, upload: false };
+              })
+            }
+          >
+            <Tooltip text="New profile pic" shown={toolTips.upload} />
+            <p
+              className="bold green cursor underline"
+              onMouseOver={() =>
+                setToolTips((prev) => {
+                  return { ...prev, upload: true };
+                })
+              }
+            >
+              Upload
+            </p>
+          </div>
         </div>
-        <FontAwesomeIcon icon={faGear} className="green icon-med cursor" />
+        <div
+          className="relative justify-self-end"
+          onMouseOut={() =>
+            setToolTips((prev) => {
+              return { ...prev, edit: false };
+            })
+          }
+        >
+          <Tooltip text="Edit account" shown={toolTips.edit} />
+          <Link href={"/editAccount"}>
+            <FontAwesomeIcon
+              onClick={() => setEditing(true)}
+              icon={faGear}
+              className="icon-green icon-med cursor"
+              onMouseOver={() =>
+                setToolTips((prev) => {
+                  return { ...prev, edit: true };
+                })
+              }
+            />
+          </Link>
+        </div>
       </div>
       <div className="padding-x-12 padding-y-8">
         <h5 className="mar-bottom-8">{username}</h5>

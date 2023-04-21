@@ -19,13 +19,26 @@ const Cont = styled.div`
     padding: 16px;
   }
 `;
-const Account = () => {
+
+export async function getServerSideProps() {
+  const { data: session } = await supabase.auth.getSession();
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
+const Account = ({ session }) => {
   const [user, setUser] = useState(null);
+
   const [isLogged, setIsLogged] = useState(false);
   const fetchUser = async () => {
     const { data: session } = await supabase.auth.getSession();
     if (session.session != null) {
       setUser(session.session.user);
+      console.log("kap");
+      console.log(session.session);
       setIsLogged(true);
     } else {
       setIsLogged(false);
@@ -40,7 +53,7 @@ const Account = () => {
       "Healthyfoodmap account page. See your saved posts, created posts and account details.",
     link: "https://healthyfoodmap.com/account",
     type: "website",
-    date: "2023-02-14 15:00:00.000",
+    date: "2023-04-20 15:00:00.000",
     image: "/seo/account.PNG",
     keywords:
       "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder",

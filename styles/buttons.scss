@@ -48,6 +48,12 @@ $light-orange: #fd7d27;
   }
 }
 
+.icon-green{
+  color: $green;
+  &:active{
+    color: $light-green;
+  }
+}
 .green-icon {
   width: 40px;
   height: 40px;
