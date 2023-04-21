@@ -74,7 +74,7 @@ const Sidebar = ({ locations, fetchLocation, locationDistances }) => {
       <Listing
         key={index}
         name={location.name}
-        address={location.address[0].full_address}
+        address={location.address[0]?.full_address}
         created_at={location.created_at}
         icon={location.icon}
         tags={location.tags}

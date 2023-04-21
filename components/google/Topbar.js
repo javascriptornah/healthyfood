@@ -270,7 +270,10 @@ const Topbar = ({
     setLocationDistances((prev) => {
       const [lat1, lon1] = [address.lat, address.lng];
       const returnLocations = locations.map((location) => {
-        const [lat2, lon2] = [location.address[0].lat, location.address[0].lng];
+        const [lat2, lon2] = [
+          location.address[0]?.lat,
+          location.address[0]?.lng,
+        ];
         const φ1 = (lat1 * Math.PI) / 180,
           φ2 = (lat2 * Math.PI) / 180,
           Δλ = ((lon2 - lon1) * Math.PI) / 180,
@@ -295,7 +298,7 @@ const Topbar = ({
   const latitudeCalc = (locationsFilter) => {
     const [lat1, lon1] = [address.lat, address.lng];
     const returnLocations = locationsFilter.filter((location) => {
-      const [lat2, lon2] = [location.address[0].lat, location.address[0].lng];
+      const [lat2, lon2] = [location.address[0]?.lat, location.address[0]?.lng];
       const φ1 = (lat1 * Math.PI) / 180,
         φ2 = (lat2 * Math.PI) / 180,
         Δλ = ((lon2 - lon1) * Math.PI) / 180,

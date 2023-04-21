@@ -28,7 +28,8 @@ export const getServerSideProps = async () => {
 export default function Home({ locationsFetch, tagsFetch }) {
   const [locations, setLocations] = useState(locationsFetch);
   const [tags, setTags] = useState(tagsFetch);
-
+  console.log("locations");
+  console.log(locationsFetch);
   const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchUser = async () => {
