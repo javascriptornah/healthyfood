@@ -77,10 +77,11 @@ const Slideshow = ({ images }) => {
   };
   const right = String(index * 100) + "%";
   console.log(right);
-  const imageElems = images.map((image) => {
+  const imageElems = images.map((image, index) => {
     return (
       <div className="image-cont">
         <Image
+          key={index}
           src={image.url}
           fill
           quality="100"
