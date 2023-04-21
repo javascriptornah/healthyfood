@@ -94,6 +94,9 @@ h6 {
 .text-shadow {
   text-shadow: 3px 8px 7px rgba(0, 0, 0, 0.61);
 }
+.text-shadow-2 {
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
 .text-shadow-white {
   text-shadow: 3px 3px 6px rgba(231, 239, 248, 0.4);
 }
@@ -131,6 +134,21 @@ h6 {
   @media only screen and (max-width: 600px) {
     margin-bottom: 16px;
   }
+}
+
+.padding-x-12{
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+.padding-y-8{
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.padding-y-16{
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .padding-right-8{
@@ -398,3 +416,4 @@ a {
     text-decoration: underline;
   }
 }
+

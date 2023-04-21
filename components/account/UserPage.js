@@ -84,6 +84,7 @@ const UserPage = ({ user, fetchUser }) => {
           ? 1
           : 0;
       });
+
       setLocations(locationsFetch);
     };
     fetchLocationsWrapper();
@@ -137,6 +138,7 @@ const UserPage = ({ user, fetchUser }) => {
           </div>
           <div className="bio">
             <AccountPreview
+              user={user}
               username="rawfatgod"
               bio="I enjoy eating steak and computer 
  programing. I am offering health

@@ -6,9 +6,9 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 const Cont = styled.div`
   border: 1px solid ${(props) => props.colors.grey};
-  background-color: #fff;
+  background-color: ${(props) => props.colors.lightBeige};
   border-radius: 8px;
-  padding: 12px 8px;
+
   overflow: auto;
   margin-bottom: 16px;
   transition: box-shadow 0.25s ease;
@@ -21,6 +21,19 @@ const Cont = styled.div`
     border: 1px solid ${(props) => props.colors.darkBlue};
     h5 {
       text-decoration: underline;
+    }
+  }
+  .circle-red {
+    background-color: ${(props) => props.colors.darkPink};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 16px;
+    p {
+      color: ${(props) => props.colors.lightBeige};
     }
   }
   .image {
@@ -44,10 +57,11 @@ const Location = ({
   tags,
   description,
   index,
+  id,
 }) => {
   const tagElems = tags.map((tag, index) => {
     return (
-      <div key={index} className="tag-five">
+      <div key={index} className="tag-five box-shadow-2">
         <p>{tag}</p>
       </div>
     );
@@ -56,21 +70,22 @@ const Location = ({
   return (
     <Link
       href={{
-        pathname: `/farm/${name}`,
+        pathname: `/farm/${id}`,
       }}
     >
-      <Cont colors={COLORS} className="box-shadow-2 cursor opacity-anim">
-        <div className="flex align-center">
-          <p className="green bold green-circle mar-right-16 mar-bottom-8">
-            {index + 1}
-          </p>
-          <div className="mar-bottom-8">
-            <h5 className="black inline-block mar-right-16">{name}</h5>
-            <p className="contrast inline-block">{address}</p>
+      <Cont colors={COLORS} className="box-shadow cursor opacity-anim">
+        <div className="flex align-center  padding-x-12 padding-y-8">
+          <div className="circle-red box-shadow-2">
+            <p className="bold">{index + 1}</p>
           </div>
+          <h5 className=" inline-bloc text-shadow-2">{name}</h5>
         </div>
+        <div className="red-line mar-bottom-8"></div>
+        <div className="mar-bottom-8">
+          <p className="contrast inline-block padding-x-12">{address}</p>
+        </div>
+
         <div>
-          <div className="grey-line mar-bottom-8"></div>
           <div className="">
             {url !== null && (
               <div className="image">
@@ -85,11 +100,11 @@ const Location = ({
                 />
               </div>
             )}
-            <ReactMarkdown className="markdown mar-bottom-16">
+            <ReactMarkdown className="markdown padding-x-12 padding-y-16">
               {description}
             </ReactMarkdown>
             <div className="right-content">
-              <div className="flex-inline  tags align-start flex-wrap">
+              <div className="flex-inline  tags align-start flex-wrap padding-x-12 padding-y-8">
                 {tagElems}
               </div>
             </div>

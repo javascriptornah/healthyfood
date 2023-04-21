@@ -4,30 +4,23 @@ import COLORS from "../../data/colors";
 import Location from "./Location";
 
 const Cont = styled.div`
-  border: 1px solid ${(props) => props.colors.grey};
-  background-color: ${(props) => props.colors.lightWhite};
-  border-radius: 8px;
-  padding: 8px 12px;
-
+  .content-holder {
+    border: 1px solid ${(props) => props.colors.grey};
+    background-color: ${(props) => props.colors.tan};
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  .title {
+    border: 1px solid ${(props) => props.colors.darkPink};
+    border-radius: 8px;
+    padding: 12px 8px;
+    background: linear-gradient(#edc7b7, #eee2dc);
+  }
   .overscroll {
     max-height: 800px;
     overflow: auto;
-    ::-webkit-scrollbar {
-      width: 1rem;
-      background: ${(props) => props.colors.offWhite};
-    }
-    .small-scrollbar {
-      &::-webkit-scrollbar {
-        width: 0.5rem;
-      }
-    }
-    ::-webkit-scrollbar-thumb {
-      background: ${(props) => props.colors.darkBlue};
-      border-radius: 1rem;
-
-      &:hover {
-        background: ${(props) => props.colors.lightBlue};
-      }
+    &::-webkit-scrollbar {
+      width: 0.5rem !important;
     }
   }
 `;
@@ -39,6 +32,7 @@ const PostPreview = ({ title, locations }) => {
       return (
         <Location
           key={index}
+          id={location.id}
           index={index}
           name={location.name}
           address={location.address[0].full_address}
@@ -54,6 +48,7 @@ const PostPreview = ({ title, locations }) => {
       return locations.map((location, index) => {
         return (
           <Location
+            id={location.id}
             key={index}
             index={index}
             name={location.name}
@@ -85,18 +80,23 @@ const PostPreview = ({ title, locations }) => {
     });
   };
   return (
-    <Cont colors={COLORS} className="mar-bottom-64">
-      <h4 className="blue mar-bottom-16">{title}</h4>
-      <div className="overscroll">
-        {renderElems}
-        {renderElems.length < locations.length && (
-          <div className="center-inline mar-bottom-32">
-            <div className="mar-bottom-4"></div>
-            <div onClick={increaseIteration} className="blue-btn-one">
-              <h5>Show More</h5>
+    <Cont colors={COLORS} className="mar-bottom-64 ">
+      <div className="title mar-bottom-16 flex align-center">
+        <h4 className="text-shadow-2 mar-right-16">{title}</h4>
+        <p className="contrast bold">({locations.length})</p>
+      </div>
+      <div className="content-holder ">
+        <div className="overscroll">
+          {renderElems}
+          {renderElems.length < locations.length && (
+            <div className="center-inline mar-bottom-32">
+              <div className="mar-bottom-4"></div>
+              <div onClick={increaseIteration} className="blue-btn-one">
+                <h5>Show More</h5>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </Cont>
   );
