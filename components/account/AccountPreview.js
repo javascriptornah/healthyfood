@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
+import LinkBio from "./LinkBio";
 const Cont = styled.div`
   padding: 0;
   background-color: ${(props) => props.colors.tan};
@@ -47,7 +48,7 @@ const AccountPreview = ({
   user,
 }) => {
   return (
-    <Cont colors={COLORS} className="grey-border-2">
+    <Cont colors={COLORS} className="grey-border-2 box-shadow-2">
       <div className="padding-x-12 padding-y-8 image-section">
         <div></div>
         <div className="flex flex-column align-center">
@@ -98,17 +99,23 @@ const AccountPreview = ({
         </div>
       </div>
 
-      <div className="padding-16">
-        <p className="bold mar-bottom-8">Links</p>
-        {links.map((link, index) => {
-          return (
-            <p key={index} className="underline-hover">
-              {" "}
-              <Link href={link}>{link}</Link>
-            </p>
-          );
-        })}
+      <div className="padding-x-12 padding-y-8 flex flex-wrap">
+        <LinkBio
+          color="red"
+          text="Raw meat Youtube"
+          icon="youtube"
+          url="https://www.youtube.com/watch?v=josTLezCaCI&list=PL94ZTy5l0-Gkx4ZBMfP1tW2d5Tivtdajo&index=131&ab_channel=%F0%9D%93%93%F0%9D%93%B2%F0%9D%93%B0%F0%9D%93%B2%F0%9D%93%BD%F0%9D%93%AA%F0%9D%93%B5%F0%9D%93%AB%F0%9D%93%B8%F0%9D%94%82%F0%9D%93%B1%F0%9D%93%AD"
+        />
       </div>
+      <div className="ssm-spacer-bot-res"></div>
+      <div className="padding-x-12 padding-y-8">
+        <Link href={"/createPost"}>
+          <div className="blue-btn-two">
+            <h5>New Post</h5>
+          </div>
+        </Link>
+      </div>
+      <div className="mar-bottom-32"></div>
     </Cont>
   );
 };

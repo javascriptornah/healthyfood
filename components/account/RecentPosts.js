@@ -4,6 +4,11 @@ import COLORS from "../../data/colors";
 import Post from "./Post";
 const Cont = styled.div`
   padding: 0;
+  .posts-holder {
+    background-color: ${(props) => props.colors.tan};
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
 `;
 
 const RecentPosts = ({ posts }) => {
@@ -21,8 +26,12 @@ const RecentPosts = ({ posts }) => {
     );
   });
   return (
-    <Cont colors={COLORS} className="grey-border-2">
-      {postElems}
+    <Cont colors={COLORS} className="">
+      <div className="red-title mar-bottom-16">
+        <h4 className="mar-right-16">Forum Posts</h4>
+        <p className="contrast bold">({posts.length})</p>
+      </div>
+      <div className="posts-holder box-shadow-2 grey-border-2">{postElems}</div>
     </Cont>
   );
 };

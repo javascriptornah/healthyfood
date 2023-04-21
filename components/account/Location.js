@@ -18,7 +18,7 @@ const Cont = styled.div`
   }
   &:hover {
     box-shadow: none;
-    border: 1px solid ${(props) => props.colors.darkBlue};
+    border: 1px solid ${(props) => props.colors.darkPink};
     h5 {
       text-decoration: underline;
     }
@@ -61,7 +61,7 @@ const Location = ({
 }) => {
   const tagElems = tags.map((tag, index) => {
     return (
-      <div key={index} className="tag-five box-shadow-2">
+      <div key={index} className="tag-five ">
         <p>{tag}</p>
       </div>
     );

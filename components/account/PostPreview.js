@@ -81,13 +81,14 @@ const PostPreview = ({ title, locations }) => {
   };
   return (
     <Cont colors={COLORS} className="mar-bottom-64 ">
-      <div className="title mar-bottom-16 flex align-center">
+      <div className="title mar-bottom-16 flex align-center box-shadow-2">
         <h4 className="text-shadow-2 mar-right-16">{title}</h4>
         <p className="contrast bold">({locations.length})</p>
       </div>
       <div className="content-holder ">
         <div className="overscroll">
           {renderElems}
+          <div className="mar-bottom-32"></div>
           {renderElems.length < locations.length && (
             <div className="center-inline mar-bottom-32">
               <div className="mar-bottom-4"></div>

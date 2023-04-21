@@ -9,6 +9,7 @@ import PostPreview from "./PostPreview";
 import toast from "react-hot-toast";
 import AccountPreview from "./AccountPreview";
 import RecentPosts from "./RecentPosts";
+import LinkBio from "./LinkBio";
 const Cont = styled.div`
   .default-page {
     background: #fff;
@@ -21,6 +22,9 @@ const Cont = styled.div`
     max-width: 1600px;
     margin: 0 auto;
     justify-items: center;
+    @media only screen and (max-width: 600px) {
+      display: block;
+    }
     & > div {
       max-width: 480px;
       @media only screen and (max-width: 600px) {
@@ -112,23 +116,13 @@ const UserPage = ({ user, fetchUser }) => {
   return (
     <Cont colors={COLORS}>
       <div className="default-page">
-        <div className="flex align-center space-between">
-          <div className="flex align-center">
-            <img
-              className="mar-right-32"
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}${user.user_metadata.avatar_url}`}
-            />
-            <div>
-              <h5 className="blue">{user.user_metadata.username}</h5>
-              <p className="contrast">{user.email}</p>
-            </div>
-          </div>
+        <div className="flex flex-end">
           <div className="red-btn-one" onClick={logout}>
             <h5>Sign Out</h5>
           </div>
         </div>
         <div className="mar-bottom-32"></div>
-        <div className="blue-line mar-bottom-32"></div>
+
         <div className="grid">
           <div className=" recent-posts">
             <PostPreview title="Recent Posts" locations={locations} />
