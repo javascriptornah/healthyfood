@@ -1,19 +1,22 @@
 import styled from "styled-components";
-import { GoogleMap, useJsApiLoader, Circle } from "@react-google-maps/api";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Toaster } from "react-hot-toast";
 import MarkerComponent from "./MarkerComponent";
 import FishMarker from "./FishMarker";
 import SeaMarker from "./SeaMarker";
-
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import latCountryCodes from "../../data/latCountryCodes.json";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Circle, useMap } from "react-leaflet";
+import L from "leaflet";
 
 const Cont = styled.div`
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  //min-height: 100vh;
+  .leaflet-container {
+    width: 100%;
+    height: 85vh;
+    z-index: 1;
+  }
   .google-holder {
     display: flex;
     @media only screen and (max-width: 800px) {
@@ -22,30 +25,24 @@ const Cont = styled.div`
   }
 `;
 
-const containerStyle = {
-  width: "100%",
-  height: "75vh",
-};
-
-const options = {
-  imagePath:
-    "'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-};
-
-function createKey(location) {
-  return location.lat + location.lng;
-}
 const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
+  const ZOOM_LEVEL = 4;
+  const mapRef = useRef();
   const [oceans, setOceans] = useState(oceansFetch);
   const [seas, setSeas] = useState(seasFetch);
   const [pollution, setPollution] = useState(pollutionFetch);
   const [fish, setFish] = useState(fishFetch);
-  const circleRef = useRef(null);
-  const [markers, setMarkers] = useState([]);
+
   const [center, setCenter] = useState({
     lat: 34.621,
     lng: -41.166,
   });
+
+  function ChangeView({ center, zoom }) {
+    const map = useMap();
+    map.setView(center, zoom);
+    return null;
+  }
 
   const [oceanElems, setOceanElems] = useState(
     oceans.map((ocean, index) => {
@@ -55,19 +52,13 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
             lat: ocean.lat,
             lng: ocean.lng,
           }}
+          radius={ocean.radius * 1000}
           key={index}
-          options={{
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#0000FF",
+          pathOptions={{
+            weight: 2,
+            color: "#0000FF",
             fillOpacity: 0.2,
             clickable: false,
-            draggable: false,
-            editable: false,
-            visible: true,
-            radius: ocean.radius * 1000,
-            zIndex: 1,
           }}
         />
       );
@@ -199,22 +190,6 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
   );
   const [coords, setCoords] = useState(null);
 
-  const [libraries] = useState(["places"]);
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-    libraries,
-  });
-  const [map, setMap] = useState(null);
-
-  const onLoad = useCallback(function callback(map) {
-    setMap(map);
-  }, []);
-
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null);
-  }, []);
-
   const [adding, setAdding] = useState(false);
 
   const startAdding = () => {
@@ -240,30 +215,23 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
       };
     });
   };
-  const {
-    ready,
-    value,
-    setValue,
-    suggestions: { status, data },
-    clearSuggestions,
-  } = usePlacesAutocomplete();
 
-  console.log("xxx");
-  console.log(oceanElems);
-  return isLoaded ? (
+  return (
     <Cont>
       <Toaster />
 
       <div className="google-holder">
-        <GoogleMap
-          mapContainerStyle={containerStyle}
+        <MapContainer
+          ref={mapRef}
+          className="leaflet-container"
           center={center}
-          zoom={4}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          onClick={(e) => adding && addMarker(e)}
-          options={{ gestureHandling: "greedy" }}
+          zoom={ZOOM_LEVEL}
         >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <ChangeView center={center} zoom={ZOOM_LEVEL} />
           {oceanElems}
           {oceanMarkers}
 
@@ -274,13 +242,11 @@ const Index = ({ oceansFetch, seasFetch, pollutionFetch, fishFetch }) => {
           {pollutionMarkers}
 
           {fishMarkers}
-        </GoogleMap>
+        </MapContainer>
       </div>
 
       <div className="lg-spacer"></div>
     </Cont>
-  ) : (
-    <> </>
   );
 };
 

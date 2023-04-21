@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
-import { Marker, InfoWindow } from "@react-google-maps/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faEye, faStar } from "@fortawesome/free-solid-svg-icons";
 import COLORS from "../../data/colors";
 import colors from "../../data/colors";
 import ReactMarkdown from "react-markdown";
+import { Marker, Popup, Tooltip } from "react-leaflet";
+import L from "leaflet";
 const Cont = styled.div`
   max-width: 320px;
   .tags-holder {
@@ -27,48 +28,50 @@ const Cont = styled.div`
 `;
 const MarkerComponent = ({ latLong, name, icon, description, appearance }) => {
   const [open, setOpen] = useState(false);
+  let iconItem = L.icon({
+    iconUrl: icon,
+    iconSize: [24, 24],
 
+    popupAnchor: [-3, -76],
+  });
   return (
     <Marker
       label={name}
-      icon={icon}
+      icon={iconItem}
       position={latLong}
       onClick={() => setOpen(true)}
     >
-      {open && (
-        <InfoWindow onCloseClick={() => setOpen(false)}>
-          <Cont colors={COLORS} className="info-box">
-            <h5 className=" underline">{name}</h5>
+      <Tooltip>{name}</Tooltip>
+      <Popup>
+        <Cont colors={COLORS} className="info-box">
+          <h5 className=" underline">{name}</h5>
 
-            <div className="mar-bottom-8"></div>
-            <Link
-              href={{
-                pathname: `/fish/${name}`,
-              }}
-            >
-              <div className="blue-btn-one flex justify-center align-center mar-bottom-16">
-                <h5 className="mar-right-8">VIEW FISH</h5>
-                <FontAwesomeIcon icon={faEye} className="icon-sm white" />
-              </div>
-            </Link>
-            <div className="mar-bottom-8"></div>
-            {description !== null && (
-              <>
-                <h5 className="black mar-bottom-8">Where are they found?</h5>
-                <ReactMarkdown className="markdown">
-                  {description}
-                </ReactMarkdown>
-              </>
-            )}
-            {appearance !== null && (
-              <>
-                <h5 className="black mar-bottom-8">Description</h5>
-                <ReactMarkdown className="markdown">{appearance}</ReactMarkdown>
-              </>
-            )}
-          </Cont>
-        </InfoWindow>
-      )}
+          <div className="mar-bottom-8"></div>
+          <Link
+            href={{
+              pathname: `/fish/${name}`,
+            }}
+          >
+            <div className="blue-btn-one flex justify-center align-center mar-bottom-16">
+              <h5 className="mar-right-8">VIEW FISH</h5>
+              <FontAwesomeIcon icon={faEye} className="icon-sm white" />
+            </div>
+          </Link>
+          <div className="mar-bottom-8"></div>
+          {description !== null && (
+            <>
+              <h5 className="black mar-bottom-8">Where are they found?</h5>
+              <ReactMarkdown className="markdown">{description}</ReactMarkdown>
+            </>
+          )}
+          {appearance !== null && (
+            <>
+              <h5 className="black mar-bottom-8">Description</h5>
+              <ReactMarkdown className="markdown">{appearance}</ReactMarkdown>
+            </>
+          )}
+        </Cont>
+      </Popup>
     </Marker>
   );
 };

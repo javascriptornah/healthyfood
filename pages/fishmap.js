@@ -1,5 +1,9 @@
 import Head from "next/head";
-import Fishmap from "../components/fishmap/index";
+import dynamic from "next/dynamic";
+const Fishmap = dynamic(() => import("../components/fishmap/index"), {
+  ssr: false,
+});
+
 import styled from "styled-components";
 import COLORS from "../data/colors";
 import { Toaster } from "react-hot-toast";
@@ -82,7 +86,7 @@ export default function Home({
         oceansFetch={oceans}
         seasFetch={seas}
         pollutionFetch={pollution}
-        fishFetch = {fish}
+        fishFetch={fish}
       />
     </Cont>
   );

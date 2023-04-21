@@ -57,8 +57,6 @@ const MarkerComponent = ({
     popupAnchor: [-3, -76],
   });
 
-  console.log("images");
-  console.log(images);
   return (
     <>
       <Marker icon={iconItem} position={latLong} onClick={() => setOpen(true)}>

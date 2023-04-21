@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
-import { Marker, InfoWindow } from "@react-google-maps/api";
+import { Marker, Popup, Tooltip } from "react-leaflet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faEye, faStar } from "@fortawesome/free-solid-svg-icons";
 import COLORS from "../../data/colors";
@@ -28,33 +28,39 @@ const Cont = styled.div`
 const MarkerComponent = ({ latLong, name, icon, description }) => {
   const [open, setOpen] = useState(false);
 
+  let iconItem = L.icon({
+    iconUrl: icon,
+    iconSize: [24, 24],
+
+    popupAnchor: [-3, -76],
+  });
+
   return (
     <Marker
       label={name}
-      icon={icon}
+      icon={iconItem}
       position={latLong}
       onClick={() => setOpen(true)}
     >
-      {open && (
-        <InfoWindow onCloseClick={() => setOpen(false)}>
-          <Cont colors={COLORS} className="info-box">
-            <p className="bold underline">{name}</p>
+      <Tooltip>{name}</Tooltip>
+      <Popup>
+        <Cont colors={COLORS} className="info-box">
+          <p className="bold underline">{name}</p>
 
-            <div className="mar-bottom-16"></div>
-            <Link
-              href={{
-                pathname: `/sea/${name}`,
-              }}
-            >
-              <div className="blue-btn-one flex justify-center align-center mar-bottom-16">
-                <h5 className="mar-right-8">VIEW SEA</h5>
-                <FontAwesomeIcon icon={faEye} className="icon-sm white" />
-              </div>
-            </Link>
-            <ReactMarkdown className="markdown">{description}</ReactMarkdown>
-          </Cont>
-        </InfoWindow>
-      )}
+          <div className="mar-bottom-16"></div>
+          <Link
+            href={{
+              pathname: `/sea/${name}`,
+            }}
+          >
+            <div className="blue-btn-one flex justify-center align-center mar-bottom-16">
+              <h5 className="mar-right-8">VIEW SEA</h5>
+              <FontAwesomeIcon icon={faEye} className="icon-sm white" />
+            </div>
+          </Link>
+          <ReactMarkdown className="markdown">{description}</ReactMarkdown>
+        </Cont>
+      </Popup>
     </Marker>
   );
 };

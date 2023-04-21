@@ -164,14 +164,9 @@ const Navbar = () => {
             <Link href="/" className="no-color-link text-shadow-red">
               <h4 className=" mar-right-32 underline-hover">FOOD MAP</h4>
             </Link>
-            <Link href="/" className="no-color-link text-shadow-red">
-              <h5 className="mar-right-16 underline-hover">MAP</h5>
-            </Link>
+
             <Link href="/forum" className="no-color-link text-shadow-red">
               <h5 className="mar-right-16 underline-hover">FORUM</h5>
-            </Link>
-            <Link href="/farmmap" className="no-color-link text-shadow-red">
-              <h5 className="mar-right-16 underline-hover">2ND MAP</h5>
             </Link>
           </div>
           <div className="nav-section">
@@ -183,9 +178,7 @@ const Navbar = () => {
                 FISH FINDER
               </h4>
             </Link>
-            <Link href="/fishmap" className="text-shadow-blue">
-              <h5 className="blue mar-right-16 underline-hover">MAP</h5>
-            </Link>
+
             <Link href="/articles" className="text-shadow-blue">
               <h5 className="blue mar-right-16 underline-hover">ARTICLES</h5>
             </Link>
