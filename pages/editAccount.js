@@ -111,17 +111,20 @@ const EditAccount = () => {
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
   const [usernameDisplay, setUsernameDisplay] = useState("");
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef(null);
   const inputRef = useRef(null);
   const [formErrors, setFormErrors] = useState({ email: "", username: "" });
   const [emailLoading, setEmailLoading] = useState(false);
+  const [bioLoading, setBioLoading] = useState(false);
   const [usernameLoading, setUsernameLoading] = useState(false);
   const [reportActive, setReportActive] = useState(false);
   const emailRef = useRef();
   const [usernameBtn, setUsernameBtn] = useState(false);
   const [emailBtn, setEmailBtn] = useState(false);
+  const [bioBtn, setBioBtn] = useState(false);
   useEffect(() => {
     const updateSession = async () => {
       const { data: session } = await supabase.auth.getSession();
@@ -195,6 +198,13 @@ const EditAccount = () => {
     }
   };
 
+  const updateBio = (e) => {
+    setBio(e.target.value);
+    if (!bioBtn) {
+      setBioBtn(true);
+    }
+  };
+
   const uploadAvatar = async (event) => {
     if (!event.target.files || event.target.files.length === 0) {
       throw new Error("You must select an image to upload.");
@@ -219,6 +229,8 @@ const EditAccount = () => {
       setReportActive(false);
     };
   };
+
+  const submitBio = () => {};
   const submitEmail = () => {
     const notUniqueEmail = () => {
       setEmailLoading(false);
@@ -434,6 +446,31 @@ const EditAccount = () => {
             ) : (
               <button onClick={submitEmail} className="dark-blue-btn">
                 <h5>{emailLoading ? "Loading..." : "Update"}</h5>
+              </button>
+            ))}
+          <div className="mar-bottom-32"></div>
+          <label>
+            <h5 className="red mar-bottom-8">Bio</h5>
+
+            <textarea
+              value={bio}
+              onChange={updateBio}
+              type="text"
+              placeholder="Tell us about yourself!"
+              ref={emailRef}
+              className={formErrors.bio !== "" ? "border-red" : ""}
+            />
+            <p className="red">{formErrors.bio}</p>
+          </label>
+          {bioBtn &&
+            (bioLoading ? (
+              <div className="lds-ripple">
+                <div></div>
+                <div></div>
+              </div>
+            ) : (
+              <button onClick={submitBio} className="dark-blue-btn">
+                <h5>{bioLoading ? "Loading..." : "Update"}</h5>
               </button>
             ))}
         </div>
