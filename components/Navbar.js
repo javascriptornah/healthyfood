@@ -8,8 +8,10 @@ import {
   faBars,
   faComment,
   faLocationDot,
+  faMapPin,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
+import { logout } from "../utils/supabaseFunctions";
 import Dropdown from "./navbar/Dropdown.js";
 import supabase from "../utils/supabaseClient";
 
@@ -19,6 +21,9 @@ const Cont = styled.div`
     padding: 16px 32px 8px 32px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     @media only screen and (max-width: 780px) {
       display: none;
     }
@@ -86,6 +91,10 @@ const Cont = styled.div`
       }
     }
   }
+  .nav-content {
+    height: 58px;
+    min-height: 58px;
+  }
   .mobile-icon {
     width: 36px;
     height: 36px;
@@ -125,7 +134,7 @@ const Navbar = () => {
   return (
     <Cont colors={COLORS} id="navbar">
       <div className="nav-desktop">
-        <div className="flex mar-bottom-8">
+        <div className="flex flex-wrap  align-center nav-content">
           <Link href="/" className="no-color-link text-shadow-red mar-right-32">
             <Image
               src="/icons/logo_sm.png"
@@ -135,58 +144,81 @@ const Navbar = () => {
               alt="Healthy food map"
             />
           </Link>
-          {user !== null ? (
+
+          <Link href="/" className="no-color-link text-shadow-red">
+            <div className="flex-inline  align-center">
+              <FontAwesomeIcon
+                icon={faMapPin}
+                className="red icon-sm mar-right-8"
+              />
+
+              <h5 className="underline-hover">FOOD MAP</h5>
+            </div>
+          </Link>
+          <div className="grey-line-nav"></div>
+          <Link href="/forum" className="no-color-link text-shadow-red">
+            <div className="flex-inline  align-center">
+              <FontAwesomeIcon
+                icon={faMapPin}
+                className="red icon-sm mar-right-8"
+              />
+
+              <h5 className="underline-hover">Forum</h5>
+            </div>
+          </Link>
+          <div className="grey-line-nav-thick"></div>
+          <Link href="/fishmap" className="no-color-link text-shadow-red">
+            <div className="flex-inline  align-center">
+              <FontAwesomeIcon
+                icon={faMapPin}
+                className="red icon-sm mar-right-8"
+              />
+
+              <h5 className="underline-hover">Fish Map</h5>
+            </div>
+          </Link>
+          <div className="grey-line-nav"></div>
+          <Link href="/articles" className="no-color-link text-shadow-red">
+            <div className="flex-inline  align-center">
+              <FontAwesomeIcon
+                icon={faMapPin}
+                className="red icon-sm mar-right-8"
+              />
+
+              <h5 className="underline-hover">Articles</h5>
+            </div>
+          </Link>
+          <div className="grey-line-nav-thick "></div>
+          <div className="mar-right-16"></div>
+          <Link href="/nutritionsearch">
+            <div className="black-gradient-btn-2 box-shadow flex-inline align-center">
+              <FontAwesomeIcon
+                icon={faSearch}
+                className="icon-ssm white mar-right-8"
+              />
+              <h5 className="blue">Nutrition Search</h5>
+            </div>
+          </Link>
+        </div>
+        {user !== null ? (
+          <div className="flex align-center">
             <Link href="/account">
               <div className="inline-block black-btn mar-right-16">
                 <h5>{user.user_metadata.username}</h5>
               </div>
             </Link>
-          ) : (
-            <Link href="/login">
-              <div className="inline-block black-btn mar-right-16">
-                <h5>Login</h5>
-              </div>
-            </Link>
-          )}
-          <Link href="/nutritionsearch">
-            <div className="black-gradient-btn box-shadow flex-inline align-center">
-              <FontAwesomeIcon
-                icon={faSearch}
-                className="icon-ssm blue mar-right-4"
-              />
-              <h5 className="blue">NUTRIENT SEARCH</h5>
+
+            <h5 onClick={logoutFunctional} className="black cursor">
+              Sign Out
+            </h5>
+          </div>
+        ) : (
+          <Link href="/login">
+            <div className="inline-block black-btn mar-right-16 cursor">
+              <h5>Login</h5>
             </div>
           </Link>
-        </div>
-
-        <div className="grid-cont">
-          <div className="nav-section food-section">
-            <Link href="/" className="no-color-link text-shadow-red">
-              <h4 className=" mar-right-32 underline-hover">FOOD MAP</h4>
-            </Link>
-
-            <Link href="/forum" className="no-color-link text-shadow-red">
-              <h5 className="mar-right-16 underline-hover">FORUM</h5>
-            </Link>
-          </div>
-          <div className="nav-section">
-            <div className="splitter"></div>
-            <div className="splitter-blue"></div>
-            <Link href="/fishmap" className="text-shadow-blue">
-              <h4 className="blue mar-right-32 underline-hover">
-                {" "}
-                FISH FINDER
-              </h4>
-            </Link>
-
-            <Link href="/articles" className="text-shadow-blue">
-              <h5 className="blue mar-right-16 underline-hover">ARTICLES</h5>
-            </Link>
-            <Link href="/datasearch" className="text-shadow-blue">
-              <h5 className="blue mar-right-16 underline-hover">DATA SEARCH</h5>
-            </Link>
-          </div>
-        </div>
+        )}
       </div>
 
       <div className="nav-mobile">
