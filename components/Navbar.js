@@ -7,8 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faComment,
+  faFish,
   faLocationDot,
   faMapPin,
+  faNewspaper,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
@@ -167,40 +169,40 @@ const Navbar = () => {
                 className="red icon-sm mar-right-8"
               />
 
-              <h5 className="underline-hover">FOOD MAP</h5>
+              <h5 className="underline-hover">food finder</h5>
             </div>
           </Link>
           <div className="grey-line-nav"></div>
           <Link href="/forum" className="no-color-link text-shadow-red">
             <div className="flex-inline  align-center">
               <FontAwesomeIcon
-                icon={faMapPin}
+                icon={faComment}
                 className="red icon-sm mar-right-8"
               />
 
-              <h5 className="underline-hover">Forum</h5>
+              <h5 className="underline-hover">forum</h5>
             </div>
           </Link>
           <div className="grey-line-nav-thick"></div>
           <Link href="/fishmap" className="no-color-link text-shadow-red">
             <div className="flex-inline  align-center">
               <FontAwesomeIcon
-                icon={faMapPin}
+                icon={faFish}
                 className="red icon-sm mar-right-8"
               />
 
-              <h5 className="underline-hover">Fish Map</h5>
+              <h5 className="underline-hover">fish map</h5>
             </div>
           </Link>
           <div className="grey-line-nav"></div>
           <Link href="/articles" className="no-color-link text-shadow-red">
             <div className="flex-inline  align-center">
               <FontAwesomeIcon
-                icon={faMapPin}
+                icon={faNewspaper}
                 className="red icon-sm mar-right-8"
               />
 
-              <h5 className="underline-hover">Articles</h5>
+              <h5 className="underline-hover">articles</h5>
             </div>
           </Link>
           <div className="grey-line-nav-thick "></div>
