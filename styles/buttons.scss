@@ -4,6 +4,7 @@ $grey: #bab2b5;
 $darkBlue: #123c69;
 $darkPink: #ac3b61;
 $redGrey: #81646d;
+$lightRedGrey: #999395;
 $black: #192430;
 $desatLightBlue: #c6cacf;
 $desatDarkBlue: #404a55;
@@ -45,6 +46,31 @@ $light-orange: #fd7d27;
   );
   &:active {
     box-shadow: none;
+  }
+}
+.grey-line-nav{
+  width:2px;
+  background-color: $lightRedGrey;
+  height:50%;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.grey-line-nav-thick{
+  width:4px;
+  background-color: $lightRedGrey;
+  height:50%;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.black-gradient-btn-2{
+  background: linear-gradient(#000, #334E68);
+  padding: 8px 16px;
+  border-radius: 8px;
+  h1,h2,h3,h4,h5{
+    color :#fff;
+  }
+  &:active{
+    background: #334E68;
   }
 }
 
