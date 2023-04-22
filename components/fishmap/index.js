@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Toaster } from "react-hot-toast";
-import MarkerComponent from "./MarkerComponent";
+import FishMarkerComponent from "./FishMarkerComponent";
 import FishMarker from "./FishMarker";
 import SeaMarker from "./SeaMarker";
 import "leaflet/dist/leaflet.css";

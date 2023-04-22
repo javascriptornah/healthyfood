@@ -18,17 +18,20 @@ import { logout } from "../utils/supabaseFunctions";
 import { useRouter } from "next/router";
 import Dropdown from "./navbar/Dropdown.js";
 import supabase from "../utils/supabaseClient";
+import { getServerSideProps } from "../pages/nutritionsearch";
 
 const Cont = styled.div`
   .nav-desktop {
     background-color: ${(props) => props.colors.tan};
-    padding: 16px 32px 8px 32px;
+
     position: relative;
+
     overflow: hidden;
+    padding: 16px 32px 8px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @media only screen and (max-width: 780px) {
+    @media only screen and (max-width: 880px) {
       display: none;
     }
   }
@@ -118,6 +121,7 @@ const Cont = styled.div`
     }
   }
 `;
+
 const Navbar = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -183,17 +187,7 @@ const Navbar = () => {
               <h5 className="underline-hover">forum</h5>
             </div>
           </Link>
-          <div className="grey-line-nav-thick"></div>
-          <Link href="/fishmap" className="no-color-link text-shadow-red">
-            <div className="flex-inline  align-center">
-              <FontAwesomeIcon
-                icon={faFish}
-                className="red icon-sm mar-right-8"
-              />
 
-              <h5 className="underline-hover">fish map</h5>
-            </div>
-          </Link>
           <div className="grey-line-nav"></div>
           <Link href="/articles" className="no-color-link text-shadow-red">
             <div className="flex-inline  align-center">
@@ -205,50 +199,55 @@ const Navbar = () => {
               <h5 className="underline-hover">articles</h5>
             </div>
           </Link>
-          <div className="grey-line-nav-thick "></div>
-          <div className="mar-right-16"></div>
-          <Link href="/nutritionsearch">
-            <div className="black-gradient-btn-2 box-shadow flex-inline align-center">
+          <div className="grey-line-nav"></div>
+          <Link
+            href="/nutritionsearch"
+            className="no-color-link text-shadow-red"
+          >
+            <div className="flex-inline  align-center">
               <FontAwesomeIcon
                 icon={faSearch}
-                className="icon-ssm white mar-right-8"
+                className="red icon-sm mar-right-8"
               />
-              <h5 className="blue">Nutrition Search</h5>
+
+              <h5 className="underline-hover">nutrition</h5>
             </div>
           </Link>
         </div>
-        {user !== null ? (
-          <div className="flex align-center">
-            <Link href="/account">
-              <div className="inline-block black-btn mar-right-16">
-                <h5>{user.user_metadata.username}</h5>
-              </div>
-            </Link>
-            {!loading ? (
-              <h5 onClick={logoutFunctional} className="black cursor">
-                Sign Out
-              </h5>
-            ) : (
-              <div className="lds-ring-green">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="flex align-center">
-            <Link href="/login">
-              <h5 className="black mar-right-16">Sign In</h5>
-            </Link>
-            <Link href="/login">
-              <div className="inline-block blue-btn-one mar-right-16 cursor">
-                <h5>Sign up</h5>
-              </div>
-            </Link>
-          </div>
-        )}
+        <div>
+          {user !== null ? (
+            <div className="flex align-center">
+              <Link href="/account">
+                <div className="inline-block black-btn mar-right-16">
+                  <h5>{user.user_metadata.username}</h5>
+                </div>
+              </Link>
+              {!loading ? (
+                <h5 onClick={logoutFunctional} className="black cursor">
+                  Sign Out
+                </h5>
+              ) : (
+                <div className="lds-ring-green">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex align-center ">
+              <Link href="/login">
+                <h5 className="black mar-right-16">Sign In</h5>
+              </Link>
+              <Link href="/login">
+                <div className="inline-block blue-btn-one mar-right-16 cursor">
+                  <h5>Sign up</h5>
+                </div>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="nav-mobile">

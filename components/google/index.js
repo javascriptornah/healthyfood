@@ -8,6 +8,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { Toaster } from "react-hot-toast";
+import { fetchAddresses } from "../../utils/functions";
 const OpenStreetMap = dynamic(() => import("./OpenStreetMap"), {
   ssr: false,
 });
@@ -26,7 +27,17 @@ function createKey(location) {
   return location.lat + location.lng;
 }
 
-const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
+const Index = ({
+  locations,
+  tagsFetch,
+  addTag,
+  fetchNewLocation,
+  user,
+  oceansFetch,
+  seasFetch,
+  pollutionFetch,
+  fishFetch,
+}) => {
   const [location, setLocation] = useState("");
   const [locationsFilter, setLocationsFilter] = useState(locations);
 
@@ -153,14 +164,29 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
     checkForUserLocation();
   }, []);
   const fetchLocation = async () => {
+    console.log(coords);
     if (coords !== null) {
+      console.log("crack cocaine");
       updateCoords(coords);
     } else {
       const dataFetch = await fetch("https://api.db-ip.com/v2/free/self").then(
         (res) => res.json()
       );
-
-      setValue(dataFetch.city);
+      let addressFetch = await fetchAddresses(dataFetch.city);
+      console.log(addressFetch);
+      setCoords({
+        coords: {
+          latitude: addressFetch.addresses[0].lat,
+          longitude: addressFetch.addresses[0].lon,
+        },
+      });
+      updateCoords({
+        coords: {
+          latitude: addressFetch.addresses[0].lat,
+          longitude: addressFetch.addresses[0].lon,
+        },
+      });
+      //setValue(dataFetch.city);
     }
   };
   /*
@@ -223,6 +249,10 @@ const Index = ({ locations, tagsFetch, addTag, fetchNewLocation, user }) => {
           locationsFilter={locationsFilter}
           center={center}
           radius={radiusValue}
+          oceansFetch={oceansFetch}
+          seasFetch={seasFetch}
+          pollutionFetch={pollutionFetch}
+          fishFetch={fishFetch}
         />
       </div>
 

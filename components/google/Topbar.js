@@ -12,7 +12,7 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
-import Select from "./Select";
+import Select from "../inputs/select/index";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   padding: 4px 8px;
