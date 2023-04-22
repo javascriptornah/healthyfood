@@ -11,7 +11,9 @@ import {
   faMapPin,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
 import { logout } from "../utils/supabaseFunctions";
+import { useRouter } from "next/router";
 import Dropdown from "./navbar/Dropdown.js";
 import supabase from "../utils/supabaseClient";
 
@@ -115,6 +117,8 @@ const Cont = styled.div`
   }
 `;
 const Navbar = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [mobileActive, setMobileActive] = useState(false);
 
   const hideMobileActive = () => {
@@ -131,6 +135,17 @@ const Navbar = () => {
     };
     fetchUser();
   }, []);
+
+  const logoutFunctional = async () => {
+    setLoading(true);
+    const state = await logout();
+    if (state) {
+      router.reload();
+    } else {
+      toast.error("Error signing out...");
+    }
+    setLoading(false);
+  };
   return (
     <Cont colors={COLORS} id="navbar">
       <div className="nav-desktop">
@@ -207,17 +222,30 @@ const Navbar = () => {
                 <h5>{user.user_metadata.username}</h5>
               </div>
             </Link>
-
-            <h5 onClick={logoutFunctional} className="black cursor">
-              Sign Out
-            </h5>
+            {!loading ? (
+              <h5 onClick={logoutFunctional} className="black cursor">
+                Sign Out
+              </h5>
+            ) : (
+              <div className="lds-ring-green">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            )}
           </div>
         ) : (
-          <Link href="/login">
-            <div className="inline-block black-btn mar-right-16 cursor">
-              <h5>Login</h5>
-            </div>
-          </Link>
+          <div className="flex align-center">
+            <Link href="/login">
+              <h5 className="black mar-right-16">Sign In</h5>
+            </Link>
+            <Link href="/login">
+              <div className="inline-block blue-btn-one mar-right-16 cursor">
+                <h5>Sign up</h5>
+              </div>
+            </Link>
+          </div>
         )}
       </div>
 
@@ -247,12 +275,7 @@ const Navbar = () => {
                 <h5 className="black text-shadow mar-bottom-8">Sign Up</h5>
               </Link>
             )}
-            <Link href="/nutritionsearch">
-              <div className="mobile-icon box-shadow mar-bottom-8">
-                <FontAwesomeIcon icon={faSearch} className="icon-ssm red" />
-              </div>
-            </Link>
-            <Link href="/farmmap">
+            <Link href="/">
               <div className="mobile-icon box-shadow mar-bottom-8">
                 <FontAwesomeIcon
                   icon={faLocationDot}
@@ -260,6 +283,12 @@ const Navbar = () => {
                 />
               </div>
             </Link>
+            <Link href="/nutritionsearch">
+              <div className="mobile-icon box-shadow mar-bottom-8">
+                <FontAwesomeIcon icon={faSearch} className="icon-ssm red" />
+              </div>
+            </Link>
+
             <Link href="/forum">
               <div className="mobile-icon box-shadow mar-bottom-8">
                 <FontAwesomeIcon icon={faComment} className="icon-ssm red" />
