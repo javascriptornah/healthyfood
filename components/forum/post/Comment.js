@@ -121,6 +121,8 @@ const Comment = ({
     setRepliesRender(replies.length > 3 ? 3 : replies.length);
   }, [replies.length]);
 
+  console.log("replies");
+  console.log(replies);
   for (let i = 0; i < repliesRender; i++) {
     if (replies[i] != undefined) {
       replyElems.push(

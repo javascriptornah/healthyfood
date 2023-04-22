@@ -166,14 +166,13 @@ const Index = ({
   const fetchLocation = async () => {
     console.log(coords);
     if (coords !== null) {
-      console.log("crack cocaine");
       updateCoords(coords);
     } else {
       const dataFetch = await fetch("https://api.db-ip.com/v2/free/self").then(
         (res) => res.json()
       );
       let addressFetch = await fetchAddresses(dataFetch.city);
-      console.log(addressFetch);
+
       setCoords({
         coords: {
           latitude: addressFetch.addresses[0].lat,

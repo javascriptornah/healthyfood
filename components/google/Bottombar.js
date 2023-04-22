@@ -156,9 +156,9 @@ const Bottombar = ({
   const [optionalFields, setOptionalFields] = useState({
     grassFed: { name: "Grass Fed", value: "unspecified" },
     organic: { name: "Organic", value: "unspecified" },
-    vaccineFree: { name: "Vaccine Free", value: "unspecified" },
-    pastureRaised: { name: "Pasture Raised", value: "unspecified" },
     soyFree: { name: "Soy Free", value: "unspecified" },
+    pastureRaised: { name: "Pasture Raised", value: "unspecified" },
+
     A2: { name: "A2", value: "unspecified" },
     unfrozen: { name: "Unfrozen", value: "unspecified" },
   });
@@ -452,11 +452,7 @@ const Bottombar = ({
           : optionalFields.organic.value == "no"
           ? false
           : "unspecified",
-        optionalFields.vaccineFree.value == "yes"
-          ? true
-          : optionalFields.vaccineFree.value == "no"
-          ? false
-          : "unspecified",
+
         optionalFields.pastureRaised.value == "yes"
           ? true
           : optionalFields.pastureRaised.value == "no"

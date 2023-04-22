@@ -12,7 +12,7 @@ const createLocation = async (
   tags,
   grassFed,
   organic,
-  vaccineFree,
+
   pastureRaised,
   soyFree,
   A2,
@@ -38,7 +38,7 @@ const createLocation = async (
         tags,
         grassFed,
         organic,
-        vaccineFree,
+
         pastureRaised,
         soyFree,
         A2,
@@ -1452,5 +1452,16 @@ export const fetchUserByName = async (username) => {
     return data;
   } catch (error) {
     return error;
+  }
+};
+
+export const deleteFile = async (filePath) => {
+  try {
+    const { error } = await supabase.storage.from("avatars").remove(filePath);
+    if (error) throw error;
+
+    return true;
+  } catch (error) {
+    return false;
   }
 };

@@ -181,6 +181,8 @@ const Sections = ({
   pricing,
   quality,
   friendly,
+  coords,
+  small_address,
 }) => {
   const [productElems, setProductElems] = useState(
     products.map((product, index) => {
@@ -276,7 +278,12 @@ const Sections = ({
           <div className="section-line">
             <h5 className="black mar-bottom-8">ADDRESS</h5>
             <div className="grey-line mar-bottom-4"></div>
-            <p className="bold">{address}</p>
+            <a
+              target="_blank"
+              href={`https://www.google.com/maps/place/${small_address}`}
+            >
+              <p className="bold light-blue underline-hover">{address}</p>
+            </a>
           </div>
 
           <div className="section-line">

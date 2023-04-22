@@ -46,10 +46,10 @@ const NotLogged = () => {
       <div className="default-page">
         <div className="flex space-around sm-spacer content-holder">
           <div className="center-inline ssm-spacer">
-            <h3 className="blue text-shadow mar-bottom-16">
+            <h3 className=" text-shadow-red mar-bottom-16">
               You Are Not Signed In!
             </h3>
-            <h4 className="light blue mar-bottom-8">
+            <h4 className="light contrast mar-bottom-8">
               Create an account or login
             </h4>
             <Link href="/login">

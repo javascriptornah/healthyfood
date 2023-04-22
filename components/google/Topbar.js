@@ -35,7 +35,7 @@ const Cont = styled.div`
   .toggles-holder {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     @media only screen and (max-width: 300px) {
       justify-content: center;
     }
@@ -220,9 +220,8 @@ const Topbar = ({
     organic: { checked: false, name: "organic" },
     soyFree: { checked: false, name: "soyFree" },
     unfrozen: { checked: false, name: "unfrozen" },
-    dewormerFree: { checked: false, name: "dewormerFree" },
     pastureRaised: { checked: false, name: "pastureRaised" },
-    vaccineFree: { checked: false, name: "vaccineFree" },
+    A2: { checked: false, name: "A2" },
   });
   const updateFilters = (field) => {
     setFilters((prev) => {
@@ -233,7 +232,11 @@ const Topbar = ({
     });
   };
   const toggles = Object.entries(filters).map(([key, val], index) => {
-    return <Toggle key={index} selected={val} setSelected={updateFilters} />;
+    return (
+      <div className="mar-right-4 mar-left-4">
+        <Toggle key={index} selected={val} setSelected={updateFilters} />{" "}
+      </div>
+    );
   });
 
   const filterLocationsByTags = () => {
@@ -401,27 +404,7 @@ const Topbar = ({
           <div className="toggles-holder small-scrollbar mar-bottom-16 ">
             {toggles}
           </div>
-
-          {/*
-          <div
-            onClick={applyFilter}
-            className="blue-btn-one flex-inline align-center submit-btn mobile-submit"
-          >
-            <h5 className="mar-right-8">Search</h5>
-            <FontAwesomeIcon icon={faSearch} className="icon-ssm white" />
-          </div>
-  */}
         </div>
-
-        {/*
-        <div
-          onClick={applyFilter}
-          className="blue-btn-one flex-inline align-center submit-btn desktop-submit"
-        >
-          <h5 className="mar-right-8">Search</h5>
-          <FontAwesomeIcon icon={faSearch} className="icon-ssm white" />
-        </div>
-  */}
       </div>
     </Cont>
   );

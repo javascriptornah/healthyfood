@@ -39,7 +39,9 @@ export const getServerSideProps = async (pageContext) => {
   };
 };
 
-const Preview = ({ locationFetch, x }) => {
+const Preview = ({ locationFetch }) => {
+  console.log("xd");
+  console.log(locationFetch);
   const [origPoster, setOrigPoster] = useState(false);
   const [user, setUser] = useState("null");
   const [location, setLocation] = useState(locationFetch);
@@ -143,7 +145,6 @@ const Preview = ({ locationFetch, x }) => {
                 value={titleText}
                 onChange={(e) => setTitleText(e.target.value)}
                 placeholder="title"
-                style={{ fontSize: "2.827rem" }}
               />
             </>
           )}
@@ -235,6 +236,11 @@ const Preview = ({ locationFetch, x }) => {
             products={location.products}
             description={location.description}
             address={location.address[0].full_address}
+            coords={{
+              lat: location.address[0].lat,
+              lng: location.address[0].lng,
+            }}
+            small_address={location.address[0].text_address}
             website={location.website}
             email={location.email}
             phone={location.number}
