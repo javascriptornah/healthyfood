@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -34,6 +35,10 @@ const Cont = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
+  .image-cont {
+    border-radius: 50%;
+    overflow: hidden;
+  }
 `;
 
 const AccountPreview = ({
@@ -56,9 +61,12 @@ const AccountPreview = ({
       <div className="padding-x-12 padding-y-8 image-section">
         <div></div>
         <div className="flex flex-column align-center">
-          <div>
-            <img
+          <div className="image-cont">
+            <Image
               src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}${user.user_metadata.avatar_url}`}
+              width={140}
+              height={140}
+              style={{ objectFit: "cover" }}
             />
           </div>
           <div

@@ -3,14 +3,8 @@ import { fetchUserByName } from "../../utils/supabaseFunctions";
 import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 import styled from "styled-components";
-export async function getServerSideProps({ params }) {
-  const userFetch = await fetchUserByName(params.username);
-  return {
-    props: {
-      userFetch,
-    },
-  };
-}
+import COLORS from "../../data/colors";
+import Header from "../../components/user/header";
 
 const Cont = styled.div`
   .default-page {
@@ -25,7 +19,18 @@ const Cont = styled.div`
     padding: 16px;
   }
 `;
+
+export async function getServerSideProps({ params }) {
+  const userFetch = await fetchUserByName(params.username);
+  return {
+    props: {
+      userFetch,
+    },
+  };
+}
+
 const User = ({ userFetch }) => {
+  console.log(userFetch);
   const router = useRouter();
   const username = router.query.username;
   const [user, setUser] = useState(null);
@@ -52,7 +57,18 @@ const User = ({ userFetch }) => {
     keywords:
       "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder",
   };
-  return <div>[username]</div>;
+  return (
+    <Cont colors={COLORS}>
+      <Header
+        username={userFetch.username}
+        avatar_url={userFetch.avatar_url}
+        created_at={userFetch.created_at}
+        locations={userFetch.locations}
+        posts={userFetch.posts}
+        comments={userFetch.comments[0].count}
+      />
+    </Cont>
+  );
 };
 
 export default User;
