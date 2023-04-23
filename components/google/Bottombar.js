@@ -398,11 +398,6 @@ const Bottombar = ({
           : optionalFields.organic.value == "no"
           ? false
           : "unspecified",
-        optionalFields.vaccineFree.value == "yes"
-          ? true
-          : optionalFields.vaccineFree.value == "no"
-          ? false
-          : "unspecified",
         optionalFields.pastureRaised.value == "yes"
           ? true
           : optionalFields.pastureRaised.value == "no"

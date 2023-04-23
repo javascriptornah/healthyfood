@@ -74,7 +74,6 @@ export const createUserLocation = async (
   tags,
   grassFed,
   organic,
-  vaccineFree,
   pastureRaised,
   soyFree,
   A2,
@@ -101,7 +100,6 @@ export const createUserLocation = async (
         tags,
         grassFed,
         organic,
-        vaccineFree,
         pastureRaised,
         soyFree,
         A2,
@@ -119,6 +117,7 @@ export const createUserLocation = async (
 
     return data.id;
   } catch (error) {
+    console.log("crack -----------");
     console.log(error);
     return false;
   }
