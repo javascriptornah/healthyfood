@@ -1560,3 +1560,23 @@ export const updateUserBio = async (user_id, bio) => {
     return false;
   }
 };
+
+export const createUserLink = async (user_id, name, icon) => {
+  try {
+    const { data: about, error: aboutError } = await supabase
+      .from("about")
+      .select("id")
+      .eq("user_id", user_id)
+      .maybeSingle();
+
+    const { data, error } = await supabase
+      .from("links")
+      .insert({ name, icon, about_id: about.id })
+      .select();
+
+    if (error) throw error;
+    return { state: true, data };
+  } catch (error) {
+    return { state: false, error };
+  }
+};

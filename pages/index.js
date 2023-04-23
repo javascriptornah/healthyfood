@@ -51,8 +51,7 @@ export default function Home({
   const [seas, setSeas] = useState(seasFetch);
   const [pollution, setPollution] = useState(pollutionFetch);
   const [fish, setFish] = useState(fishFetch);
-  console.log("locations");
-  console.log(locationsFetch);
+
   const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchUser = async () => {
@@ -69,9 +68,6 @@ export default function Home({
       return [...prev, location];
     });
   };
-  useEffect(() => {
-    console.log(locations);
-  }, [locations]);
 
   const fetchNewLocation = async (id) => {
     const location = fetchLocation(id);
@@ -98,7 +94,7 @@ export default function Home({
   return (
     <>
       <Head>
-        <title>{meta.title} </title>
+        <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Healthyfoodmap" />

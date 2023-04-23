@@ -500,14 +500,19 @@ const EditAccount = () => {
             text="Raw Meat Youtube"
             color="red"
           />
-          <div className="add-social">
+          <div className="add-social" onClick={() => setAddingSocial(true)}>
             <FontAwesomeIcon
               icon={faPlus}
               className="black icon-med mar-right-8"
             />
             <p className="bold">Add social link</p>
           </div>
-          <AddSocial />
+          {addingSocial && (
+            <AddSocial
+              user_id={session.user.id}
+              hideSocial={() => setAddingSocial(false)}
+            />
+          )}
         </div>
       ) : (
         <NotLogged />

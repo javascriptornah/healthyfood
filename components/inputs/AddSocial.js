@@ -2,7 +2,12 @@ import { useState, useRef } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink, faArrowTurnDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLink,
+  faArrowTurnDown,
+  faClose,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
   faReddit,
@@ -12,6 +17,7 @@ import {
   faTelegram,
 } from "@fortawesome/free-brands-svg-icons";
 import toast from "react-hot-toast";
+import { createUserLink } from "../../utils/supabaseFunctions";
 const Cont = styled.div`
   .content-spec {
     max-width: 400px;
@@ -40,6 +46,16 @@ const Cont = styled.div`
       background-color: ${(props) => props.colors.lightBeige};
     }
   }
+  .delete {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    .contrast {
+      &:hover {
+        color: black !important;
+      }
+    }
+  }
   .return {
     position: absolute;
     top: 16px;
@@ -53,8 +69,8 @@ const Cont = styled.div`
   }
 `;
 
-const AddSocial = () => {
-  const [adding, setAdding] = useState(true);
+const AddSocial = ({ hideSocial, user_id }) => {
+  const [adding, setAdding] = useState(false);
   const inputRef = useRef(null);
   const [socialState, setSocialState] = useState({
     icon: faInstagram,
@@ -63,10 +79,17 @@ const AddSocial = () => {
   });
   const [linkVal, setLinkVal] = useState("");
 
-  const createLink = () => {
+  const createLink = async () => {
     if (linkVal == "") {
       toast.error("Can't be empty");
       inputRef.current.focus();
+    }
+    let { state, data } = await createUserLink(
+      user_id,
+      linkVal,
+      socialState.text
+    );
+    if (state) {
     }
   };
 
@@ -76,9 +99,12 @@ const AddSocial = () => {
   };
 
   return (
-    <Cont colors={COLORS} className="loading-screen">
+    <Cont colors={COLORS} className="loading-screen opacity-anim">
       {!adding ? (
-        <div className="content-spec box-shadow-2 ">
+        <div className="content-spec box-shadow-2 relative">
+          <div className="delete cursor" onClick={hideSocial}>
+            <FontAwesomeIcon icon={faClose} className="contrast icon-sm" />
+          </div>
           <div className="center-inline padding-16">
             <h5>Add Social Link</h5>
           </div>
@@ -179,13 +205,17 @@ const AddSocial = () => {
                 ref={inputRef}
                 value={linkVal}
                 onChange={(e) => setLinkVal(e.target.value)}
-                placeholder="@username"
+                placeholder="https://"
                 type="text"
               />
               <div className="mar-bottom-16"></div>
               <div className="flex flex-end">
-                <button type="submit" className="blue-btn-one">
-                  <h5>Create</h5>
+                <button
+                  type="submit"
+                  className="blue-btn-one flex align-center"
+                >
+                  <h5 className="mar-right-8">Create</h5>
+                  <FontAwesomeIcon icon={faPlus} className="white icon-sm" />
                 </button>
               </div>
             </form>
