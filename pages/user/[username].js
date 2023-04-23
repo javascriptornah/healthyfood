@@ -66,6 +66,8 @@ const User = ({ userFetch }) => {
         locations={userFetch.locations}
         posts={userFetch.posts}
         comments={userFetch.comments[0].count}
+        bio={userFetch.account?.bio || ""}
+        links={userFetch.account?.bio?.links || []}
       />
     </Cont>
   );

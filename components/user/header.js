@@ -3,7 +3,12 @@ import Image from "next/image";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComment, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faComment,
+  faUser,
+  faArrowUp,
+  faNewspaper,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Cont = styled.div``;
 
@@ -37,6 +42,38 @@ const Header = ({
         <div className="tan-icon">
           <FontAwesomeIcon icon={faUser} className="icon-sm red mar-right-8" />
           <h5>Add Friend</h5>
+        </div>
+      </div>
+      <div className="flex space-between info flex-wrap mar-bottom-16">
+        <div className="mar-bottom-8">
+          <p className="bold">Upvotes</p>
+          <div className="flex-inline align-center">
+            <FontAwesomeIcon
+              icon={faArrowUp}
+              className="icon-ssm contrast mar-right-8"
+            />
+            <p className="contrast">{upvotes}</p>
+          </div>
+        </div>
+        <div className="mar-bottom-8">
+          <p className="bold">Posts</p>
+          <div className="flex-inline align-center">
+            <FontAwesomeIcon
+              icon={faNewspaper}
+              className="icon-ssm contrast mar-right-8"
+            />
+            <p className="contrast">{posts.length}</p>
+          </div>
+        </div>
+        <div className="mar-bottom-8">
+          <p className="bold">Comments</p>
+          <div className="flex-inline align-center">
+            <FontAwesomeIcon
+              icon={faComment}
+              className="icon-ssm contrast mar-right-8"
+            />
+            <p className="contrast">{comments}</p>
+          </div>
         </div>
       </div>
     </Cont>
