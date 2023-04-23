@@ -29,6 +29,13 @@ const Cont = styled.div`
     display: flex;
     @media only screen and (max-width: 600px) {
       flex-direction: column;
+      .dropdown__selected {
+        width: 100%;
+      }
+      .dropdown__menu {
+        width: 100%;
+        border-radius: 8px;
+      }
     }
   }
 

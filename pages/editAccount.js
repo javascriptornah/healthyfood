@@ -7,6 +7,7 @@ import supabase from "../utils/supabaseClient";
 import NotLogged from "../components/account/notlogged";
 import { nanoid } from "nanoid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AddSocial from "../components/inputs/AddSocial";
 import {
   faEye,
   faEyeSlash,
@@ -23,11 +24,20 @@ import {
   checkUsernameUnique,
   checkEmailUnique,
   updateUserEmail,
+  updateUserBio,
+  fetchUserById,
 } from "../utils/supabaseFunctions";
+
 const Cont = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px;
+  @media only screen and (max-width: 600px) {
+    padding: 16px;
+  }
+  @media only screen and (max-width: 300px) {
+    padding: 8px;
+  }
   .input-line {
     margin-bottom: 16px;
     h5 {
@@ -100,23 +110,7 @@ const EditAccount = () => {
   const [user, setUser] = useState(null);
 
   const [isLogged, setIsLogged] = useState(false);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data: session } = await supabase.auth.getSession();
-      if (session.session != null) {
-        setUser(session.session.user);
-        console.log("kap");
-        console.log(session.session);
-        setUsername(session.session.user.user_metadata.username);
-        setIsLogged(true);
-      } else {
-        setIsLogged(false);
-      }
-    };
-    fetchUser();
-  }, []);
-
+  const [addingSocial, setAddingSocial] = useState(false);
   const [session, setSession] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [username, setUsername] = useState("");
@@ -144,6 +138,11 @@ const EditAccount = () => {
         setUsername(session?.session?.user.user_metadata.username);
         setEmail(session?.session?.user.email);
         setUsernameDisplay(session.session.user.user_metadata.username);
+        const userInfo = await fetchUserById(session.session.user.id);
+        console.log("user info");
+        console.log(userInfo);
+        setBio(userInfo.about[0].bio);
+        setUser(userInfo);
       }
     };
     updateSession();
@@ -240,7 +239,14 @@ const EditAccount = () => {
     };
   };
 
-  const submitBio = () => {};
+  const submitBio = async () => {
+    const res = await updateUserBio(session.user.id, bio);
+    if (res) {
+      toast.success("Bio updated!");
+    } else {
+      toast.error("Error updating bio");
+    }
+  };
   const submitEmail = () => {
     const notUniqueEmail = () => {
       setEmailLoading(false);
@@ -349,18 +355,15 @@ const EditAccount = () => {
       <Toaster />
 
       <div className="center-inline  ssm-spacer">
-        <h1 className="black">Edit Profile</h1>
+        <h2 className="black">Edit Profile</h2>
       </div>
       {user ? (
         <div className="fake-form" onSubmit={onSubmit}>
-          <div
-            style={{ height: "80px" }}
-            className="flex align-center ssm-spacer"
-          >
+          <div className="flex align-center flex-wrap">
             <div>
               <div
                 onClick={() => fileRef.current.click()}
-                className="image-cont mar-right-32"
+                className="image-cont mar-right-32 mar-bottom-32"
               >
                 <div className="plus-icon">
                   <FontAwesomeIcon icon={faPlus} className="red icon-med" />
@@ -388,7 +391,7 @@ const EditAccount = () => {
             <div>
               <h5
                 onClick={() => fileRef.current.click()}
-                className="green cursor"
+                className="green cursor mar-bottom-32"
               >
                 Change profile picture
               </h5>
@@ -504,6 +507,7 @@ const EditAccount = () => {
             />
             <p className="bold">Add social link</p>
           </div>
+          <AddSocial />
         </div>
       ) : (
         <NotLogged />

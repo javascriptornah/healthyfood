@@ -14,6 +14,10 @@ const Cont = styled.div`
   .default-page {
     background: #fff;
     border: none !important;
+    @media only screen and (max-width: 600px) {
+      padding-right: 16px;
+      padding-left: 8px;
+    }
   }
   .grid {
     display: grid;

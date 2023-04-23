@@ -14,12 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 const Cont = styled.div`
   background: rgb(18, 60, 105);
-  background: linear-gradient(
-    0deg,
-    rgba(18, 60, 105, 1) 0%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(18, 60, 105, 1) 100%
-  );
+  background: ${(props) => props.colors.tan};
   height: 100vh;
   width: 100%;
   position: fixed;
@@ -30,7 +25,7 @@ const Cont = styled.div`
   padding: 8px 16px;
   .line {
     padding: 4px;
-    border-bottom: 2px solid ${(props) => props.colors.offWhite};
+    border-bottom: 2px solid ${(props) => props.colors.grey};
     &:hover {
       background-color: ${(props) => props.colors.offWhite};
       .white {
@@ -42,10 +37,10 @@ const Cont = styled.div`
   h4 {
     text-decoration: none !important;
   }
-  .white-line {
+  .grey-line {
     width: 100%;
     height: 12px;
-    background-color: ${(props) => props.colors.offWhite};
+    background-color: ${(props) => props.colors.grey};
     margin-top: 32px;
     margin-bottom: 32px;
   }
@@ -53,7 +48,7 @@ const Cont = styled.div`
   .icon-holder {
     width: 48px;
     height: 48px;
-    border: 2px solid ${(props) => props.colors.offWhite};
+    border: 2px solid ${(props) => props.colors.darkPink};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,9 +57,9 @@ const Cont = styled.div`
     transition: background-color 0.25s ease;
     margin-left: auto;
     &:hover {
-      background-color: ${(props) => props.colors.offWhite};
-      .white {
-        color: ${(props) => props.colors.darkBlue};
+      background-color: ${(props) => props.colors.darkPink};
+      .red {
+        color: ${(props) => props.colors.tan};
       }
     }
   }
@@ -83,12 +78,12 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
         onClick={hideMobileActive}
         className="icon-holder box-shadow-white cursor"
       >
-        <FontAwesomeIcon icon={faArrowTurnUp} className="icon-sm white" />
+        <FontAwesomeIcon icon={faArrowTurnUp} className="icon-sm red" />
       </div>
       <Link onClick={hideMobileActive} href="/account">
         <div className="flex line align-center ">
-          <h4 className="white text-shadow-white light mar-right-8">account</h4>
-          <FontAwesomeIcon icon={faUser} className="white icon-sm" />
+          <h4 className=" text-shadow-white light mar-right-8">account</h4>
+          <FontAwesomeIcon icon={faUser} className="red icon-sm" />
         </div>
       </Link>
 
@@ -96,51 +91,47 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
         <Link onClick={hideMobileActive} href="/">
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center">
-              <h4 className="white text-shadow-white light mar-right-8">
+              <h4 className=" text-shadow-white light mar-right-8">
                 food finder
               </h4>
-              <FontAwesomeIcon icon={faMapPin} className="white icon-ssm" />
+              <FontAwesomeIcon icon={faMapPin} className="red icon-ssm" />
             </div>
-            <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
+            <FontAwesomeIcon icon={faArrowRight} className="red icon-ssm" />
           </div>
         </Link>
         <Link onClick={hideMobileActive} href="/forum">
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center line-cont">
-              <h4 className="white text-shadow-white light mar-right-8">
-                forum
-              </h4>
-              <FontAwesomeIcon icon={faComment} className="white icon-ssm" />
+              <h4 className=" text-shadow-white light mar-right-8">forum</h4>
+              <FontAwesomeIcon icon={faComment} className="red icon-ssm" />
             </div>
-            <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
+            <FontAwesomeIcon icon={faArrowRight} className="red icon-ssm" />
           </div>
         </Link>
 
         <Link onClick={hideMobileActive} href="/articles">
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center">
-              <h4 className="white text-shadow-white light mar-right-8">
-                articles
-              </h4>
-              <FontAwesomeIcon icon={faNewspaper} className="white icon-sm" />
+              <h4 className=" text-shadow-white light mar-right-8">articles</h4>
+              <FontAwesomeIcon icon={faNewspaper} className="red icon-sm" />
             </div>
-            <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
+            <FontAwesomeIcon icon={faArrowRight} className="red icon-ssm" />
           </div>
         </Link>
         <Link onClick={hideMobileActive} href="/nutrition">
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center">
-              <h4 className="white text-shadow-white light mar-right-8">
+              <h4 className=" text-shadow-white light mar-right-8">
                 nutrition
               </h4>
-              <FontAwesomeIcon icon={faSearch} className="white icon-sm" />
+              <FontAwesomeIcon icon={faSearch} className="red icon-sm" />
             </div>
-            <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
+            <FontAwesomeIcon icon={faArrowRight} className="red icon-ssm" />
           </div>
         </Link>
       </section>
 
-      <div className="white-line"></div>
+      <div className="grey-line"></div>
     </Cont>
   );
 };

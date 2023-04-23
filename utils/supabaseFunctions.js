@@ -1455,6 +1455,22 @@ export const fetchUserByName = async (username) => {
   }
 };
 
+export const fetchUserById = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select(
+        "username, comments(count), created_at, avatar_url, posts(title, content, created_at, img_url,  country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*), products(*), images(*)), about(*,links(*)))"
+      )
+      .eq("id", id)
+      .maybeSingle();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 //files
 
 export const deleteFile = async (filePath) => {
@@ -1514,6 +1530,29 @@ export const updateUserUsername = async (username) => {
     const { data, error } = await supabase.auth.updateUser({
       data: { username: username },
     });
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const updateUserBio = async (user_id, bio) => {
+  try {
+    const { data: bioFetch, error: bioError } = await supabase
+      .from("about")
+      .select("*")
+      .eq("user_id", user_id)
+      .maybeSingle();
+    if (bioError) throw bioError;
+
+    console.log("ran here");
+    const { data, error } = await supabase
+      .from("about")
+      .update({ bio, user_id })
+      .eq("user_id", user_id);
+
     if (error) throw error;
     return true;
   } catch (error) {

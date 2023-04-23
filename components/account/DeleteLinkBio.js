@@ -16,7 +16,7 @@ const Cont = styled.div`
   display: inline-block;
   border-radius: 16px;
   margin-right: 16px;
-
+  margin-bottom: 16px;
   .delete {
     background-color: #fff;
     width: 32px;

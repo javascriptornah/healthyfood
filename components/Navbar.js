@@ -72,7 +72,7 @@ const Cont = styled.div`
     padding-right: 40px;
   }
   .nav-mobile {
-    @media only screen and (min-width: 780px) {
+    @media only screen and (min-width: 880px) {
       display: none;
     }
     .nav-mobile-content {
