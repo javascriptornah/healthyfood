@@ -49,6 +49,7 @@ const Cont = styled.div`
     margin-top: 32px;
     margin-bottom: 32px;
   }
+
   .icon-holder {
     width: 48px;
     height: 48px;
@@ -105,7 +106,7 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
         </Link>
         <Link onClick={hideMobileActive} href="/forum">
           <div className="line flex space-between align-center">
-            <div className="flex-inline align-center">
+            <div className="flex-inline align-center line-cont">
               <h4 className="white text-shadow-white light mar-right-8">
                 forum
               </h4>
