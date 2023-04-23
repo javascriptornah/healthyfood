@@ -10,6 +10,7 @@ import {
   faLocationDot,
   faNewspaper,
   faComment,
+  faMapPin,
 } from "@fortawesome/free-solid-svg-icons";
 const Cont = styled.div`
   background: rgb(18, 60, 105);
@@ -84,45 +85,54 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
         <FontAwesomeIcon icon={faArrowTurnUp} className="icon-sm white" />
       </div>
       <Link onClick={hideMobileActive} href="/account">
-        <div className="flex line align-center mar-bottom-32">
-          <h4 className="white text-shadow-white light mar-right-8">ACCOUNT</h4>
+        <div className="flex line align-center ">
+          <h4 className="white text-shadow-white light mar-right-8">account</h4>
           <FontAwesomeIcon icon={faUser} className="white icon-sm" />
         </div>
       </Link>
 
       <section>
-        <h3 className="white">FOOD MAP </h3>
         <Link onClick={hideMobileActive} href="/">
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center">
-              <h4 className="white text-shadow-white light mar-right-8">MAP</h4>
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                className="white icon-ssm"
-              />
+              <h4 className="white text-shadow-white light mar-right-8">
+                food finder
+              </h4>
+              <FontAwesomeIcon icon={faMapPin} className="white icon-ssm" />
             </div>
             <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
           </div>
         </Link>
-        <Link onClick={hideMobileActive} href="/nutritionsearch">
+        <Link onClick={hideMobileActive} href="/forum">
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center">
               <h4 className="white text-shadow-white light mar-right-8">
-                NUTRITION SEARCH
+                forum
               </h4>
-              <FontAwesomeIcon icon={faSearch} className="white icon-ssm" />
+              <FontAwesomeIcon icon={faComment} className="white icon-ssm" />
             </div>
             <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
           </div>
         </Link>
 
-        <Link onClick={hideMobileActive} href="/forum">
+        <Link onClick={hideMobileActive} href="/articles">
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center">
               <h4 className="white text-shadow-white light mar-right-8">
-                FORUM
+                articles
               </h4>
-              <FontAwesomeIcon icon={faComment} className="white icon-sm" />
+              <FontAwesomeIcon icon={faNewspaper} className="white icon-sm" />
+            </div>
+            <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
+          </div>
+        </Link>
+        <Link onClick={hideMobileActive} href="/nutrition">
+          <div className="line flex space-between align-center">
+            <div className="flex-inline align-center">
+              <h4 className="white text-shadow-white light mar-right-8">
+                nutrition
+              </h4>
+              <FontAwesomeIcon icon={faSearch} className="white icon-sm" />
             </div>
             <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
           </div>
@@ -130,46 +140,6 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
       </section>
 
       <div className="white-line"></div>
-
-      <section>
-        <h3 className="white">FISH FINDER </h3>
-        <Link href="/fishmap" onClick={hideMobileActive}>
-          <div className="line flex space-between align-center">
-            <div className="flex-inline align-center">
-              <h4 className="white text-shadow-white light mar-right-8">MAP</h4>
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                className="white icon-ssm"
-              />
-            </div>
-            <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
-          </div>
-        </Link>
-
-        <Link href="/articles" onClick={hideMobileActive}>
-          <div className="line flex space-between align-center">
-            <div className="flex-inline align-center">
-              <h4 className="white text-shadow-white light mar-right-8">
-                ARTICLES
-              </h4>
-              <FontAwesomeIcon icon={faNewspaper} className="white icon-ssm" />
-            </div>
-            <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
-          </div>
-        </Link>
-
-        <Link href="/datasearch" onClick={hideMobileActive}>
-          <div className="line flex space-between align-center">
-            <div className="flex-inline align-center">
-              <h4 className="white text-shadow-white light mar-right-8">
-                DATA SEARCH
-              </h4>
-              <FontAwesomeIcon icon={faSearch} className="white icon-ssm" />
-            </div>
-            <FontAwesomeIcon icon={faArrowRight} className="white icon-ssm" />
-          </div>
-        </Link>
-      </section>
     </Cont>
   );
 };
