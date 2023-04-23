@@ -14,6 +14,7 @@ import {
   faTurnDown,
 } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
+import DeleteLinkBio from "../components/account/DeleteLinkBio";
 const Cont = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -408,7 +409,7 @@ const EditAccount = () => {
             />
             <p className="red">{formErrors.username}</p>
           </label>
-          <div className="mar-bottom-32"></div>
+          <div className="mar-bottom-16"></div>
           {usernameBtn &&
             (usernameLoading ? (
               <div className="lds-ripple">
@@ -416,11 +417,14 @@ const EditAccount = () => {
                 <div></div>
               </div>
             ) : (
-              <button onClick={submitUsername} className="dark-blue-btn">
+              <button
+                onClick={submitUsername}
+                className="black-btn inline-block"
+              >
                 <h5>Update</h5>
               </button>
             ))}
-
+          <div className="mar-bottom-32"></div>
           <label>
             <h5 className="red mar-bottom-8">Email</h5>
             <p className="mar-bottom-16 contrast">
@@ -437,6 +441,7 @@ const EditAccount = () => {
             />
             <p className="red">{formErrors.email}</p>
           </label>
+          <div className="mar-bottom-16"></div>
           {emailBtn &&
             (emailLoading ? (
               <div className="lds-ripple">
@@ -444,9 +449,9 @@ const EditAccount = () => {
                 <div></div>
               </div>
             ) : (
-              <button onClick={submitEmail} className="dark-blue-btn">
+              <div onClick={submitEmail} className="black-btn inline-block">
                 <h5>{emailLoading ? "Loading..." : "Update"}</h5>
-              </button>
+              </div>
             ))}
           <div className="mar-bottom-32"></div>
           <label>
@@ -462,6 +467,7 @@ const EditAccount = () => {
             />
             <p className="red">{formErrors.bio}</p>
           </label>
+          <div className="mar-bottom-16"></div>
           {bioBtn &&
             (bioLoading ? (
               <div className="lds-ripple">
@@ -469,10 +475,38 @@ const EditAccount = () => {
                 <div></div>
               </div>
             ) : (
-              <button onClick={submitBio} className="dark-blue-btn">
+              <div onClick={submitBio} className="black-btn inline-block">
                 <h5>{bioLoading ? "Loading..." : "Update"}</h5>
-              </button>
+              </div>
             ))}
+          <div className="mar-bottom-32"></div>
+          <h5 className="red mar-bottom-8">Social Links</h5>
+          <p
+            onClick={async () => {
+              const { user, error } = await supabase.auth.updateUser({
+                data: { avatar_url: "anon.png" },
+              });
+              console.log("user");
+              console.log(user);
+              console.log("error");
+              console.log(error);
+            }}
+          >
+            Click me
+          </p>
+          <DeleteLinkBio
+            url="/"
+            icon="youtube"
+            text="Raw Meat Youtube"
+            color="red"
+          />
+          <div className="add-social">
+            <FontAwesomeIcon
+              icon={faPlus}
+              className="black icon-med mar-right-8"
+            />
+            <p className="bold">Add social link</p>
+          </div>
         </div>
       ) : (
         <NotLogged />

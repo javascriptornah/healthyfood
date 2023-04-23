@@ -23,6 +23,25 @@ p {
   text-align: center;
 }
 
+.add-social{
+  padding: 8px 12px;
+  background-color: $light-beige;
+  transition: background-color .25s ease;
+  &:hover{
+    background-color: #fff;
+  }
+  border-radius: 16px;
+  cursor:pointer;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  display:inline-flex;
+  align-items: center;
+
+  &:active {
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+      rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  }
+}
 //fonts and colors
 h1,
 h2,

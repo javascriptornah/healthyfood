@@ -38,7 +38,7 @@ const SignupForm = ({ passwordState, togglePasswordState }) => {
           options: {
             data: {
               username: formData.username,
-              avatar_url: "anon",
+              avatar_url: "anon.png",
               role: "anon",
             },
           },
@@ -99,7 +99,6 @@ const SignupForm = ({ passwordState, togglePasswordState }) => {
         <div className="input-line">
           <h5>USERNAME</h5>
           <input
-          
             {...register("username", {
               required: true,
               pattern: {
