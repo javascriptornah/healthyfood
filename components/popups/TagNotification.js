@@ -7,7 +7,7 @@ const Cont = styled.div`
   border: 1px solid ${(props) => props.colors.darkPink};
   border-bottom: 8px solid ${(props) => props.colors.darkPink};
   padding: 16px;
-  z-index:1;
+  z-index: 1;
 
   .tag-text {
     border: 1px solid ${(props) => props.colors.darkPink};
@@ -20,7 +20,7 @@ const TagNotification = ({ runFunction, hideNotification, tagText }) => {
   return (
     <Cont className="box-shadow" colors={COLORS}>
       <div className="mar-bottom-32 flex flex-wrap align-center justify-center">
-        <h3 className="black inline-block mar-right-8">Did You Mean</h3>
+        <p className="black inline-block mar-right-8">Did You Mean</p>
         <h3 className="tag-text inline-block mar-right-8">{tagText}</h3>
         <h3 className="inline-block black ">?</h3>
       </div>

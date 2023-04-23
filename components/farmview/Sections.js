@@ -344,7 +344,7 @@ const Sections = ({
         <div className="center-inline">
           <h4 className="underline mar-bottom-16">HOW TO ORDER</h4>
         </div>
-        <p>{howToOrder}</p>
+        <ReactMarkdown className="markdownn">{howToOrder}</ReactMarkdown>
       </section>
     </Cont>
   );

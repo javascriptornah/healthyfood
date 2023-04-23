@@ -34,9 +34,12 @@ $light-red: #fd2727;
 $light-orange: #fd7d27;
 
 
-.base-markdown{
+.base-markdown, .markdown{
   h1,h2,h3,h4,h5,p{
     color: $black;
+  }
+  h3{
+    font-size: 30px;
   }
 }
 .forum-page{
