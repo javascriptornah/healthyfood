@@ -1455,6 +1455,8 @@ export const fetchUserByName = async (username) => {
   }
 };
 
+//files
+
 export const deleteFile = async (filePath) => {
   try {
     const { error } = await supabase.storage.from("avatars").remove(filePath);
@@ -1462,6 +1464,60 @@ export const deleteFile = async (filePath) => {
 
     return true;
   } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const uploadFile = async (filePath, file) => {
+  try {
+    const { error } = await supabase.storage
+      .from("avatars")
+      .upload(filePath, file);
+
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const updateUserAvatar = async (avatar_url) => {
+  try {
+    const { data, error } = await supabase.auth.updateUser({
+      data: { avatar_url },
+    });
+    if (error) throw error;
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const updateUserEmail = async (email) => {
+  try {
+    const { data, error } = await supabase.auth.updateUser({
+      email,
+    });
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const updateUserUsername = async (username) => {
+  try {
+    const { data, error } = await supabase.auth.updateUser({
+      data: { username: username },
+    });
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.log(error);
     return false;
   }
 };

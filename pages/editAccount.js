@@ -15,6 +15,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 import DeleteLinkBio from "../components/account/DeleteLinkBio";
+import {
+  deleteFile,
+  uploadFile,
+  updateUserAvatar,
+  updateUserUsername,
+  checkUsernameUnique,
+  checkEmailUnique,
+  updateUserEmail,
+} from "../utils/supabaseFunctions";
 const Cont = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -160,11 +169,11 @@ const EditAccount = () => {
         };
       });
     };
-    if (!/^[a-zA-Z0-9_.]{6,20}$/.test(username)) {
+    if (!/^[a-zA-Z0-9_.]{1,20}$/.test(username)) {
       setFormErrors((prev) => {
         return {
           ...prev,
-          username: "6-20 letters. Only letters, numbers or _.",
+          username: "1-20 letters. Only letters, numbers or _.",
         };
       });
     } else {
