@@ -233,7 +233,7 @@ const Topbar = ({
   };
   const toggles = Object.entries(filters).map(([key, val], index) => {
     return (
-      <div className="mar-right-4 mar-left-4">
+      <div key={index} className="mar-right-4 mar-left-4">
         <Toggle key={index} selected={val} setSelected={updateFilters} />{" "}
       </div>
     );
