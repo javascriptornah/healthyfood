@@ -141,6 +141,12 @@ const Bottombar = ({
     lng: "",
   });
 
+  const sliceImages = (index) => {
+    setImages((prev) => {
+      prev.splice(index, 1);
+      return [...prev];
+    });
+  };
   useEffect(() => {
     console.log(address);
   }, [address]);
@@ -751,7 +757,7 @@ const Bottombar = ({
         return (
           <div key={index} className="select-box-holder">
             <p className="black bold mar-bottom-4">{val.name}?</p>
-            <div className="select-box">
+            <div className="select-box flex flex-wrap">
               {["yes", "no", "unspecified"].map((fieldValue, index) => {
                 return (
                   <div
@@ -1163,6 +1169,7 @@ const Bottombar = ({
                 onChange={uploadImage}
               />
               <RenderImages
+                sliceImages={sliceImages}
                 setPhotoDisplayVisible={setPhotoDisplayVisible}
                 images={images}
                 updateSelectedImage={updateSelectedImage}
