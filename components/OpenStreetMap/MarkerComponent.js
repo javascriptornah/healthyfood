@@ -7,16 +7,17 @@ import { Marker, Popup, Tooltip } from "react-leaflet";
 import COLORS from "../../data/colors";
 import L from "leaflet";
 import Slideshow from "./Slideshow";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 const Cont = styled.div`
   max-width: 320px;
   .tags-holder {
     border-bottom: 1px solid ${(props) => props.colors.grey};
 
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     //background-color: ${(props) => props.colors.grey};
 
-    padding: 4px;
+    padding: 8px;
     border-radius: 8px 8px 0 0;
     margin-bottom: 8px;
   }
@@ -57,39 +58,25 @@ const MarkerComponent = ({
     popupAnchor: [-3, -76],
   });
 
+  const [tagElems, setTagElems] = useState([]);
+
+  useEffect(() => {
+    let renderCount = tags.length > 4 ? 4 : tags.length;
+    for (let i = 0; i < renderCount; i++) {
+      tagElems.push(<div className="tag-three">{tags[i]}</div>);
+    }
+  }, []);
+
+  console.log("/?");
+  console.log(tagElems);
+
   return (
     <>
       <Marker icon={iconItem} position={latLong} onClick={() => setOpen(true)}>
         <Tooltip>{name}</Tooltip>
         <Popup className="icon-box">
           <Cont colors={COLORS} className="info-box">
-            <div className="tags-holder ">
-              <p style={{ backgroundColor: "#CCE729" }} className="tag-four">
-                {tags[0]}
-              </p>
-              <p
-                style={{ backgroundColor: COLORS.lightOrange }}
-                className="tag-four"
-              >
-                {tags[1]}
-              </p>
-              {tags[2] !== undefined && (
-                <p
-                  style={{ backgroundColor: COLORS.lightGreen }}
-                  className="tag-four"
-                >
-                  {tags[2]}
-                </p>
-              )}
-              {tags[3] !== undefined && (
-                <p
-                  style={{ backgroundColor: COLORS.lightRed }}
-                  className="tag-four"
-                >
-                  {tags[3]}
-                </p>
-              )}
-            </div>
+            <div className="tags-holder">{tagElems}</div>
             <Link
               href={{
                 pathname: `/farm/${id}`,
@@ -100,13 +87,10 @@ const MarkerComponent = ({
                 <FontAwesomeIcon icon={faEye} className="icon-sm white" />
               </div>
             </Link>
-            {images.length > 0 && <Slideshow images={images} />}
-
             <div className="field-line">
-              <p className="black bold">Name</p>
-              <div className="grey-line mar-bottom-4"></div>
               <h5 className="bold black">{name}</h5>
             </div>
+            {images.length > 0 && <Slideshow images={images} />}
 
             <div className="field-line">
               <p className="black bold">Address</p>
@@ -125,7 +109,11 @@ const MarkerComponent = ({
 
             <div className="field-line">
               <p className="black bold">Description</p>
-              <p className="info-box-description">{description}</p>
+              <p className="info-box-description">
+                <ReactMarkdown className="base-markdown">
+                  {description}
+                </ReactMarkdown>
+              </p>
             </div>
 
             <div className="field-line">
