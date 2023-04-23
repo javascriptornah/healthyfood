@@ -16,10 +16,7 @@ const Cont = styled.div`
   display: inline-block;
   border-radius: 16px;
   margin-right: 16px;
-  &:active {
-    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
-      rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-  }
+
   .delete {
     background-color: #fff;
     width: 32px;
@@ -27,9 +24,15 @@ const Cont = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     border-radius: 50%;
     &:hover {
       background-color: ${(props) => props.colors.offWhite};
+    }
+    &:active {
+      box-shadow: none;
+      box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+        rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
     }
   }
 `;

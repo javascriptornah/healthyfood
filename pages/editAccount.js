@@ -481,19 +481,7 @@ const EditAccount = () => {
             ))}
           <div className="mar-bottom-32"></div>
           <h5 className="red mar-bottom-8">Social Links</h5>
-          <p
-            onClick={async () => {
-              const { user, error } = await supabase.auth.updateUser({
-                data: { avatar_url: "anon.png" },
-              });
-              console.log("user");
-              console.log(user);
-              console.log("error");
-              console.log(error);
-            }}
-          >
-            Click me
-          </p>
+
           <DeleteLinkBio
             url="/"
             icon="youtube"

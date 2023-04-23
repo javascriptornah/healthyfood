@@ -280,6 +280,7 @@ const Sections = ({
             <div className="grey-line mar-bottom-4"></div>
             <a
               target="_blank"
+              rel="noreferrer"
               href={`https://www.google.com/maps/place/${small_address}`}
             >
               <p className="bold light-blue underline-hover">{address}</p>
