@@ -134,7 +134,7 @@ export const updateLocation = async (
   number = null,
   grassFed,
   organic,
-  vaccineFree,
+
   pastureRaised,
   soyFree,
   A2,
@@ -159,7 +159,7 @@ export const updateLocation = async (
         number,
         grassFed,
         organic,
-        vaccineFree,
+
         pastureRaised,
         soyFree,
         A2,

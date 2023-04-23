@@ -173,7 +173,7 @@ const Sections = ({
   howToOrder,
   grassFed,
   organic,
-  vaccineFree,
+
   soyFree,
   pastureRaised,
   A2,
@@ -204,7 +204,7 @@ const Sections = ({
     [
       { name: "Grassfed", value: grassFed },
       { name: "Organic", value: organic },
-      { name: "Vaccine Free", value: vaccineFree },
+
       { name: "Soy Free", value: soyFree },
       { name: "Pasture Raised", value: pastureRaised },
       { name: "A2", value: A2 },

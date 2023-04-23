@@ -227,7 +227,7 @@ const Sections = ({
   howToOrder,
   grassFed,
   organic,
-  vaccineFree,
+
   soyFree,
   pastureRaised,
   A2,
@@ -329,7 +329,7 @@ const Sections = ({
     setValue("pickup", delivery);
     setValue("grassFed", grassFed);
     setValue("organic", organic);
-    setValue("vaccineFree", vaccineFree);
+
     setValue("pastureRaised", pastureRaised);
     setValue("soyFree", soyFree);
     setValue("A2", A2);
@@ -389,7 +389,7 @@ const Sections = ({
         numberOrganize.join(""),
         formData.grassFed,
         formData.organic,
-        formData.vaccineFree,
+
         formData.pastureRaised,
         formData.soyFree,
         formData.A2,
@@ -522,7 +522,7 @@ const Sections = ({
     [
       { name: "Grassfed", value: grassFed },
       { name: "Organic", value: organic },
-      { name: "Vaccine Free", value: vaccineFree },
+
       { name: "Soy Free", value: soyFree },
       { name: "Pasture Raised", value: pastureRaised },
       { name: "A2", value: A2 },
@@ -1066,56 +1066,6 @@ const Sections = ({
                       {" "}
                       <p>Unspecified</p>
                     </p>
-                  </div>
-                </label>
-              </div>
-
-              <div className="radio-line">
-                <h4 className="mar-bottom-8">VACCINE FREE?</h4>
-                <div className="flex mar-bottom-8">
-                  <label htmlFor="vaccines-true">
-                    <div className="flex align-center mar-right-8">
-                      <input
-                        {...register("vaccineFree", {
-                          required: false,
-                        })}
-                        type="radio"
-                        value="true"
-                        id="vaccines-true"
-                      />
-                      <p className="mar-left-4">Yes</p>
-                    </div>
-                  </label>
-
-                  <label htmlFor="pickupOnly">
-                    <div className="flex align-center">
-                      <input
-                        {...register("vaccineFree", {
-                          required: false,
-                        })}
-                        type="radio"
-                        id="vaccines-false"
-                        value="false"
-                      />
-                      <p className="mar-left-4">
-                        {" "}
-                        <p>No</p>
-                      </p>
-                    </div>
-                  </label>
-                </div>
-                <label htmlFor="vaccines-unspecified">
-                  <div className="flex align-center">
-                    <input
-                      {...register("vaccineFree", {
-                        required: false,
-                      })}
-                      type="radio"
-                      id="vaccines-unspecified"
-                      value="unspecified"
-                      defaultChecked
-                    />
-                    <p className="mar-left-4">Unspecified</p>
                   </div>
                 </label>
               </div>

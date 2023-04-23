@@ -209,7 +209,6 @@ const Preview = ({ locationFetch }) => {
             hoursTo={location.hoursTo}
             grassFed={location.grassFed}
             organic={location.organic}
-            vaccineFree={location.vaccineFree}
             soyFree={location.soyFree}
             pastureRaised={location.pastureRaised}
             A2={location.A2}
