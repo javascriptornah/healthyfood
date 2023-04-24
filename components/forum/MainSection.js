@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 import Mainline from "./Mainline";
+import { fetchCountryLastPostByName } from "../../utils/supabaseFunctions";
 const Cont = styled.div`
   border-radius: 8px 8px 0px 0px;
   .title-spec {
@@ -16,9 +17,6 @@ const Cont = styled.div`
 `;
 const ForumContent = ({ countries, europe, recentPosts }) => {
   const [res, setRes] = useState(recentPosts);
-  console.log("resss");
-  console.log(res);
-  console.log("resss");
 
   const [showStates, setShowStates] = useState(
     countries[1].forumStates.slice(0, 6)
@@ -36,6 +34,17 @@ const ForumContent = ({ countries, europe, recentPosts }) => {
     date: new Date(),
   });
 
+  const fetchLastCountryPost = async (country_id) => {
+    const res = await fetchCountryLastPostByName(country_id);
+
+    return {
+      title: res[0]?.title,
+      created_at: res[0]?.created_at,
+      username: res[0]?.users.username,
+      region: res[0].state_id.name,
+    };
+  };
+
   return (
     <Cont colors={COLORS}>
       <div className="title-spec">
@@ -48,6 +57,8 @@ const ForumContent = ({ countries, europe, recentPosts }) => {
         postsX={countries[1].posts[0].count}
         lastPostDetails={postObj}
         link="country"
+        fetchLastPostFunction={fetchLastCountryPost}
+        region_id={2}
       />
       <Mainline
         title="Canada"
@@ -55,14 +66,16 @@ const ForumContent = ({ countries, europe, recentPosts }) => {
         postsX={countries[0].posts[0].count}
         lastPostDetails={recentPosts}
         link="country"
+        fetchLastPostFunction={fetchLastCountryPost}
+        region_id={1}
       />
-      <Mainline
+      {/* <Mainline
         title="Europe"
         subTitles={showEuroCountries}
         postsX={127}
         lastPostDetails={postObj}
         link="country"
-      />
+      /> */}
     </Cont>
   );
 };

@@ -49,6 +49,8 @@ const Forum = ({ postsFetch, data, data2, recentPosts }) => {
     })
   );
 
+  console.log("eruope");
+  console.log(data2);
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">

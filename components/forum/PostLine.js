@@ -28,7 +28,7 @@ const Cont = styled.div`
 const PostLine = ({ title, forum, username, date, id }) => {
   const router = useRouter();
   const path = router.asPath;
-  console.log(router);
+
   let date2 = new Date(date);
   let hoursMin = date2.getUTCHours() + ":" + date2.getUTCMinutes();
 

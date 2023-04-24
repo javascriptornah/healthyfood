@@ -1373,6 +1373,22 @@ export const fetchStateLastPostByName = async (state_id) => {
     return error;
   }
 };
+
+export const fetchCountryLastPostByName = async (country_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("title, users(username), created_at, state_id(name)")
+      .eq("country_id", country_id)
+      .limit(1)
+      .order("id", { ascending: false });
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
 export const fetchPostLastCommentById = async (id) => {
   try {
     const { data, error } = await supabase

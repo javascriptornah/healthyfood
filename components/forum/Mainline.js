@@ -41,10 +41,9 @@ const MainLine = ({
   title,
   subTitles,
   postsX,
-  lastPostDetails,
   link,
-  backLink,
-  state_id,
+  fetchLastPostFunction,
+  region_id,
 }) => {
   const router = useRouter();
   const path = router.asPath;
@@ -53,12 +52,13 @@ const MainLine = ({
     title: "",
     created_at: "",
     username: "",
-    city: "",
+    region: "",
   });
-  console.log("kapa");
+
   useEffect(() => {
+    /*
     const getLastPost = async () => {
-      const res = await fetchStateLastPostByName(state_id);
+      const res = await fetchStateLastPostByName(5);
       setLastPost((prev) => {
         return {
           title: res[0]?.title,
@@ -67,10 +67,18 @@ const MainLine = ({
           city: res[0]?.city_id.name,
         };
       });
+    }; */
+
+    const getLastPost = async () => {
+      const res = await fetchLastPostFunction(region_id);
+
+      setLastPost(res);
     };
     getLastPost();
   }, []);
 
+  console.log("last post");
+  console.log(lastPost);
   return (
     <Link
       href={{
@@ -101,7 +109,7 @@ const MainLine = ({
               by{" "}
               <span className="green underline-hover">{lastPost.username}</span>
             </p>
-            <p className="small">{lastPost.city}</p>
+            <p className="small">{lastPost.region}</p>
             <p className="small">
               {lastPost.created_at !== undefined &&
                 fetchDaysDiff(lastPost.created_at)}
