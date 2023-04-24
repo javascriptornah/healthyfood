@@ -1505,9 +1505,10 @@ export const updateUserAvatar = async (avatar_url) => {
       data: { avatar_url },
     });
     if (error) throw error;
-
+    console.log("worked");
     return true;
   } catch (error) {
+    console.lod("didnt work");
     console.log(error);
     return false;
   }

@@ -382,6 +382,8 @@ const EditAccount = () => {
     keywords: "healthy food map, edit account, healthy food map edit account",
   };
 
+  console.log("avatar url");
+  console.log(session);
   return (
     <Cont colors={COLORS} className="container">
       <Toaster />
@@ -420,12 +422,13 @@ const EditAccount = () => {
                       alt="profile"
                     />
                   ) : (
-                    <Image
+                    /* <img
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${avatarUrl}`}
-                      style={{ objectFit: "cover" }}
-                      fill
-                      size="100%"
-                      alt="profile"
+                      style={{ width: "160px", height: "160px" }}
+                    /> */
+                    <img
+                      src={`https://jhzmmpuwxsnhhxedkcuj.supabase.co/storage/v1/object/public/avatars/matt-pierce@hotmail.com.lzuIjWleNjc-wEdbfrC2S`}
+                      style={{ width: "160px", height: "160px" }}
                     />
                   ))}
               </div>
