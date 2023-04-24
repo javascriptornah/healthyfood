@@ -56,8 +56,8 @@ const Post = ({ postFetch }) => {
   const pageId = router.query.id;
 
   console.log(postFetch);
-  let backLink = router.query.backLink;
-  backLink = backLink.replace(/\?.*/, "");
+  let backLink = router.query?.backLink;
+  backLink = backLink?.replace(/\?.*/, "") || "/";
   console.log("asdasd");
   console.log(backLink);
   const [comments, setComments] = useState(

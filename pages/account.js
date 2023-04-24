@@ -6,7 +6,10 @@ import COLORS from "../data/colors";
 import NotLogged from "../components/account/notlogged";
 import UserPage from "../components/account/UserPage";
 import { Toaster } from "react-hot-toast";
-import { fetchUserById } from "../utils/supabaseFunctions";
+import {
+  fetchUserById,
+  fetchUserPostsPreviewById,
+} from "../utils/supabaseFunctions";
 const Cont = styled.div`
   .default-page {
     background: #fff;
@@ -34,12 +37,17 @@ const Account = ({ session }) => {
   const [user, setUser] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
+  const [posts, setPosts] = useState([]);
   const fetchUser = async () => {
     const { data: session } = await supabase.auth.getSession();
     if (session.session != null) {
       setUser(session.session.user);
 
       const userInfo = await fetchUserById(session.session.user.id);
+      const postsFetch = await fetchUserPostsPreviewById(
+        session.session.user.id
+      );
+      setPosts(postsFetch);
       setUserDetails(userInfo);
       setIsLogged(true);
     } else {
@@ -47,8 +55,6 @@ const Account = ({ session }) => {
     }
   };
 
-  console.log("kap");
-  console.log(userDetails);
   useEffect(() => {
     fetchUser();
   }, []);
@@ -86,6 +92,7 @@ const Account = ({ session }) => {
           fetchUser={fetchUser}
           locationsFetch={userDetails.locations}
           userDetails={userDetails}
+          postsFetch={posts}
         />
       ) : (
         <NotLogged />

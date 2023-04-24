@@ -1026,6 +1026,22 @@ export const fetchPostById = async (id) => {
   }
 };
 
+export const fetchUserPostsPreviewById = async (user_id) => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select(
+        "*, page_views(view_count), state_id(name), country_id(name), user_id(*), comments(count), downvotes(count), upvotes(count)"
+      )
+      .eq("user_id", user_id);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const signInWithEmail = async (email, password) => {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -1460,7 +1476,7 @@ export const fetchUserById = async (id) => {
     const { data, error } = await supabase
       .from("users")
       .select(
-        "username, upvotes(count), comments(count), created_at, avatar_url, posts(title, content, created_at, img_url,  country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*), products(*), images(*)), about(*,links(*)))"
+        "username, upvotes(count), comments(count), created_at, avatar_url, posts(title, content, created_at, img_url, country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*), products(*), images(*)), about(*,links(*)))"
       )
       .eq("id", id)
       .maybeSingle();

@@ -8,7 +8,20 @@ import SignupPopup from "../popups/SignupPopup";
 import supabase from "../../utils/supabaseClient";
 import { logout } from "../../utils/supabaseFunctions";
 import toast, { Toaster } from "react-hot-toast";
-const Cont = styled.div``;
+
+const Cont = styled.div`
+  .title-spec {
+    background-color: ${(props) => props.colors.darkPink};
+    text-align: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 16px;
+    h3 {
+      color: #fff;
+    }
+  }
+`;
 const Header = () => {
   const router = useRouter();
   const [showLogin, setShowLogin] = useState(false);
@@ -45,10 +58,9 @@ const Header = () => {
     <Cont colors={COLORS} className="mar-bottom-48">
       <Toaster />
       {showLogin && <SignupPopup hideFunction={hideLogin} />}
-
-      <h3 className="underline text-shadow-red mar-bottom-16">
-        FOOD SOURCING FORUM
-      </h3>
+      <div className="title-spec">
+        <h3 className="text-shadow">FOOD SOURCING FORUM</h3>
+      </div>
       {user !== null ? (
         <>
           <p>

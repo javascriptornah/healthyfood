@@ -11,17 +11,32 @@ const Cont = styled.div`
   }
 `;
 
-const RecentPosts = ({ posts }) => {
+const RecentPosts = ({ posts, username }) => {
+  console.log("usernameeeee");
+  console.log(username);
   const postElems = posts.map((post, index) => {
     return (
       <Post
         key={index}
+        id={post.id}
         title={post.title}
-        forum={post.forum}
-        username={post.username}
+        forum={`${
+          post.state_id?.name
+            ? post.country_id?.name + ", "
+            : post.country_id?.name
+        } ${
+          post.state_id?.name
+            ? post.city_id?.name
+              ? post.state_id?.name + ", "
+              : post.state_id?.name
+            : ""
+        } ${post.city_id?.name ? post.city_id?.name + ", " : ""}`}
+        username={username}
         content={post.content}
-        views={post.views}
-        comments={post.comments}
+        views={post.page_views[0]?.view_count}
+        comments={post.comments[0].count}
+        upvotes={post.upvotes[0].count - post.downvotes[0].count}
+        created_at={post.created_at}
       />
     );
   });

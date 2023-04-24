@@ -79,7 +79,14 @@ const Cont = styled.div`
   }
 `;
 
-const UserPage = ({ user, fetchUser, locationsFetch, userDetails }) => {
+const UserPage = ({
+  user,
+  fetchUser,
+  locationsFetch,
+  userDetails,
+  postsFetch,
+}) => {
+  const [posts, setPosts] = useState(postsFetch);
   const [locations, setLocations] = useState(
     locationsFetch.sort((a, b) => {
       return new Date(a.created_at) > new Date(b.created_at)
@@ -110,6 +117,8 @@ const UserPage = ({ user, fetchUser, locationsFetch, userDetails }) => {
     },
   ];
 
+  console.log("pposts");
+  console.log(posts);
   return (
     <Cont colors={COLORS}>
       <div className="default-page">
@@ -125,7 +134,7 @@ const UserPage = ({ user, fetchUser, locationsFetch, userDetails }) => {
             <PostPreview title="Recent Posts" locations={locations} />
           </div>
           <div className=" post-activity">
-            <RecentPosts posts={postsX} />
+            <RecentPosts posts={posts} username={userDetails.username} />
           </div>
           <div className="bio">
             <AccountPreview
