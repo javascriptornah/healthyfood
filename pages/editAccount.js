@@ -150,6 +150,7 @@ const EditAccount = () => {
     };
     updateSession();
   }, []);
+
   useEffect(() => {
     setUsernameDisplay(session?.user?.user_metadata.username);
   }, [session]);
