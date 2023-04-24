@@ -12,18 +12,32 @@ const Cont = styled.div`
   border-radius: 4px;
 
   overflow-y: auto;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   transition: box-shadow 0.25s ease;
 
   @media only screen and (max-width: 600px) {
     flex-direction: column;
   }
-  &:hover {
-    box-shadow: none;
-    border: 1px solid ${(props) => props.colors.darkPink};
-    h5 {
-      text-decoration: underline;
+
+  @media only screen and (max-width: 1100px) {
+    .image {
+      height: 100px !important;
     }
+  }
+  @media only screen and (max-width: 700px) {
+    .text {
+      font-size: 13px;
+      height: 60px !important;
+    }
+  }
+
+  .black-bg {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.15;
   }
   .circle-red {
     background-color: ${(props) => props.colors.darkPink};
@@ -53,6 +67,10 @@ const Cont = styled.div`
   .text {
     height: 100px;
   }
+  .text-hide {
+    overflow-y: hidden;
+    height: 30px;
+  }
 `;
 const Location = ({
   name,
@@ -73,16 +91,29 @@ const Location = ({
       </div>
     );
   });
+  const [showOverlay, setShowOverlay] = useState(false);
   return (
-    <Link
-      href={{
-        pathname: `/farm/${id}`,
-      }}
+    <Cont
+      colors={COLORS}
+      className="location cursor opacity-anim relative"
+      onMouseOver={() => setShowOverlay(true)}
+      onMouseOut={() => setShowOverlay(false)}
     >
-      <Cont colors={COLORS} className=" cursor opacity-anim">
-        <div className="flex align-center space-between flex-wrap  padding-x-12 padding-y-8">
+      <Link
+        href={{
+          pathname: `/farm/${id}`,
+        }}
+      >
+        <div
+          className="black-bg"
+          style={{ display: showOverlay ? "block" : "none" }}
+        ></div>
+
+        <div className=" padding-x-12 padding-y-8">
           <div className="flex align-center">
-            <h5 className=" inline-bloc text-shadow-2 mar-right-8">{name}</h5>
+            <h5 className=" inline-block text-hide text-shadow-2 mar-right-8">
+              {name}
+            </h5>
           </div>
           <div>
             <FontAwesomeIcon
@@ -116,8 +147,8 @@ const Location = ({
             )}
           </div>
         </div>
-      </Cont>
-    </Link>
+      </Link>
+    </Cont>
   );
 };
 

@@ -6,6 +6,14 @@ import Location from "./Location";
 const Cont = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  @media only screen and (max-width: 500px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media only screen and (max-width: 300px) {
+    grid-template-columns: 1fr;
+  }
+  .location {
+  }
 `;
 
 const Locations = ({ locations }) => {

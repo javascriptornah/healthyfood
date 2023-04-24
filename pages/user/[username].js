@@ -9,8 +9,14 @@ import Locations from "../../components/user/Locations";
 const Cont = styled.div`
   padding: 32px;
   max-width: 1400px;
-  width: 1000px;
+  width: 100%;
   margin: 0 auto;
+  @media only screen and (max-width: 600px) {
+    padding: 16px;
+  }
+  @media only screen and (max-width: 400px) {
+    padding: 8px;
+  }
   .default-page {
     background: #fff;
     border: 1px solid ${(props) => props.colors.grey};
