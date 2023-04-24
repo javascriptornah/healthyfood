@@ -79,24 +79,17 @@ const Cont = styled.div`
   }
 `;
 
-const UserPage = ({ user, fetchUser }) => {
-  const [locations, setLocations] = useState([]);
+const UserPage = ({ user, fetchUser, locationsFetch, userDetails }) => {
+  const [locations, setLocations] = useState(
+    locationsFetch.sort((a, b) => {
+      return new Date(a.created_at) > new Date(b.created_at)
+        ? -1
+        : new Date(a.created_at) < new Date(b.created_at)
+        ? 1
+        : 0;
+    })
+  );
   const router = useRouter();
-  useEffect(() => {
-    const fetchLocationsWrapper = async () => {
-      let locationsFetch = await fetchUserLocations(user.id);
-      locationsFetch = locationsFetch.sort((a, b) => {
-        return new Date(a.created_at) > new Date(b.created_at)
-          ? -1
-          : new Date(a.created_at) < new Date(b.created_at)
-          ? 1
-          : 0;
-      });
-
-      setLocations(locationsFetch);
-    };
-    fetchLocationsWrapper();
-  }, []);
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -116,7 +109,7 @@ const UserPage = ({ user, fetchUser }) => {
       comments: 42,
     },
   ];
-  console.log(user);
+
   return (
     <Cont colors={COLORS}>
       <div className="default-page">
@@ -138,17 +131,11 @@ const UserPage = ({ user, fetchUser }) => {
             <AccountPreview
               user={user}
               username="rawfatgod"
-              bio="I enjoy eating steak and computer 
- programing. I am offering health
-consultation for $50 hour. DM me 
-formore info."
-              upvotes="675"
-              posts="65"
-              comments="99"
-              links={[
-                "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
-                "https://www.youtube.com/channel/UC9M82W-V9YlK5-00KQ4QeJA",
-              ]}
+              bio={userDetails.about[0].bio}
+              upvotes={userDetails.upvotes[0].count}
+              posts={userDetails.posts.length}
+              comments={userDetails.comments[0].count}
+              links={userDetails.about[0].links}
             />
           </div>
         </div>

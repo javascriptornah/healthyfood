@@ -56,6 +56,18 @@ const AccountPreview = ({
   });
   const [editing, setEditing] = useState(false);
 
+  const [linkElems, setLinkElems] = useState(
+    links.map((link, index) => {
+      return (
+        <LinkBio
+          key={index}
+          url={link.link}
+          icon={link.icon}
+          text={link.name}
+        />
+      );
+    })
+  );
   return (
     <Cont colors={COLORS} className="grey-border-2 box-shadow-2">
       <div className="padding-x-12 padding-y-8 image-section">
@@ -151,14 +163,7 @@ const AccountPreview = ({
         </div>
       </div>
 
-      <div className="padding-x-12 padding-y-8 flex flex-wrap">
-        <LinkBio
-          color="red"
-          text="Raw meat Youtube"
-          icon="youtube"
-          url="https://www.youtube.com/watch?v=josTLezCaCI&list=PL94ZTy5l0-Gkx4ZBMfP1tW2d5Tivtdajo&index=131&ab_channel=%F0%9D%93%93%F0%9D%93%B2%F0%9D%93%B0%F0%9D%93%B2%F0%9D%93%BD%F0%9D%93%AA%F0%9D%93%B5%F0%9D%93%AB%F0%9D%93%B8%F0%9D%94%82%F0%9D%93%B1%F0%9D%93%AD"
-        />
-      </div>
+      <div className="padding-x-12 padding-y-8 flex flex-wrap">{linkElems}</div>
       <div className="ssm-spacer-bot-res"></div>
       <div className="padding-x-12 padding-y-8">
         <Link href={"/createPost"}>

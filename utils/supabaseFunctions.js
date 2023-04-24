@@ -1444,7 +1444,7 @@ export const fetchUserByName = async (username) => {
     const { data, error } = await supabase
       .from("users")
       .select(
-        "username, comments(count), created_at, avatar_url, posts(title, content, created_at, img_url,  country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*), products(*), images(*)), about(*,links(*)))"
+        "username,  comments(count), created_at, avatar_url, posts(title, content, created_at, img_url,  country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*), products(*), images(*)), about(*,links(*)))"
       )
       .eq("username", username)
       .maybeSingle();
@@ -1460,7 +1460,7 @@ export const fetchUserById = async (id) => {
     const { data, error } = await supabase
       .from("users")
       .select(
-        "username, comments(count), created_at, avatar_url, posts(title, content, created_at, img_url,  country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*), products(*), images(*)), about(*,links(*)))"
+        "username, upvotes(count), comments(count), created_at, avatar_url, posts(title, content, created_at, img_url,  country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*), products(*), images(*)), about(*,links(*)))"
       )
       .eq("id", id)
       .maybeSingle();
@@ -1561,7 +1561,7 @@ export const updateUserBio = async (user_id, bio) => {
   }
 };
 
-export const createUserLink = async (user_id, name, icon) => {
+export const createUserLink = async (user_id, name, link, icon) => {
   try {
     const { data: about, error: aboutError } = await supabase
       .from("about")
@@ -1571,12 +1571,25 @@ export const createUserLink = async (user_id, name, icon) => {
 
     const { data, error } = await supabase
       .from("links")
-      .insert({ name, icon, about_id: about.id })
-      .select();
+      .insert({ name, link, icon, about_id: about.id })
+      .select()
+      .maybeSingle();
 
     if (error) throw error;
     return { state: true, data };
   } catch (error) {
+    return { state: false, error };
+  }
+};
+
+export const deleteUserLink = async (id) => {
+  try {
+    const { data, error } = await supabase.from("links").delete().eq("id", id);
+
+    if (error) throw error;
+    return { state: true };
+  } catch (error) {
+    console.log(error);
     return { state: false, error };
   }
 };

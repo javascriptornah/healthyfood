@@ -26,6 +26,7 @@ import {
   updateUserEmail,
   updateUserBio,
   fetchUserById,
+  deleteUserLink,
 } from "../utils/supabaseFunctions";
 
 const Cont = styled.div`
@@ -108,9 +109,10 @@ const Cont = styled.div`
 
 const EditAccount = () => {
   const [user, setUser] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
   const [addingSocial, setAddingSocial] = useState(false);
+  const [links, setLinks] = useState([]);
   const [session, setSession] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [username, setUsername] = useState("");
@@ -142,6 +144,7 @@ const EditAccount = () => {
         console.log("user info");
         console.log(userInfo);
         setBio(userInfo.about[0].bio);
+        setLinks(userInfo.about[0].links);
         setUser(userInfo);
       }
     };
@@ -339,6 +342,33 @@ const EditAccount = () => {
     }
   };
 
+  const deleteLink = async (id, index) => {
+    setLoading(true);
+    const state = await deleteUserLink(id);
+    if (state) {
+      toast.success("Link deleted");
+      setLinks((prev) => {
+        prev.splice(index, 1);
+        return [...prev];
+      });
+    } else {
+      toast.error("Error deleting link");
+    }
+    setLoading(false);
+  };
+  const linkElems = links.map((link, index) => {
+    return (
+      <DeleteLinkBio
+        icon={link.icon}
+        text={link.name}
+        deleteLink={() => deleteLink(link.id, index)}
+      />
+    );
+  });
+
+  const pushLink = (id, icon, link, name) => {
+    links.push({ id, icon, link, name });
+  };
   const meta = {
     title: "Edit Account",
     description:
@@ -353,6 +383,16 @@ const EditAccount = () => {
   return (
     <Cont colors={COLORS} className="container">
       <Toaster />
+      {loading && (
+        <div className="loading-screen-blank">
+          <div className="lds-ring-green">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      )}
 
       <div className="center-inline  ssm-spacer">
         <h2 className="black">Edit Profile</h2>
@@ -493,24 +533,22 @@ const EditAccount = () => {
             ))}
           <div className="mar-bottom-32"></div>
           <h5 className="red mar-bottom-8">Social Links</h5>
-
-          <DeleteLinkBio
-            url="/"
-            icon="youtube"
-            text="Raw Meat Youtube"
-            color="red"
-          />
-          <div className="add-social" onClick={() => setAddingSocial(true)}>
-            <FontAwesomeIcon
-              icon={faPlus}
-              className="black icon-med mar-right-8"
-            />
-            <p className="bold">Add social link</p>
+          <div className="flex flex-wrap align-start">
+            {linkElems}
+            <div className="add-social" onClick={() => setAddingSocial(true)}>
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="black icon-med mar-right-8"
+              />
+              <p className="bold">Add social link</p>
+            </div>
           </div>
+
           {addingSocial && (
             <AddSocial
               user_id={session.user.id}
               hideSocial={() => setAddingSocial(false)}
+              pushLink={pushLink}
             />
           )}
         </div>

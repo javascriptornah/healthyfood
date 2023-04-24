@@ -6,6 +6,7 @@ import COLORS from "../data/colors";
 import NotLogged from "../components/account/notlogged";
 import UserPage from "../components/account/UserPage";
 import { Toaster } from "react-hot-toast";
+import { fetchUserById } from "../utils/supabaseFunctions";
 const Cont = styled.div`
   .default-page {
     background: #fff;
@@ -31,19 +32,23 @@ export async function getServerSideProps() {
 }
 const Account = ({ session }) => {
   const [user, setUser] = useState(null);
-
+  const [userDetails, setUserDetails] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
   const fetchUser = async () => {
     const { data: session } = await supabase.auth.getSession();
     if (session.session != null) {
       setUser(session.session.user);
-      console.log("kap");
-      console.log(session.session);
+
+      const userInfo = await fetchUserById(session.session.user.id);
+      setUserDetails(userInfo);
       setIsLogged(true);
     } else {
       setIsLogged(false);
     }
   };
+
+  console.log("kap");
+  console.log(userDetails);
   useEffect(() => {
     fetchUser();
   }, []);
@@ -76,7 +81,12 @@ const Account = ({ session }) => {
       </Head>
       <Toaster />
       {isLogged ? (
-        <UserPage user={user} fetchUser={fetchUser} />
+        <UserPage
+          user={user}
+          fetchUser={fetchUser}
+          locationsFetch={userDetails.locations}
+          userDetails={userDetails}
+        />
       ) : (
         <NotLogged />
       )}

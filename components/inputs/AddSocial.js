@@ -15,6 +15,7 @@ import {
   faTwitter,
   faDiscord,
   faTelegram,
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import toast from "react-hot-toast";
 import { createUserLink } from "../../utils/supabaseFunctions";
@@ -69,33 +70,77 @@ const Cont = styled.div`
   }
 `;
 
-const AddSocial = ({ hideSocial, user_id }) => {
+const AddSocial = ({ hideSocial, user_id, pushLink }) => {
+  const [loading, setLoading] = useState(false);
   const [adding, setAdding] = useState(false);
   const inputRef = useRef(null);
+  const inputRef2 = useRef(null);
   const [socialState, setSocialState] = useState({
     icon: faInstagram,
     text: "Instagram",
     color: "#f09433",
   });
   const [linkVal, setLinkVal] = useState("");
+  const [textVal, setTextVal] = useState("");
 
   const createLink = async () => {
-    if (linkVal == "") {
+    if (textVal == "") {
+      toast.error("Can't be empty");
+      inputRef2.current.focus();
+      return;
+    } else if (linkVal == "") {
       toast.error("Can't be empty");
       inputRef.current.focus();
+      return;
+    }
+    setLoading(true);
+    if (
+      !/(https|http)?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+        linkVal
+      )
+    ) {
+      toast.error("Must be valid link starting with http/https");
+      setLoading(false);
+      return;
     }
     let { state, data } = await createUserLink(
       user_id,
+      textVal,
       linkVal,
-      socialState.text
+      socialState.text.toLowerCase()
     );
     if (state) {
+      toast.success("Link added!");
+      setLinkVal("");
+      hideSocial();
+      console.log(data);
+      pushLink(data.id, data.icon, data.link, data.name);
+    } else {
+      toast.error("Error creating link");
     }
+    setLoading(false);
   };
 
   const startAdding = (icon, text, color) => {
     setAdding(true);
     setSocialState({ icon, text, color });
+  };
+
+  const updateLink = (e) => {
+    let val = e.target.value;
+    if (!/^https?:\/\//g.test(val)) {
+      let reg = new RegExp("^" + val, "g");
+
+      let match = "https://".match(reg);
+
+      if (match == null) {
+        setLinkVal("https://" + val);
+      } else {
+        setLinkVal(match + "https://".replace(match, ""));
+      }
+    } else {
+      setLinkVal(val);
+    }
   };
 
   return (
@@ -112,7 +157,29 @@ const AddSocial = ({ hideSocial, user_id }) => {
           <div className="padding-16">
             <div
               className="link box-shadow-2 cursor"
+              onClick={() => startAdding(faLink, "Custom Url", "#BAB2B5")}
+            >
+              <FontAwesomeIcon
+                icon={faLink}
+                style={{ color: "#BAB2B5" }}
+                className="icon-ssm mar-right-8 "
+              />
+              <p className="bold black">Custom Url</p>
+            </div>
+            <div
+              className="link box-shadow-2 cursor"
               onClick={() => startAdding(faInstagram, "Instagram", "#f09433")}
+            >
+              <FontAwesomeIcon
+                icon={faYoutube}
+                style={{ color: "#FF0000" }}
+                className="icon-ssm mar-right-8 "
+              />
+              <p className="bold black">Youtube</p>
+            </div>
+            <div
+              className="link box-shadow-2 cursor"
+              onClick={() => startAdding(faYoutube, "Youtube", "#FF0000")}
             >
               <FontAwesomeIcon
                 icon={faInstagram}
@@ -134,7 +201,7 @@ const AddSocial = ({ hideSocial, user_id }) => {
             </div>
             <div
               className="link box-shadow-2 cursor"
-              onClick={() => startAdding(faInstagram, "Instagram", "#f09433")}
+              onClick={() => startAdding(faTwitter, "Twitter", "#1DA1F2")}
             >
               <FontAwesomeIcon
                 icon={faTwitter}
@@ -145,7 +212,7 @@ const AddSocial = ({ hideSocial, user_id }) => {
             </div>
             <div
               className="link box-shadow-2 cursor"
-              onClick={() => startAdding(faInstagram, "Instagram", "#f09433")}
+              onClick={() => startAdding(faFacebook, "Facebook", "#4267B2")}
             >
               <FontAwesomeIcon
                 icon={faFacebook}
@@ -156,7 +223,7 @@ const AddSocial = ({ hideSocial, user_id }) => {
             </div>
             <div
               className=" black link box-shadow-2 cursor"
-              onClick={() => startAdding(faInstagram, "Instagram", "#f09433")}
+              onClick={() => startAdding(faDiscord, "Discord", "#6a0dad")}
             >
               <FontAwesomeIcon
                 icon={faDiscord}
@@ -167,7 +234,7 @@ const AddSocial = ({ hideSocial, user_id }) => {
             </div>
             <div
               className=" black link box-shadow-2 cursor"
-              onClick={() => startAdding(faInstagram, "Instagram", "#f09433")}
+              onClick={() => startAdding(faTelegram, "Telegram", "#0088cc")}
             >
               <FontAwesomeIcon
                 icon={faTelegram}
@@ -202,21 +269,39 @@ const AddSocial = ({ hideSocial, user_id }) => {
             </div>
             <form onSubmit={createLink}>
               <input
+                ref={inputRef2}
+                value={textVal}
+                onChange={(e) => setTextVal(e.target.value)}
+                placeholder="Display text"
+                type="text"
+                className="mar-bottom-8 text-field-2"
+              />
+              <input
                 ref={inputRef}
                 value={linkVal}
-                onChange={(e) => setLinkVal(e.target.value)}
+                onChange={updateLink}
                 placeholder="https://"
                 type="text"
+                className=" text-field-2"
               />
               <div className="mar-bottom-16"></div>
               <div className="flex flex-end">
-                <button
-                  type="submit"
-                  className="blue-btn-one flex align-center"
-                >
-                  <h5 className="mar-right-8">Create</h5>
-                  <FontAwesomeIcon icon={faPlus} className="white icon-sm" />
-                </button>
+                {!loading ? (
+                  <button
+                    type="submit"
+                    className="blue-btn-one flex align-center"
+                  >
+                    <h5 className="mar-right-8">Create</h5>
+                    <FontAwesomeIcon icon={faPlus} className="white icon-sm" />
+                  </button>
+                ) : (
+                  <div className="lds-ring-green">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                )}
               </div>
             </form>
           </div>

@@ -333,6 +333,16 @@ body {
   }
 }
 
+.loading-screen-blank{
+  position: fixed;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  z-index:1;
+  
+ 
+}
+
 .grey-gradient-bg {
   background: rgb(198, 202, 207);
   background: linear-gradient(
@@ -442,6 +452,17 @@ input[type="text"].input-small, input[type='email'].input-small,input[type='pass
     border: 1px solid $darkPink;
   }
 }
+
+input[type="text"].text-field-2, input[type='email'].text-field-2,input[type='password'].text-field-2 {
+  border: 1px solid $grey;
+  background-color: $lt-grey2;
+  &:focus{
+    outline:none;
+    border: 1px solid $darkPink;
+    background-color: #fff;
+  }
+}
+
 .grey-line-vertical {
   background-color: grey;
   width: 1px;
