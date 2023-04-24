@@ -359,6 +359,7 @@ const EditAccount = () => {
   const linkElems = links.map((link, index) => {
     return (
       <DeleteLinkBio
+        key={index}
         icon={link.icon}
         text={link.name}
         deleteLink={() => deleteLink(link.id, index)}
@@ -457,7 +458,7 @@ const EditAccount = () => {
               type="text"
               placeholder="Username"
               ref={inputRef}
-              className={formErrors.username !== "" ? "border-red" : ""}
+              className={formErrors.username !== "" ? "border-red " : ""}
             />
             <p className="red">{formErrors.username}</p>
           </label>

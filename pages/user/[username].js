@@ -5,8 +5,12 @@ import supabase from "../../utils/supabaseClient";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 import Header from "../../components/user/header";
-
+import Locations from "../../components/user/Locations";
 const Cont = styled.div`
+  padding: 32px;
+  max-width: 1400px;
+  width: 1000px;
+  margin: 0 auto;
   .default-page {
     background: #fff;
     border: 1px solid ${(props) => props.colors.grey};
@@ -57,6 +61,7 @@ const User = ({ userFetch }) => {
     keywords:
       "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder",
   };
+
   return (
     <Cont colors={COLORS}>
       <Header
@@ -66,9 +71,13 @@ const User = ({ userFetch }) => {
         locations={userFetch.locations}
         posts={userFetch.posts}
         comments={userFetch.comments[0].count}
-        bio={userFetch.account?.bio || ""}
-        links={userFetch.account?.bio?.links || []}
+        bio={userFetch.about[0]?.bio || ""}
+        links={userFetch.about[0]?.links || []}
+        upvotes={userFetch.upvotes[0].count}
       />
+      <div className="mar-bottom-32"></div>
+      <div className="grey-line mar-bottom-16"></div>
+      <Locations locations={userFetch.locations} />
     </Cont>
   );
 };

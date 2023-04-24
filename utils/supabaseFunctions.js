@@ -1444,7 +1444,7 @@ export const fetchUserByName = async (username) => {
     const { data, error } = await supabase
       .from("users")
       .select(
-        "username,  comments(count), created_at, avatar_url, posts(title, content, created_at, img_url,  country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*), products(*), images(*)), about(*,links(*)))"
+        "username,  comments(count), created_at, avatar_url, posts(title, content, created_at, img_url, country_id(name), state_id(name), city_id(name), comments(count), upvotes(count), downvotes(count), page_views(view_count)), locations(*, address(*, country_id(name), state_id(name)), products(*), images(*)), about(*,links(*)), upvotes(count))"
       )
       .eq("username", username)
       .maybeSingle();

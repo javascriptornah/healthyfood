@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUp,
@@ -12,6 +12,12 @@ import styled from "styled-components";
 import COLORS from "../../data/colors";
 import LinkBio from "./LinkBio";
 import Tooltip from "../inputs/Tooltip";
+import { nanoid } from "nanoid";
+import {
+  deleteFile,
+  uploadFile,
+  updateUserAvatar,
+} from "../../utils/supabaseFunctions";
 const Cont = styled.div`
   padding: 0;
   background-color: ${(props) => props.colors.tan};
@@ -50,6 +56,9 @@ const AccountPreview = ({
   links,
   user,
 }) => {
+  const fileRef = useRef(null);
+  const [avatarUrl, setAvatarUrl] = useState(user.user_metadata.avatar_url);
+  const [uploading, setUploading] = useState(false);
   const [toolTips, setToolTips] = useState({
     edit: false,
     upload: false,
@@ -68,14 +77,34 @@ const AccountPreview = ({
       );
     })
   );
+  const uploadAvatar = async (event) => {
+    if (!event.target.files || event.target.files.length === 0) {
+      throw new Error("You must select an image to upload.");
+    }
+
+    setUploading(true);
+    const file = event.target.files[0];
+    const fileExt = file.name.split(".").pop();
+    const filePath = `${user?.email}.${nanoid()}`;
+    const finishUpload = () => {
+      setAvatarUrl(filePath);
+      setUploading(false);
+    };
+
+    deleteFile(avatarUrl).then((res) =>
+      uploadFile(filePath, file).then((res) =>
+        updateUserAvatar(filePath).then((res) => finishUpload())
+      )
+    );
+  };
   return (
-    <Cont colors={COLORS} className="grey-border-2 box-shadow-2">
+    <Cont colors={COLORS} className="grey-border-2 box-shadow-2 relative">
       <div className="padding-x-12 padding-y-8 image-section">
         <div></div>
         <div className="flex flex-column align-center">
           <div className="image-cont">
             <Image
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}${user.user_metadata.avatar_url}`}
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}${avatarUrl}`}
               width={140}
               height={140}
               style={{ objectFit: "cover" }}
@@ -90,17 +119,33 @@ const AccountPreview = ({
             }
           >
             <Tooltip text="New profile pic" shown={toolTips.upload} />
-            <p
-              className="bold green cursor underline"
-              onMouseOver={() =>
-                setToolTips((prev) => {
-                  return { ...prev, upload: true };
-                })
-              }
-            >
-              Upload
-            </p>
+            {!uploading ? (
+              <p
+                className="bold green cursor underline"
+                onClick={() => fileRef.current.click()}
+                onMouseOver={() =>
+                  setToolTips((prev) => {
+                    return { ...prev, upload: true };
+                  })
+                }
+              >
+                Upload
+              </p>
+            ) : (
+              <div className="lds-ring-green">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            )}
           </div>
+          <input
+            type="file"
+            onChange={uploadAvatar}
+            ref={fileRef}
+            hidden={true}
+          />
         </div>
         <div
           className="relative justify-self-end"

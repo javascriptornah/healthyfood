@@ -24,7 +24,7 @@ const Cont = styled.div`
   z-index: 6;
   padding: 8px 16px;
   .line {
-    padding: 4px;
+    padding: 8px;
     border-bottom: 2px solid ${(props) => props.colors.grey};
     &:hover {
       background-color: ${(props) => props.colors.offWhite};
@@ -36,6 +36,7 @@ const Cont = styled.div`
   }
   h4 {
     text-decoration: none !important;
+    margin-bottom: 4px;
   }
   .grey-line {
     width: 100%;
@@ -83,7 +84,7 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
       <Link onClick={hideMobileActive} href="/account">
         <div className="flex line align-center ">
           <h4 className=" text-shadow-white light mar-right-8">account</h4>
-          <FontAwesomeIcon icon={faUser} className="red icon-sm" />
+          <FontAwesomeIcon icon={faUser} className="red icon-ssm" />
         </div>
       </Link>
 
@@ -96,7 +97,6 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
               </h4>
               <FontAwesomeIcon icon={faMapPin} className="red icon-ssm" />
             </div>
-            <FontAwesomeIcon icon={faArrowRight} className="red icon-ssm" />
           </div>
         </Link>
         <Link onClick={hideMobileActive} href="/forum">
@@ -105,7 +105,6 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
               <h4 className=" text-shadow-white light mar-right-8">forum</h4>
               <FontAwesomeIcon icon={faComment} className="red icon-ssm" />
             </div>
-            <FontAwesomeIcon icon={faArrowRight} className="red icon-ssm" />
           </div>
         </Link>
 
@@ -113,9 +112,8 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center">
               <h4 className=" text-shadow-white light mar-right-8">articles</h4>
-              <FontAwesomeIcon icon={faNewspaper} className="red icon-sm" />
+              <FontAwesomeIcon icon={faNewspaper} className="red icon-ssm" />
             </div>
-            <FontAwesomeIcon icon={faArrowRight} className="red icon-ssm" />
           </div>
         </Link>
         <Link onClick={hideMobileActive} href="/nutrition">
@@ -124,9 +122,8 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
               <h4 className=" text-shadow-white light mar-right-8">
                 nutrition
               </h4>
-              <FontAwesomeIcon icon={faSearch} className="red icon-sm" />
+              <FontAwesomeIcon icon={faSearch} className="red icon-ssm" />
             </div>
-            <FontAwesomeIcon icon={faArrowRight} className="red icon-ssm" />
           </div>
         </Link>
       </section>

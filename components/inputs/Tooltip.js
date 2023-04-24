@@ -11,6 +11,8 @@ const Cont = styled.div`
   transform: translateX(-50%);
   padding: 4px 8px;
   transition: opacity 0.25s ease;
+  max-width: 300px;
+  word-wrap: break-word;
 `;
 
 const Tooltip = ({ text, shown }) => {

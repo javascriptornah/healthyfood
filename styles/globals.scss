@@ -426,7 +426,7 @@ input[type="checkbox"]:focus {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  border: 1px solid $darkPink;
+  border: 1px solid $grey;
   border-radius: 8px;
   background-color: $light-beige;
   font-size: 18px;
@@ -435,9 +435,14 @@ input[type="password"] {
   height: 40px;
   min-width: 50px;
   width: 100%;
+  
   &:focus {
     background: #fff;
-    outline: 3px solid $darkPink;
+    border: 1px solid $darkPink
+  }
+  &:not(:placeholder-shown){
+    border: 1px solid $darkPink;
+    
   }
 }
 input[type="text"].input-small, input[type='email'].input-small,input[type='password'].input-small {
