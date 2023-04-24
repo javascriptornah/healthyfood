@@ -422,13 +422,12 @@ const EditAccount = () => {
                       alt="profile"
                     />
                   ) : (
-                    /* <img
+                    <Image
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${avatarUrl}`}
-                      style={{ width: "160px", height: "160px" }}
-                    /> */
-                    <img
-                      src={`https://jhzmmpuwxsnhhxedkcuj.supabase.co/storage/v1/object/public/avatars/matt-pierce@hotmail.com.lzuIjWleNjc-wEdbfrC2S`}
-                      style={{ width: "160px", height: "160px" }}
+                      style={{ objectFit: "cover" }}
+                      fill
+                      size="100%"
+                      alt="profile"
                     />
                   ))}
               </div>
