@@ -29,8 +29,15 @@ const Header = ({
   avatar_url,
 }) => {
   const [linkElems, setLinkElems] = useState(
-    links.map((link) => {
-      return <LinkBio url={link.link} text={link.name} icon={link.icon} />;
+    links.map((link, index) => {
+      return (
+        <LinkBio
+          key={index}
+          url={link.link}
+          text={link.name}
+          icon={link.icon}
+        />
+      );
     })
   );
   return (
