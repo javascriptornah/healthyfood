@@ -342,6 +342,17 @@ export const fetchLocations = async () => {
   }
 };
 
+export const fetchLocationIds = async () => {
+  try {
+    const { data, error } = await supabase.from("locations").select("id");
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export const fetchUserLocations = async (user_id) => {
   try {
     const { data, error } = await supabase
