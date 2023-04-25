@@ -128,12 +128,15 @@ const Preview = ({ locationFetch }) => {
   console.log(locationFetch);
   console.log("date");
   console.log();
+  let keywords = location.tags.map((tag) => `${tag} near me`).join(",");
+  console.log("keywords");
+  console.log(keywords);
   const meta = {
     title: location.name,
     description: location.description,
     link: `https://healthyfoodmap.com/farm/`,
     type: "website",
-    date: new Date(locationFetch.created_at).toISOString(),
+    date: "2023-02-14 15:00:00.000",
     image: locationFetch.images[0] ? locationFetch.images[0] : "/seo/index.PNG",
     keywords: ``,
   };
