@@ -170,10 +170,8 @@ const Preview = ({ locationFetch }) => {
           </div>
           <div className="flex align-center flex-wrap mar-bottom-16">
             {location.tags.map((tag, index) => (
-              <div className="tag-six">
-                <p key={index} className="mar-right-4">
-                  {tag}
-                </p>
+              <div className="tag-six" key={index}>
+                <p className="mar-right-4">{tag}</p>
               </div>
             ))}
           </div>
