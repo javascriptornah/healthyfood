@@ -3,6 +3,7 @@ import styled from "styled-components";
 import COLORS from "../../data/colors";
 import Mainline from "./Mainline";
 import { fetchCountryLastPostByName } from "../../utils/supabaseFunctions";
+import supabase from "../../utils/supabaseClient";
 const Cont = styled.div`
   border-radius: 8px 8px 0px 0px;
   .title-spec {
@@ -15,7 +16,7 @@ const Cont = styled.div`
     }
   }
 `;
-const ForumContent = ({ countries, europe, recentPosts }) => {
+const ForumContent = ({ countries, europe, recentPosts, europePosts }) => {
   const [res, setRes] = useState(recentPosts);
 
   const [showStates, setShowStates] = useState(
@@ -45,6 +46,11 @@ const ForumContent = ({ countries, europe, recentPosts }) => {
     };
   };
 
+  const fetchLastEuropePost = async () => {
+    const lastEuropePost = await supabase.from("fetch_");
+  };
+  fetchLastEuropePost();
+
   return (
     <Cont colors={COLORS}>
       <div className="title-spec">
@@ -54,7 +60,7 @@ const ForumContent = ({ countries, europe, recentPosts }) => {
       <Mainline
         title="United States"
         subTitles={showStates}
-        postsX={countries[1].posts[0].count}
+        postsCount={countries[1].posts[0].count}
         lastPostDetails={postObj}
         link="country"
         fetchLastPostFunction={fetchLastCountryPost}
@@ -63,7 +69,7 @@ const ForumContent = ({ countries, europe, recentPosts }) => {
       <Mainline
         title="Canada"
         subTitles={showProvinces}
-        postsX={countries[0].posts[0].count}
+        postsCount={countries[0].posts[0].count}
         lastPostDetails={recentPosts}
         link="country"
         fetchLastPostFunction={fetchLastCountryPost}
@@ -72,7 +78,7 @@ const ForumContent = ({ countries, europe, recentPosts }) => {
       {/* <Mainline
         title="Europe"
         subTitles={showEuroCountries}
-        postsX={127}
+        postsCount={euopePosts}
         lastPostDetails={postObj}
         link="country"
       /> */}

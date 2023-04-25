@@ -40,7 +40,7 @@ const Cont = styled.div`
 const MainLine = ({
   title,
   subTitles,
-  postsX,
+  postsCount,
   link,
   fetchLastPostFunction,
   region_id,
@@ -102,7 +102,7 @@ const MainLine = ({
           )}
         </div>
         <div className="flex flex-one align-center">
-          <p style={{ width: "80px" }}>{postsX} posts</p>
+          <p style={{ width: "80px" }}>{postsCount} posts</p>
           <div className="recent-post-status">
             <p className="inline-block bold mar-right-4 small">Last post</p>
             <p className="inline-block small">

@@ -8,6 +8,7 @@ import {
   fetchForumCountries,
   fetchRecentCountryPosts,
 } from "../utils/supabaseFunctions";
+import supabase from "../utils/supabaseClient";
 import CreatePostIconTwo from "../components/forum/CreatePostIconTwo";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
@@ -30,17 +31,21 @@ export async function getServerSideProps() {
   const postsFetch = await fetchPosts();
   const { data, data2 } = await fetchForumCountries();
   const recentPosts = await fetchRecentCountryPosts();
+  const { data: europePosts } = await supabase
+    .from("get_europe_post_count")
+    .select();
   return {
     props: {
       postsFetch,
       data,
       data2,
       recentPosts,
+      europePosts: europePosts[0].count,
     },
   };
 }
 
-const Forum = ({ postsFetch, data, data2, recentPosts }) => {
+const Forum = ({ postsFetch, data, data2, recentPosts, europePosts }) => {
   const [posts, setPosts] = useState(
     postsFetch.sort((a, b) => {
       let aDate = new Date(a.created_at).getTime();
@@ -49,8 +54,6 @@ const Forum = ({ postsFetch, data, data2, recentPosts }) => {
     })
   );
 
-  console.log("eruope");
-  console.log(data2);
   return (
     <Cont colors={COLORS}>
       <div className="content-holder box-shadow-2">
@@ -64,6 +67,7 @@ const Forum = ({ postsFetch, data, data2, recentPosts }) => {
           countries={data}
           europe={data2}
           recentPosts={recentPosts}
+          europePosts={europePosts}
         />
       </div>
     </Cont>

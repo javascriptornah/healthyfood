@@ -2,6 +2,8 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
+import Tooltip from "./Tooltip";
+
 const Cont = styled.div`
   display: flex;
   align-items: center;
@@ -58,6 +60,32 @@ const Cont = styled.div`
     position: relative;
   }
 `;
+
+const IconComponent = ({ icon, setIcon }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  let reg = /(\/icons\/|\.png)/g;
+  let iconText = icon.replace(reg, "");
+  return (
+    <div
+      className="icon mar-right-8 box-shadow-2 relative"
+      id={icon}
+      onClick={() => setIcon(icon)}
+    >
+      <Tooltip text={iconText} shown={showTooltip} />
+      <Image
+        style={{ display: "block" }}
+        src={icon}
+        width="32"
+        height="32"
+        quality="100"
+        className="icon-img"
+        alt={icon}
+        onMouseOver={() => setShowTooltip(true)}
+        onMouseOut={() => setShowTooltip(false)}
+      />
+    </div>
+  );
+};
 const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
   const [icons, setIcons] = useState([
     "/icons/milk.png",
@@ -66,6 +94,7 @@ const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
     "/icons/fruit.png",
     "/icons/market.png",
     "/icons/honey.png",
+    "/icons/restaurant.png",
   ]);
   const setIcon = (icon) => {
     setIcons((icons) => {
@@ -80,15 +109,16 @@ const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
       selectedImg.current.classList.remove("opacity-anim");
     }, 1000);
   };
-
+  /* 
   const iconElems = icons.map((icon, index) => {
     return (
       <div
         key={index}
-        className="icon mar-right-8 box-shadow-2"
+        className="icon mar-right-8 box-shadow-2 relative"
         id={icon}
         onClick={() => setIcon(icon)}
       >
+        <Tooltip text={icon} shown={true} />
         <Image
           style={{ display: "block" }}
           src={icon}
@@ -100,6 +130,10 @@ const IconSelect = ({ selectedIcon, setSelectedIcon }) => {
         />
       </div>
     );
+  }); */
+
+  const iconElems = icons.map((icon, index) => {
+    return <IconComponent key={index} icon={icon} setIcon={setIcon} />;
   });
 
   const selectedImg = useRef(null);
