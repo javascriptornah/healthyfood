@@ -259,14 +259,14 @@ const Sections = ({
     <Cont colors={COLORS} className="section-holder">
       <section className="section">
         <div>
-          <div className="center-inline mar-bottom-16">
-            <h4>PRODUCTS</h4>
+          <div className="red-title-bg">
+            <h4 className="text-shadow">PRODUCTS</h4>
           </div>
           <ul className="products-holder-2 small-scrollbar">{productElems}</ul>
         </div>
         <div>
-          <div className="center-inline mar-bottom-16">
-            <h4>DESCRIPTION</h4>
+          <div className="red-title-bg">
+            <h4 className="text-shadow">DESCRIPTION</h4>
           </div>
           <ReactMarkdown className="description-text small-scrollbar markdown">
             {description}
@@ -341,8 +341,8 @@ const Sections = ({
         <div className="star-field-holder align-center">{starFields}</div>
       </section>
       <section style={{ backgroundColor: "#fff" }}>
-        <div className="center-inline">
-          <h4 className="underline mar-bottom-16">HOW TO ORDER</h4>
+        <div className="red-title-bg">
+          <h4 className="text-shadow">HOW TO ORDER</h4>
         </div>
         <ReactMarkdown className="markdownn">{howToOrder}</ReactMarkdown>
       </section>
