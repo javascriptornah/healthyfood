@@ -128,7 +128,11 @@ const Preview = ({ locationFetch }) => {
   console.log(locationFetch);
   console.log("date");
   console.log();
-  let keywords = location.tags.map((tag) => `${tag} near me`).join(",");
+  /*
+  let keywords = location.tags.map((tag) => `${tag} near me`).join(", ");
+  keywords += location.products
+    .map((product) => `${product.name} near me`)
+    .join(", ");
   console.log("keywords");
   console.log(keywords);
   const meta = {
@@ -139,11 +143,11 @@ const Preview = ({ locationFetch }) => {
     date: "2023-02-14 15:00:00.000",
     image: locationFetch.images[0] ? locationFetch.images[0] : "/seo/index.PNG",
     keywords: ``,
-  };
+  };*/
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
         <meta property="og:type" content={meta.type} />
@@ -157,7 +161,7 @@ const Preview = ({ locationFetch }) => {
         <meta name="keywords" content={meta.keywords} />
 
         <meta name="description" content={meta.description} />
-      </Head>
+      </Head> */}
       <Cont colors={COLORS} className="default-page">
         {loading.state && (
           <div className="loading-screen">
