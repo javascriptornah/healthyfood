@@ -150,7 +150,7 @@ const Preview = ({ locationFetch }) => {
 
   return (
     <>
-      {/* <Head>
+      <Head>
         <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
         <meta property="og:type" content={meta.type} />
@@ -164,7 +164,7 @@ const Preview = ({ locationFetch }) => {
         <meta name="keywords" content={meta.keywords} />
 
         <meta name="description" content={meta.description} />
-      </Head> */}
+      </Head>
       <Cont colors={COLORS} className="default-page">
         {loading.state && (
           <div className="loading-screen">
