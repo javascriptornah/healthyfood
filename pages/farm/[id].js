@@ -128,24 +128,29 @@ const Preview = ({ locationFetch }) => {
   console.log(locationFetch);
   console.log("date");
   console.log();
-  /*
+
   let keywords = location.tags.map((tag) => `${tag} near me`).join(", ");
   keywords += location.products
     .map((product) => `${product.name} near me`)
     .join(", ");
+  keywords += location.tags
+    .map((tag) => `${tag} ${location.address[0].state_id.name}`)
+    .join(", ");
+  keywords +=
+    "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder";
   console.log("keywords");
   console.log(keywords);
-  */
+
   const meta = {
     title: location.name,
     description: location.description,
     link: `https://healthyfoodmap.com/farm/`,
     type: "website",
-    date: "2023-02-14 15:00:00.000",
+    date: new Date(location.created_at).toISOString(),
     image: locationFetch.images[0]
       ? locationFetch.images[0].url
       : "/seo/index.PNG",
-    keywords: `seed oil free`,
+    keywords: keywords,
   };
 
   return (
