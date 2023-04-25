@@ -135,15 +135,18 @@ const Preview = ({ locationFetch }) => {
     .join(", ");
   console.log("keywords");
   console.log(keywords);
+  */
   const meta = {
     title: location.name,
     description: location.description,
     link: `https://healthyfoodmap.com/farm/`,
     type: "website",
     date: "2023-02-14 15:00:00.000",
-    image: locationFetch.images[0] ? locationFetch.images[0] : "/seo/index.PNG",
-    keywords: ``,
-  };*/
+    image: locationFetch.images[0]
+      ? locationFetch.images[0].url
+      : "/seo/index.PNG",
+    keywords: `seed oil free`,
+  };
 
   return (
     <>
