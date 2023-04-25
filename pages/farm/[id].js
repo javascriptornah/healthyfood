@@ -21,6 +21,23 @@ const Cont = styled.div`
   .header {
     padding: 16px;
     background-color: ${(props) => props.colors.tan};
+
+    @media only screen and (max-width: 300px) {
+      padding: 0;
+    }
+  }
+  .red-title-bg {
+    border-radius: 0;
+  }
+  .tag-six {
+    width: auto;
+    padding: 4px 8px;
+    &:first-of-type {
+      border-radius: 0;
+    }
+    &:last-of-type {
+      border-radius: 0;
+    }
   }
 `;
 
@@ -134,10 +151,12 @@ const Preview = ({ locationFetch }) => {
           />
         )}
         <Toaster />
-        <div className="header flex flex-wrap space-between align-center">
+        <div className="header flex flex-wrap space-between align-start">
           <div className="flex align-center mar-bottom-16">
             {!editMode ? (
-              <h3 className="text-shadow-red mar-right-16">{location.name}</h3>
+              <div className="red-title-bg">
+                <h3 className="text-shadow">{location.name}</h3>
+              </div>
             ) : (
               <>
                 <input
@@ -148,25 +167,14 @@ const Preview = ({ locationFetch }) => {
                 />
               </>
             )}
-
-            <div className="flex flex-column ">
-              <p className="mar-right-4 contrast">
-                Posted- {new Date(location.created_at).toDateString()}
-              </p>
-              <p className="bold">u/{location?.user_id?.username || "anon"} </p>
-            </div>
           </div>
           <div className="flex align-center flex-wrap mar-bottom-16">
-            <p
-              className="inline-block mar-right-8 bold box-shadow-2 white-bg"
-              style={{ border: "1px solid #192430", padding: "4px 8px" }}
-            >
-              Tags
-            </p>
             {location.tags.map((tag, index) => (
-              <p key={index} className="mar-right-4">
-                {tag},
-              </p>
+              <div className="tag-six">
+                <p key={index} className="mar-right-4">
+                  {tag}
+                </p>
+              </div>
             ))}
           </div>
           {origPoster && (
