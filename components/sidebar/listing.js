@@ -39,6 +39,7 @@ const Cont = styled.div`
 `;
 const Listing = ({
   name,
+  id,
   address,
   created_at,
   icon,
@@ -92,10 +93,7 @@ const Listing = ({
   return (
     <Link
       href={{
-        pathname: `/farm/${name}`,
-        query: {
-          title: name,
-        },
+        pathname: `/farm/${id}`,
       }}
       className="underline-hover"
     >

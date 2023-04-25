@@ -58,8 +58,6 @@ export const getServerSideProps = async (pageContext) => {
 };
 
 const Preview = ({ locationFetch }) => {
-  console.log("xd");
-  console.log(locationFetch);
   const [origPoster, setOrigPoster] = useState(false);
   const [user, setUser] = useState("null");
   const [location, setLocation] = useState(locationFetch);
@@ -127,8 +125,34 @@ const Preview = ({ locationFetch }) => {
     }
   };
 
+  const meta = {
+    title: location.name,
+    description: location.description,
+    link: "https://healthyfoodmap.com/",
+    type: "website",
+    date: "2023-02-14 15:00:00.000",
+    image: "/seo/index.PNG",
+    keywords:
+      "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder",
+  };
+
   return (
     <>
+      <Head>
+        <title>{meta.title}</title>
+        <meta name="robots" content="follow, index" />
+        <meta property="og:type" content={meta.type} />
+        <meta property="og:site_name" content="Healthyfoodmap" />
+        <meta property="og:description" content={meta.description} />
+        <meta property="og:title" content={meta.title} />
+        <meta property="og:image" content={meta.image} />
+        <meta property="article:published_time" content={meta.date} />
+        <link rel="canonical" href={meta.image} />
+        <meta property="og:url" content={meta.link} />
+        <meta name="keywords" content={meta.keywords} />
+
+        <meta name="description" content={meta.description} />
+      </Head>
       <Cont colors={COLORS} className="default-page">
         {loading.state && (
           <div className="loading-screen">
