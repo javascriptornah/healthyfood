@@ -135,13 +135,7 @@ const Preview = ({ locationFetch }) => {
     type: "website",
     date: new Date(locationFetch.created_at).toISOString(),
     image: locationFetch.images[0] ? locationFetch.images[0] : "/seo/index.PNG",
-    keywords: `${location.tags.map((tag) => `${tag} near me`)}${
-      location.name
-    }, ${location.products.map(
-      (product) => `${product.name} near me`
-    )}${location.tags.map(
-      (tag) => `${tag} ${location.address[0].state_id.name}`
-    )} online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder`,
+    keywords: ``,
   };
 
   return (
