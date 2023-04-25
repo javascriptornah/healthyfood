@@ -14,7 +14,7 @@ const Cont = styled.div`
     border-bottom: 1px solid ${(props) => props.colors.grey};
 
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     //background-color: ${(props) => props.colors.grey};
 
     padding: 8px;
@@ -58,22 +58,27 @@ const MarkerComponent = ({
     popupAnchor: [-3, -76],
   });
 
+  let point = L.point(0, -12);
+
   const [tagElems, setTagElems] = useState([]);
 
   useEffect(() => {
     let renderCount = tags.length > 4 ? 4 : tags.length;
     for (let i = 0; i < renderCount; i++) {
-      tagElems.push(<div className="tag-three">{tags[i]}</div>);
+      tagElems.push(
+        <div className="tag-six">
+          <p>{tags[i]}</p>
+        </div>
+      );
     }
   }, []);
-
-  console.log("/?");
-  console.log(tagElems);
 
   return (
     <>
       <Marker icon={iconItem} position={latLong} onClick={() => setOpen(true)}>
-        <Tooltip>{name}</Tooltip>
+        <Tooltip offset={point} direction={"top"}>
+          {name}
+        </Tooltip>
         <Popup className="icon-box">
           <Cont colors={COLORS} className="info-box">
             <div className="tags-holder">{tagElems}</div>

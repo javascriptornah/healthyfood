@@ -23,6 +23,41 @@ p {
   text-align: center;
 }
 
+.red-title-bg{
+    background-color: $dark-pink;
+    text-align: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 16px;
+    h3 {
+      color: #fff;
+    }
+}
+.tag-six{
+  width:25%;
+  height:40px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-color:  $dark-pink;
+  &:first-of-type{
+    border-radius: 8px 0 0 8px;
+  }
+  &:last-of-type{
+    border-radius: 0 8px 8px 0;
+  }
+
+  p{
+    color: $light-beige;
+  }
+  &:nth-of-type(2n){
+    background-color:  $light-beige;
+    p{
+      color: $dark-pink;
+    }
+  }
+}
 .add-social{
   padding: 8px 12px;
   background-color: $light-beige;

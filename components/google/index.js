@@ -164,7 +164,6 @@ const Index = ({
     checkForUserLocation();
   }, []);
   const fetchLocation = async () => {
-    console.log(coords);
     if (coords !== null) {
       updateCoords(coords);
     } else {
@@ -185,22 +184,8 @@ const Index = ({
           longitude: addressFetch.addresses[0].lon,
         },
       });
-      //setValue(dataFetch.city);
     }
   };
-  /*
-  useEffect(() => {
-    const fetchLoc = async () => {
-      if (data.length > 0) {
-        const results = await getGeocode({ address: data[0].description });
-        const { lat, lng } = await getLatLng(results[0]);
-
-        updateCoords({ coords: { latitude: lat, longitude: lng } });
-        setCoords({ coords: { latitude: lat, longitude: lng } });
-      }
-    };
-    fetchLoc();
-  }, []); */
 
   const [options, setOptions] = useState({
     strokeColor: "#FF0000",

@@ -25,7 +25,7 @@ const Cont = styled.div`
   overflow: hidden;
   .black-btn {
     position: sticky;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
   }
   .location-holder {
     height: 100%;
@@ -87,17 +87,20 @@ const Sidebar = ({ locations, fetchLocation, locationDistances }) => {
       />
     );
   });
+
   return (
     <Cont colors={COLORS}>
-      <div className="flex flex-end">
+      <div className="flex  flex-column align-end">
         <div
           className="black-btn flex-inline align-center"
           onClick={fetchLocation}
         >
           <h5 className="mar-right-8">FIND ME</h5>
+
           <FontAwesomeIcon icon={faLocationDot} className="icon-ssm white" />
         </div>
       </div>
+      <div className="mar-bottom-16"></div>
       <div className="location-holder">{sidebarLocations}</div>
     </Cont>
   );
