@@ -5,13 +5,12 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import { capitalize } from "../../utils/functions";
 const Cont = styled.div`
-  
-
   margin-bottom: 16px;
-  
-
-  
-
+  @media only screen and (max-width: 300px) {
+    .icon-med {
+      font-size: 24px;
+    }
+  }
 `;
 
 const StarReview = ({ field, stars, updateStarsFunc }) => {
@@ -88,10 +87,8 @@ const StarReview = ({ field, stars, updateStarsFunc }) => {
           ref={star5}
         />
       </div>
-      
     </Cont>
   );
 };
 
 export default StarReview;
-

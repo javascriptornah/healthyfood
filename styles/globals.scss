@@ -33,6 +33,7 @@ $light-green: #27fd55;
 $light-red: #fd2727;
 $light-orange: #fd7d27;
 
+
 .tooltip {
  
 }
@@ -645,11 +646,13 @@ li {
   background-color: $light-beige;
   font-size: 18px;
   outline: none;
-  padding: 8px;
+  padding-left:8px;
   min-height: 40px;
   width: 100%;
   border-radius: 8px;
-
+  &:focus-within{
+    background-color: #fff;
+  }
   input {
     padding: 0;
     height: 36px;
@@ -658,6 +661,9 @@ li {
     max-width: 100%;
     padding: 4px;
     margin-right: 8px;
+    &:focus{
+      border:none;
+    }
   }
 }
 .red-line {
@@ -837,4 +843,15 @@ li {
   position: fixed;
   z-index: 5;
   background-color: rgba(18, 60, 105, 0.5);
+}
+
+fieldset{
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid black;
+  position: relative;
+  input{
+    background-color: #fff !important;
+    border: none !important;
+  }
 }

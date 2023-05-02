@@ -18,16 +18,7 @@ const Cont = styled.div`
   }
 `;
 
-const OpenStreetMap = ({
-  locations,
-  locationsFilter,
-  center,
-  radius,
-  oceansFetch,
-  seasFetch,
-  pollutionFetch,
-  fishFetch,
-}) => {
+const OpenStreetMap = ({ locations, locationsFilter, center, radius }) => {
   const [markers, setMarkers] = useState([]);
 
   const ZOOM_LEVEL = 9;
@@ -38,10 +29,6 @@ const OpenStreetMap = ({
     map.setView(center, zoom);
     return null;
   }
-  const [oceans, setOceans] = useState(oceansFetch);
-  const [seas, setSeas] = useState(seasFetch);
-  const [pollution, setPollution] = useState(pollutionFetch);
-  const [fish, setFish] = useState(fishFetch);
 
   useEffect(() => {
     setMarkers((prev) => {
@@ -73,7 +60,7 @@ const OpenStreetMap = ({
     });
   }, [locations, locationsFilter]);
 
-  const [oceanElems, setOceanElems] = useState(
+  /*  const [oceanElems, setOceanElems] = useState(
     oceans.map((ocean, index) => {
       return (
         <Circle
@@ -215,7 +202,7 @@ const OpenStreetMap = ({
         />
       );
     })
-  );
+  ); */
 
   return (
     <Cont>
@@ -240,12 +227,12 @@ const OpenStreetMap = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {markers}
-        {oceanElems}
+        {/* {oceanElems}
         {oceanMarkers}
         {seaElems} {seaMarkers}
         {pollutionElems}
         {pollutionMarkers}
-        {fishMarkers}
+        {fishMarkers} */}
       </MapContainer>
     </Cont>
   );

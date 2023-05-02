@@ -22,35 +22,20 @@ const Cont = styled.div`
 export const getServerSideProps = async () => {
   const locationsFetch = await fetchLocations();
   const tagsFetch = await fetchTags();
-  const oceansFetch = await fetchOceans();
-  const seasFetch = await fetchSeas();
-  const pollutionFetch = await fetchPollution();
-  const fishFetch = await fetchOceanFish();
+  //const oceansFetch = await fetchOceans();
+  //const seasFetch = await fetchSeas();
+  //const pollutionFetch = await fetchPollution();
+  //const fishFetch = await fetchOceanFish();
   return {
     props: {
       locationsFetch,
       tagsFetch,
-      oceansFetch,
-      seasFetch,
-      pollutionFetch,
-      fishFetch,
     },
   };
 };
-export default function Home({
-  locationsFetch,
-  tagsFetch,
-  oceansFetch,
-  seasFetch,
-  pollutionFetch,
-  fishFetch,
-}) {
+export default function Home({ locationsFetch, tagsFetch }) {
   const [locations, setLocations] = useState(locationsFetch);
   const [tags, setTags] = useState(tagsFetch);
-  const [oceans, setOceans] = useState(oceansFetch);
-  const [seas, setSeas] = useState(seasFetch);
-  const [pollution, setPollution] = useState(pollutionFetch);
-  const [fish, setFish] = useState(fishFetch);
 
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -115,10 +100,6 @@ export default function Home({
           addTag={addTag}
           fetchNewLocation={fetchNewLocation}
           user={user}
-          oceansFetch={oceans}
-          seasFetch={seas}
-          pollutionFetch={pollution}
-          fishFetch={fish}
         />
       </Cont>
     </>

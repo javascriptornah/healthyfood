@@ -13,6 +13,19 @@ const Cont = styled.div`
   transition: opacity 0.25s ease;
   max-width: 300px;
   word-wrap: break-word;
+
+  .arrow-down {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+
+    border-top: 10px solid ${(props) => props.colors.lightBeige};
+  }
 `;
 
 const Tooltip = ({ text, shown }) => {
@@ -24,6 +37,7 @@ const Tooltip = ({ text, shown }) => {
       className="box-shadow-2"
     >
       <p>{textCopy}</p>
+      <div className="arrow-down"></div>
     </Cont>
   );
 };

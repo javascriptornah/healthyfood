@@ -22,11 +22,12 @@ import {
   faArrowTurnUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
+import IconSelector from "../inputs/IconSelector";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-
+import DropdownWrapper from "../inputs/DropdownWrapper";
 import ProductTags from "../inputs/productTags";
 import ImageUpload from "../inputs/ImageUpload";
 import RenderImages from "../inputs/RenderImages";
@@ -67,6 +68,9 @@ const Cont = styled.div`
     background: #fff;
     border: 1px solid ${(props) => props.colors.grey};
     padding: 16px;
+    @media only screen and (max-width: 400px) {
+      padding: 8px;
+    }
   }
 
   .dollar-input {
@@ -107,8 +111,9 @@ const Bottombar = ({
     register,
     watch,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm();
+  const productsRef = useRef(null);
   const [description, setDescription] = useState("");
   const updateDescription = (value) => {
     setDescription(value);
@@ -117,6 +122,7 @@ const Bottombar = ({
   const updateHowToOrder = (value) => {
     setHowToOrder(value);
   };
+
   const [selectedIcon, setSelectedIcon] = useState("/icons/meat.png");
   const [loading, setLoading] = useState({ state: false, msg: "" });
   const [images, setImages] = useState([]);
@@ -147,9 +153,6 @@ const Bottombar = ({
       return [...prev];
     });
   };
-  useEffect(() => {
-    console.log(address);
-  }, [address]);
 
   const updateProduct = (e, field) => {
     setProduct((prev) => {
@@ -286,8 +289,9 @@ const Bottombar = ({
 
   const checkAddressValid = async () => {
     try {
-      console.log(location);
       const results = await fetchAddresses(location);
+      if (results?.addresses?.error) throw results.error;
+
       return true;
     } catch (error) {
       toast("Please select an address from the dropdown.", {
@@ -484,8 +488,22 @@ const Bottombar = ({
     }
   };
 
+  const checkTagSelected = () => {
+    if (selectedTags.length == 0) {
+      toast.error("Please select at least 1 Product Type.");
+      productsRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+
+      return false;
+    }
+
+    return true;
+  };
   const submitForm = handleSubmit(async (formData) => {
     const validAddress = await checkAddressValid();
+    if (!checkTagSelected()) return;
     setLoading({ state: true, msg: "checking address valid..." });
     if (validAddress) {
       const locationId = await createLocationFunc(formData);
@@ -829,39 +847,24 @@ const Bottombar = ({
         </button>
       )}
       <div className="mar-bottom-16"></div>
+
       <br />
       {adding && (
         <div className="fake-form">
-          <h4 className="mar-bottom-8 text-shadow-red">ENTER AN ADDRESS *</h4>
-          <div className="red-line mar-bottom-8"></div>
-          <p className="italic mar-bottom-4">Select from the dropdown</p>
-          <PlacesAutocomplete
-            location={location}
-            setLocation={setLocation}
-            setAddress={setAddress}
-          />
-          <div className="mar-bottom-32"></div>
-          <div className="input-line">
-            <div className="input-line">
-              <h4 className="text-shadow-red">PRODUCT TYPES *</h4>
-              <div className="red-line mar-bottom-8"></div>
-              <ProductTags
-                tags={tags}
-                selectedTags={selectedTags}
-                pushTag={pushTag}
-                deleteTag={deleteTag}
-              />
-            </div>
+          <div className="mar-bottom-32">
+            <h5 className=" text-shadow-red">Enter an Address *</h5>
+
+            <p className="italic mar-bottom-4">Select from the dropdown</p>
+            <PlacesAutocomplete
+              location={location}
+              setLocation={setLocation}
+              setAddress={setAddress}
+            />
           </div>
-          <CreateTag addTag={addTag} tags={tags} />
-          <IconSelect
-            selectedIcon={selectedIcon}
-            setSelectedIcon={setSelectedIcon}
-          />
           <form className=" opacity-anim" onSubmit={submitForm}>
             <div className="input-line">
-              <h4 className="text-shadow-red">BUSINESS NAME *</h4>
-              <div className="red-line mar-bottom-8"></div>
+              <h5 className="text-shadow-red mar-bottom-4">Business Name *</h5>
+
               <input
                 {...register("name", {
                   required: true,
@@ -874,9 +877,21 @@ const Bottombar = ({
                 <p className="error">*Name is required</p>
               )}
             </div>
+
             <div className="input-line">
-              <h4 className="text-shadow-red">DESCRIPTION *</h4>
-              <div className="red-line mar-bottom-8"></div>
+              <div className="input-line">
+                <h5 className="text-shadow-red" ref={productsRef}>
+                  Product Types *
+                </h5>
+
+                <p className="italic mar-bottom-4">Select products sold here</p>
+                <IconSelector pushTag={pushTag} deleteTag={deleteTag} />
+              </div>
+            </div>
+
+            <div className="input-line">
+              <h5 className="text-shadow-red">Description *</h5>
+
               <p className="italic">How are their prices?</p>
               <p className="italic mar-bottom-4">What was your experience?</p>
               <Editor
@@ -885,275 +900,341 @@ const Bottombar = ({
                 updateSection={updateDescription}
               />
             </div>
+            <DropdownWrapper title={"How to Order + Products"}>
+              <div className="input-line">
+                <h5 className="text-shadow-red">How To Order</h5>
 
-            <div className="input-line">
-              <h4 className="text-shadow-red">HOW TO ORDER</h4>
-              <div className="red-line"></div>
-              <p className="italic">Do you need to order from their website?</p>
-              <p className="italic mar-bottom-4">
-                Is it pickup only on certain days?
-              </p>
-              <Editor
-                id="howToOrder"
-                section={howToOrder}
-                updateSection={updateHowToOrder}
-              />
-            </div>
+                <p className="italic">
+                  Do you need to order from their website?
+                </p>
+                <p className="italic mar-bottom-4">
+                  Is it pickup only on certain days?
+                </p>
+                <Editor
+                  id="howToOrder"
+                  section={howToOrder}
+                  updateSection={updateHowToOrder}
+                />
+              </div>
 
-            <form onSubmit={addProduct} className="input-line">
-              <h4 className="text-shadow-red">SPECIFIC PRODUCTS</h4>
-              <div className="red-line mar-bottom-8"></div>
-              <p className="italic mar-bottom-4">
-                Add more specic products to show exactly what they have
-              </p>
-              <div className="relative">
-                <div className="tags-input-box mar-bottom-8 align-center flex">
-                  <FontAwesomeIcon
-                    icon={faEgg}
-                    className="icon-ssm blue mar-right-8"
-                  />
-                  <input
-                    value={product.name}
-                    onChange={(e) => updateProduct(e, "name")}
-                    type="text"
-                    placeholder="sirloin steak... unsalted raw cheese..."
-                    ref={productInput}
-                    className="flex-one"
-                  />
-                </div>
-                <div className="tags-input-box flex-inline align-center dollar-input inline-block mar-bottom-8">
-                  <FontAwesomeIcon
-                    icon={faDollarSign}
-                    className="icon-ssm blue mar-right-8"
-                  />
-                  <input
-                    type="text"
-                    placeholder="14.99..."
-                    style={{ width: "160px" }}
-                    value={product.value}
-                    ref={productValueRef}
-                    onChange={(e) => updateProductValue(e, "value")}
-                  />
-                </div>
-                <br />
+              <form onSubmit={addProduct} className="input-line">
+                <h5 className="text-shadow-red">Specific Products</h5>
+
+                <p className="italic mar-bottom-4">
+                  Add more specic products to show exactly what they have
+                </p>
                 <div className="relative">
-                  <div className="dropdown" ref={dropdownEl2}>
-                    <input type="hidden" />
+                  <div className="tags-input-box mar-bottom-8 align-center flex">
+                    <FontAwesomeIcon
+                      icon={faEgg}
+                      className="icon-ssm blue mar-right-8"
+                    />
+                    <input
+                      value={product.name}
+                      onChange={(e) => updateProduct(e, "name")}
+                      type="text"
+                      placeholder="sirloin steak... unsalted raw cheese..."
+                      ref={productInput}
+                      className="flex-one"
+                    />
+                  </div>
+                  <div className="flex flex-wrap">
+                    <div className="mar-right-16 tags-input-box flex-inline align-center dollar-input inline-block mar-bottom-8">
+                      <FontAwesomeIcon
+                        icon={faDollarSign}
+                        className="icon-ssm blue mar-right-8"
+                      />
+                      <input
+                        type="text"
+                        placeholder="14.99..."
+                        style={{ width: "160px" }}
+                        value={product.value}
+                        ref={productValueRef}
+                        onChange={(e) => updateProductValue(e, "value")}
+                      />
+                    </div>
 
-                    <div
-                      className="dropdown__selected"
-                      onClick={() => setShowDropdown2(!showDropdown2)}
-                    >
-                      {selectedMeasure ? (
-                        <>
-                          <FontAwesomeIcon
-                            icon={faWeightScale}
-                            className="icon-ssm blue mar-right-8"
-                          />
-                          {selectedMeasure}
-                        </>
-                      ) : (
-                        "Please select one option"
+                    <div className="relative mar-right-8 mar-bottom-8">
+                      <div className="dropdown" ref={dropdownEl2}>
+                        <input type="hidden" />
+
+                        <div
+                          className="dropdown__selected"
+                          onClick={() => setShowDropdown2(!showDropdown2)}
+                        >
+                          {selectedMeasure ? (
+                            <>
+                              <FontAwesomeIcon
+                                icon={faWeightScale}
+                                className="icon-ssm blue mar-right-8"
+                              />
+                              {selectedMeasure}
+                            </>
+                          ) : (
+                            "Please select one option"
+                          )}
+                        </div>
+                      </div>
+                      {showDropdown2 && (
+                        <Dropdown
+                          searchPlaceholder="pound"
+                          search={measurementSearch}
+                          searchChangeHandler={measureSearchChangeHandler}
+                          selectedValue={selectedMeasure}
+                          selectedIndex={selectedMeasureIndex}
+                          changeSelectedHandler={changeSelectedMeasureHandler}
+                          name="weight"
+                          regions={measureOptions}
+                        />
+                      )}
+                    </div>
+                    <div className="mar-bottom-8"></div>
+                    <div className="relative">
+                      <div className="dropdown" ref={dropdownEl}>
+                        <input type="hidden" />
+
+                        <div
+                          className="dropdown__selected"
+                          onClick={() => setShowDropdown(!showDropdown)}
+                        >
+                          {selectedValue ? (
+                            <>
+                              <FontAwesomeIcon
+                                icon={faCoins}
+                                className="icon-ssm blue mar-right-8"
+                              />
+                              {selectedValue}
+                            </>
+                          ) : (
+                            "Please select one option"
+                          )}
+                        </div>
+                      </div>
+                      {showDropdown && (
+                        <Dropdown
+                          searchPlaceholder="USD"
+                          search={dollarSearch}
+                          searchChangeHandler={searchChangeHandler}
+                          selectedValue={selectedValue}
+                          selectedIndex={selectedIndex}
+                          changeSelectedHandler={changeSelectedHandler}
+                          name="dollar"
+                          regions={options}
+                        />
                       )}
                     </div>
                   </div>
-                  {showDropdown2 && (
-                    <Dropdown
-                      searchPlaceholder="pound"
-                      search={measurementSearch}
-                      searchChangeHandler={measureSearchChangeHandler}
-                      selectedValue={selectedMeasure}
-                      selectedIndex={selectedMeasureIndex}
-                      changeSelectedHandler={changeSelectedMeasureHandler}
-                      name="weight"
-                      regions={measureOptions}
-                    />
-                  )}
                 </div>
                 <div className="mar-bottom-8"></div>
-                <div className="relative">
-                  <div className="dropdown" ref={dropdownEl}>
-                    <input type="hidden" />
+                {productElems}
 
-                    <div
-                      className="dropdown__selected"
-                      onClick={() => setShowDropdown(!showDropdown)}
-                    >
-                      {selectedValue ? (
-                        <>
-                          <FontAwesomeIcon
-                            icon={faCoins}
-                            className="icon-ssm blue mar-right-8"
-                          />
-                          {selectedValue}
-                        </>
-                      ) : (
-                        "Please select one option"
-                      )}
-                    </div>
+                <button className="blue-btn-one" onClick={addProduct}>
+                  <div className="flex align-center">
+                    <h5 className="mar-right-8">Add</h5>
+                    <FontAwesomeIcon icon={faPlus} className="icon-ssm white" />
                   </div>
-                  {showDropdown && (
-                    <Dropdown
-                      searchPlaceholder="USD"
-                      search={dollarSearch}
-                      searchChangeHandler={searchChangeHandler}
-                      selectedValue={selectedValue}
-                      selectedIndex={selectedIndex}
-                      changeSelectedHandler={changeSelectedHandler}
-                      name="dollar"
-                      regions={options}
+                </button>
+              </form>
+            </DropdownWrapper>
+            <DropdownWrapper title={"Hours + Contact Info"}>
+              <div className="input-line">
+                <h5 className="text-shadow-red mar-bottom-4">Hours</h5>
+
+                <h5 className="black">From</h5>
+                <input
+                  {...register("hoursFrom", {
+                    required: false,
+                  })}
+                  type="time"
+                  name="hoursFrom"
+                  className="mar-bottom-8"
+                />
+                <h5 className="black">To</h5>
+                <input
+                  {...register("hoursTo", {
+                    required: false,
+                  })}
+                  type="time"
+                  name="hoursTo"
+                />
+              </div>
+
+              <div className="input-line">
+                <h5 className="text-shadow-red mar-bottom-8">
+                  Pickup or Delivery?
+                </h5>
+
+                <label htmlFor="pickupAndDelivery">
+                  <div className="flex align-center">
+                    <input
+                      {...register("pickup", {
+                        required: false,
+                      })}
+                      type="radio"
+                      value="pickup & delivery"
+                      id="pickupAndDelivery"
                     />
-                  )}
+                    <p className="mar-left-4">Pickup & Delivery</p>
+                  </div>
+                </label>
+
+                <label htmlFor="pickupOnly">
+                  <div className="flex align-center">
+                    <input
+                      {...register("pickup", {
+                        required: false,
+                      })}
+                      type="radio"
+                      id="pickupOnly"
+                      value="pickup"
+                    />
+                    <p className="mar-left-4">
+                      {" "}
+                      <strong>Pickup</strong> Only
+                    </p>
+                  </div>
+                </label>
+
+                <label htmlFor="deliveryOnly">
+                  <div className="flex align-center">
+                    <input
+                      {...register("pickup", {
+                        required: false,
+                      })}
+                      type="radio"
+                      id="deliveryOnly"
+                      value="delivery"
+                    />
+                    <p className="mar-left-4">
+                      {" "}
+                      <strong>Delivery</strong> Only
+                    </p>
+                  </div>
+                </label>
+
+                <label htmlFor="unspecified">
+                  <div className="flex align-center">
+                    <input
+                      {...register("pickup", {
+                        required: false,
+                      })}
+                      type="radio"
+                      id="unspecified"
+                      value="unspecified"
+                      defaultChecked
+                    />
+                    <p className="mar-left-4">Unspecified</p>
+                  </div>
+                </label>
+              </div>
+
+              <div className="input-line">
+                <h5 className="text-shadow-red">Website Link</h5>
+
+                <input
+                  {...register("website", {
+                    required: false,
+                    pattern: {
+                      value:
+                        /(https|http)?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+                      message: "Must be a valid link starting with http/https",
+                    },
+                  })}
+                  type="text"
+                  placeholder="www.example.com"
+                  name="website"
+                />
+                {errors.website?.type === "pattern" && (
+                  <p className="error">*{errors.website.message}</p>
+                )}
+              </div>
+
+              <div className="input-line">
+                <h5 className="text-shadow-red">Contact Info</h5>
+
+                <p className="bold">Email</p>
+                <input
+                  {...register("email", {
+                    required: false,
+                  })}
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                />
+                <div className="mar-bottom-16"></div>
+                <p className="bold">Phone Number</p>
+                <input
+                  {...register("number", {
+                    required: false,
+                  })}
+                  type="text"
+                  placeholder="(613) - 256 - 1919..."
+                  name="number"
+                />
+              </div>
+            </DropdownWrapper>
+
+            <DropdownWrapper title={"Specifications + Rating"}>
+              <div className="optional-fields mar-bottom-16">
+                <p>Optional</p>
+                <div className="flex mar-bottom-8 space-between flex-wrap">
+                  <h5 className="black">Product Specifications</h5>
+                  <p
+                    onClick={() =>
+                      serviceRatingRef.current.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      })
+                    }
+                    className="underline bold-hover "
+                  >
+                    Skip Section
+                  </p>
+                </div>
+                <div className="grey-line mar-bottom-16"></div>
+                <div className="flex flex-wrap space-between">
+                  {optionalfieldElems}
                 </div>
               </div>
-              <div className="mar-bottom-8"></div>
-              {productElems}
-              <div className="mar-bottom-16"></div>
-              <button className="blue-btn-one" onClick={addProduct}>
-                <div className="flex align-center">
-                  <h5 className="mar-right-8">Add</h5>
-                  <FontAwesomeIcon icon={faPlus} className="icon-ssm white" />
-                </div>
-              </button>
-            </form>
 
-            <div className="input-line">
-              <h4 className="text-shadow-red">HOURS</h4>
-              <div className="red-line mar-bottom-8"></div>
-              <h5 className="black">From</h5>
-              <input
-                {...register("hoursFrom", {
-                  required: false,
-                })}
-                type="time"
-                name="hoursFrom"
-                className="mar-bottom-8"
-              />
-              <h5 className="black">To</h5>
-              <input
-                {...register("hoursTo", {
-                  required: false,
-                })}
-                type="time"
-                name="hoursTo"
-              />
-            </div>
-
-            <div className="input-line">
-              <h4 className="text-shadow-red">PICKUP OR DELIVERY?</h4>
-              <div className="red-line mar-bottom-8"></div>
-              <label htmlFor="pickupAndDelivery">
-                <div className="flex align-center">
-                  <input
-                    {...register("pickup", {
-                      required: true,
-                    })}
-                    type="radio"
-                    value="pickup & delivery"
-                    id="pickupAndDelivery"
-                  />
-                  <p className="mar-left-4">Pickup & Delivery</p>
-                </div>
-              </label>
-
-              <label htmlFor="pickupOnly">
-                <div className="flex align-center">
-                  <input
-                    {...register("pickup", {
-                      required: true,
-                    })}
-                    type="radio"
-                    id="pickupOnly"
-                    value="pickup"
-                  />
-                  <p className="mar-left-4">
-                    {" "}
-                    <strong>Pickup</strong> Only
+              <div className="optional-fields" ref={serviceRatingRef}>
+                <p>Optional</p>
+                <div className="flex mar-bottom-8 space-between flex-wrap">
+                  <h5 className="black">Service Rating</h5>
+                  <p
+                    className="underline bold-hover"
+                    onClick={() =>
+                      createButtonRef.current.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      })
+                    }
+                  >
+                    Skip Section
                   </p>
                 </div>
-              </label>
-
-              <label htmlFor="deliveryOnly">
-                <div className="flex align-center">
-                  <input
-                    {...register("pickup", {
-                      required: true,
-                    })}
-                    type="radio"
-                    id="deliveryOnly"
-                    value="delivery"
+                <div className="grey-line mar-bottom-16"></div>
+                <div className="stars ">
+                  <StarReview
+                    field={reviewFields.pricing.name}
+                    stars={reviewFields.pricing.stars}
+                    updateStarsFunc={updateReviewFields}
                   />
-                  <p className="mar-left-4">
-                    {" "}
-                    <strong>Delivery</strong> Only
-                  </p>
-                </div>
-              </label>
-
-              <label htmlFor="unspecified">
-                <div className="flex align-center">
-                  <input
-                    {...register("pickup", {
-                      required: true,
-                    })}
-                    type="radio"
-                    id="unspecified"
-                    value="unspecified"
-                    defaultChecked
+                  <StarReview
+                    field={reviewFields.quality.name}
+                    stars={reviewFields.quality.stars}
+                    updateStarsFunc={updateReviewFields}
                   />
-                  <p className="mar-left-4">Unspecified</p>
+                  <StarReview
+                    field={reviewFields.friendly.name}
+                    stars={reviewFields.friendly.stars}
+                    updateStarsFunc={updateReviewFields}
+                  />
                 </div>
-              </label>
-            </div>
-
+              </div>
+            </DropdownWrapper>
             <div className="input-line">
-              <h4 className="text-shadow-red">WEBSITE LINK</h4>
-              <div className="red-line mar-bottom-8"></div>
-              <input
-                {...register("website", {
-                  required: false,
-                  pattern: {
-                    value:
-                      /(https|http)?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-                    message: "Must be a valid link starting with http/https",
-                  },
-                })}
-                type="text"
-                placeholder="www.example.com"
-                name="website"
-              />
-              {errors.website?.type === "pattern" && (
-                <p className="error">*{errors.website.message}</p>
-              )}
-            </div>
-
-            <div className="input-line">
-              <h4 className="text-shadow-red">CONTACT INFO *</h4>
-              <div className="red-line mar-bottom-8"></div>
-              <p className="bold">Email</p>
-              <input
-                {...register("email", {
-                  required: false,
-                })}
-                type="email"
-                placeholder="Email"
-                name="email"
-              />
-              <div className="mar-bottom-16"></div>
-              <p className="bold">Phone Number</p>
-              <input
-                {...register("number", {
-                  required: false,
-                })}
-                type="text"
-                placeholder="(613) - 256 - 1919..."
-                name="number"
-              />
-            </div>
-
-            <div className="input-line">
-              <h4 className="text-shadow-red">UPLOAD IMAGE/S</h4>
-              <div className="red-line mar-bottom-8"></div>
+              <h5 className="text-shadow-red mar-bottom-8">Upload Images</h5>
 
               <div
                 onClick={() => imageRef.current.click()}
@@ -1175,71 +1256,13 @@ const Bottombar = ({
                 updateSelectedImage={updateSelectedImage}
               />
             </div>
-
-            <div className="optional-fields mar-bottom-16">
-              <p>Optional</p>
-              <div className="flex mar-bottom-8 space-between flex-wrap">
-                <h5 className="black">Product Specifications</h5>
-                <p
-                  onClick={() =>
-                    serviceRatingRef.current.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    })
-                  }
-                  className="underline bold-hover "
-                >
-                  Skip Section
-                </p>
-              </div>
-              <div className="grey-line mar-bottom-16"></div>
-              <div className="flex flex-wrap space-between">
-                {optionalfieldElems}
-              </div>
-            </div>
-
-            <div className="optional-fields" ref={serviceRatingRef}>
-              <p>Optional</p>
-              <div className="flex mar-bottom-8 space-between flex-wrap">
-                <h5 className="black">Service Rating</h5>
-                <p
-                  className="underline bold-hover"
-                  onClick={() =>
-                    createButtonRef.current.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    })
-                  }
-                >
-                  Skip Section
-                </p>
-              </div>
-              <div className="grey-line mar-bottom-16"></div>
-              <div className="stars ">
-                <StarReview
-                  field={reviewFields.pricing.name}
-                  stars={reviewFields.pricing.stars}
-                  updateStarsFunc={updateReviewFields}
-                />
-                <StarReview
-                  field={reviewFields.quality.name}
-                  stars={reviewFields.quality.stars}
-                  updateStarsFunc={updateReviewFields}
-                />
-                <StarReview
-                  field={reviewFields.friendly.name}
-                  stars={reviewFields.friendly.stars}
-                  updateStarsFunc={updateReviewFields}
-                />
-              </div>
-            </div>
-
             <div className="mar-bottom-32"></div>
-            <div
+            <button
               style={{ display: "flex", width: "100%" }}
               type="submit"
               className="align-center justify-center blue-btn-one box-shadow-2 mar-bottom-32"
               onClick={submitForm}
+              disabled={!isValid}
             >
               <h3 className="mar-right-8" ref={createButtonRef}>
                 Create
@@ -1248,7 +1271,7 @@ const Bottombar = ({
                 icon={faLocationDot}
                 className="white icon-med"
               />
-            </div>
+            </button>
           </form>
         </div>
       )}
@@ -1385,7 +1408,7 @@ const Container = styled.div`
   }
   .google-dropdown {
     overflow: auto;
-    z-index: 5;
+    z-index: 101;
     max-height: 400px;
   }
   form {
@@ -1445,7 +1468,6 @@ export const PlacesAutocomplete = ({
   };
 
   const showResults = async (e) => {
-    e.preventDefault();
     if (text == "") {
       toast.error("Text can't be empty");
 
@@ -1462,6 +1484,14 @@ export const PlacesAutocomplete = ({
     setAddresses(addresses.addresses);
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (text == "") return;
+    const delayType = setTimeout(() => {
+      showResults();
+    }, 1000);
+    return () => clearTimeout(delayType);
+  }, [text]);
 
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -1536,7 +1566,10 @@ export const PlacesAutocomplete = ({
             border: showDropdown ? "1px solid #192430" : "1px solid #BAB2B5",
           }}
         >
-          <p>Show Results</p>
+          <div>
+            <p className=" inline-block mar-right-8">Show Results</p>
+            <p className="contrast inline-block">({addresses.length})</p>
+          </div>
           <FontAwesomeIcon
             icon={faChevronDown}
             className="icon-ssm"
