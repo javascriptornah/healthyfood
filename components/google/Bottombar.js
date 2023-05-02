@@ -482,7 +482,7 @@ const Bottombar = ({
         reviewFields.quality.stars === 0 ? null : reviewFields.quality.stars,
         reviewFields.friendly.stars === 0 ? null : reviewFields.friendly.stars,
         howToOrder,
-        selectedIcon
+        selectedTags[0]
       );
       return locationId;
     }
@@ -495,7 +495,10 @@ const Bottombar = ({
         behavior: "smooth",
         block: "center",
       });
-
+      productsRef.current.classList.add("red-animation");
+      setTimeout(() => {
+        productsRef.current.classList.remove("red-animation");
+      }, 2000);
       return false;
     }
 
@@ -1468,6 +1471,10 @@ export const PlacesAutocomplete = ({
   };
 
   const showResults = async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
     if (text == "") {
       toast.error("Text can't be empty");
 
@@ -1479,6 +1486,7 @@ export const PlacesAutocomplete = ({
 
     if (addresses.addresses.error) {
       toast.error(addresses.addresses.error);
+      setLoading(false);
       return;
     }
     setAddresses(addresses.addresses);

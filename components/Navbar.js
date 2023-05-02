@@ -176,8 +176,8 @@ const Navbar = () => {
               <h5 className="underline-hover">food finder</h5>
             </div>
           </Link>
-          <div className="grey-line-nav"></div>
-          <Link href="/forum" className="no-color-link text-shadow-red">
+          {/*<div className="grey-line-nav"></div>
+           <Link href="/forum" className="no-color-link text-shadow-red">
             <div className="flex-inline  align-center">
               <FontAwesomeIcon
                 icon={faComment}
@@ -186,7 +186,7 @@ const Navbar = () => {
 
               <h5 className="underline-hover">forum</h5>
             </div>
-          </Link>
+          </Link> */}
 
           <div className="grey-line-nav"></div>
           <Link href="/articles" className="no-color-link text-shadow-red">
@@ -290,11 +290,11 @@ const Navbar = () => {
               </div>
             </Link>
 
-            <Link href="/forum">
+            {/* <Link href="/forum">
               <div className="mobile-icon box-shadow mar-bottom-8">
                 <FontAwesomeIcon icon={faComment} className="icon-ssm red" />
               </div>
-            </Link>
+            </Link> */}
           </div>
           <div
             onClick={() => setMobileActive(true)}

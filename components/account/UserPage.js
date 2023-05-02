@@ -26,9 +26,7 @@ const Cont = styled.div`
     max-width: 1600px;
     margin: 0 auto;
     justify-items: center;
-    @media only screen and (max-width: 600px) {
-      display: block;
-    }
+
     & > div {
       max-width: 480px;
       @media only screen and (max-width: 600px) {
@@ -117,8 +115,6 @@ const UserPage = ({
     },
   ];
 
-  console.log("pposts");
-  console.log(posts);
   return (
     <Cont colors={COLORS}>
       <div className="default-page">

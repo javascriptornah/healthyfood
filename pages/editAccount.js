@@ -420,6 +420,7 @@ const EditAccount = () => {
                       fill
                       size="100%"
                       alt="profile"
+                      priority
                     />
                   ) : (
                     <Image
@@ -428,6 +429,7 @@ const EditAccount = () => {
                       fill
                       size="100%"
                       alt="profile"
+                      priority
                     />
                   ))}
               </div>

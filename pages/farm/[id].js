@@ -9,7 +9,7 @@ import EditImageSection from "../../components/farmview/EditImageSection";
 import Sections from "../../components/farmview/Sections";
 import supabase from "../../utils/supabaseClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import EditSections from "../../components/farmview/EditSections";
 import { toast, Toaster } from "react-hot-toast";
 import DeletePopup from "../../components/popups/DeletePopup";
@@ -222,14 +222,16 @@ const Preview = ({ locationFetch }) => {
                 onClick={toggleEditMode}
                 className="black-btn flex-inline cursor align-center"
               >
-                <h4 className="mar-right-16">
-                  {editMode ? "CANCEL EDIT" : "EDIT"}
-                </h4>
+                <h5 className="">{editMode ? "Cancel Edit" : ""}</h5>
                 <FontAwesomeIcon icon={faPencil} className=" icon-sm white" />
               </div>
               {editMode && (
-                <div onClick={showPopup} className="red-btn-one">
-                  <h4>DELETE</h4>
+                <div
+                  onClick={showPopup}
+                  className="red-btn-one flex-inline align-center"
+                >
+                  <h5 className="mar-right-8">Delete</h5>
+                  <FontAwesomeIcon icon={faTrash} className="white icon-sm" />
                 </div>
               )}
             </>

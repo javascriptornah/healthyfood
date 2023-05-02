@@ -9,6 +9,13 @@ const Cont = styled.div`
     border-radius: 8px;
     padding: 8px 12px;
   }
+  .overscroll {
+    max-height: 800px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0.5rem !important;
+    }
+  }
 `;
 
 const RecentPosts = ({ posts, username }) => {
@@ -46,7 +53,9 @@ const RecentPosts = ({ posts, username }) => {
         <h4 className="mar-right-16">Forum Posts</h4>
         <p className="contrast bold">({posts.length})</p>
       </div>
-      <div className="posts-holder box-shadow-2 grey-border-2">{postElems}</div>
+      <div className="posts-holder box-shadow-2 grey-border-2 overscroll">
+        {postElems}
+      </div>
     </Cont>
   );
 };

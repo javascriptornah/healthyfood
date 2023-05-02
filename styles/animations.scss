@@ -44,20 +44,20 @@ $red: rgb(236, 41, 41);
   animation-timing-function: ease;
 }
 
-@keyframes red {
+@keyframes red-bg {
   0% {
-    background-color: inherit !important;
+    background-color: white !important;
   }
   50% {
     background-color: red !important;
   }
   100% {
-    background-color: inherit !important;
+    background-color: white !important;
   }
 }
 
 .red-anim {
-  animation-name: red;
+  animation-name: red-bg;
   animation-duration: 1s;
   animation-timing-function: ease;
 }
@@ -91,4 +91,16 @@ $red: rgb(236, 41, 41);
   100% {
     height:100%;
   }
+}
+
+@keyframes red-animation {
+  from {
+    background-color: red;
+  } to {
+    background-color: inherit;
+  }
+}
+
+.red-animation{
+  animation: red-animation 2s ease;
 }

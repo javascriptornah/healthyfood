@@ -99,14 +99,14 @@ const Dropdown = ({ hideMobileActive, mobileActive }) => {
             </div>
           </div>
         </Link>
-        <Link onClick={hideMobileActive} href="/forum">
+        {/*  <Link onClick={hideMobileActive} href="/forum">
           <div className="line flex space-between align-center">
             <div className="flex-inline align-center line-cont">
               <h4 className=" text-shadow-white light mar-right-8">forum</h4>
               <FontAwesomeIcon icon={faComment} className="red icon-ssm" />
             </div>
           </div>
-        </Link>
+        </Link> */}
 
         <Link onClick={hideMobileActive} href="/articles">
           <div className="line flex space-between align-center">

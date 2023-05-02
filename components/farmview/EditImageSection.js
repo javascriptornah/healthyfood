@@ -50,17 +50,17 @@ const Cont = styled.div`
       background-color: white;
       border: 1px solid ${(props) => props.colors.blue};
     }
-    @media only screen and (max-width:400px){
-        padding: 8px;
-        .icon-lg{
-            font-size:24px;
-        }
-        h4{
-            display:none;
-        }
+    @media only screen and (max-width: 400px) {
+      padding: 8px;
+      .icon-lg {
+        font-size: 24px;
+      }
+      h4 {
+        display: none;
+      }
     }
   }
-  .padding-8{
+  .padding-8 {
     padding: 8px;
   }
   .small-template {
@@ -108,24 +108,27 @@ const Cont = styled.div`
   .empty-image {
     position: relative;
     cursor: pointer;
+    padding: 16px;
   }
   .selected-image {
     opacity: 1;
     cursor: default;
     border: 2px solid ${(props) => props.colors.darkPink};
   }
-  .header-image{
-    opacity:.5;
+  .header-image {
+    opacity: 0.5;
   }
 `;
 
 const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
   const [imagesCopy, setImagesCopy] = useState(images);
-  const [previewUrl, setPreviewUrl] = useState({url:imagesCopy[0]?.url, id:0} || null);
+  const [previewUrl, setPreviewUrl] = useState(
+    { url: imagesCopy[0]?.url, id: 0 } || null
+  );
   const [loading, setLoading] = useState({ state: false, msg: "" });
   const selectImage = (url, id) => {
     if (previewUrl.url === url) return;
-    setPreviewUrl({url, id});
+    setPreviewUrl({ url, id });
     imageRef.current.classList.add("opacity-anim-fast");
     setTimeout(() => {
       imageRef.current.classList.remove("opacity-anim-fast");
@@ -137,27 +140,27 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
       <div
         key={index}
         className={
-          image.url === previewUrl.url ? "selected-image image-select" : "image-select"
+          image.url === previewUrl.url
+            ? "selected-image image-select"
+            : "image-select"
         }
       >
         <img src={image.url} />
       </div>
     );
   });
-  
+
   const [imageElems, setImageElems] = useState([]);
   useEffect(() => {
     const imageArr = [];
     //loop of four because only 4 images limit
     for (let i = 0; i < 4; i++) {
-        // if image exists
+      // if image exists
       if (imagesCopy[i] !== undefined) {
         imageArr.push(
           <div
             key={i}
-            onClick={() => 
-                   selectImage(imagesCopy[i].url, i)
-            }
+            onClick={() => selectImage(imagesCopy[i].url, i)}
             className={
               imagesCopy[i].url === previewUrl.url
                 ? "selected-image image-select"
@@ -165,29 +168,29 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
             }
           >
             <div className="absolute-center">
-            <div onClick={() => {
-                imageInputRef.current.id = i;
-                imageInputRef?.current?.click()
-            
-            }} className="image-upload-btn padding-8">
-                  
-                  <FontAwesomeIcon icon={faUpload} className="icon-ssm blue" />
-                </div>
-                </div>
-            <img src={imagesCopy[i].url} className = 'header-image'/>
+              <div
+                onClick={() => {
+                  imageInputRef.current.id = i;
+                  imageInputRef?.current?.click();
+                }}
+                className="image-upload-btn padding-8"
+              >
+                <FontAwesomeIcon icon={faUpload} className="icon-ssm blue" />
+              </div>
+            </div>
+            <img src={imagesCopy[i].url} className="header-image" />
           </div>
         );
       } else {
-        
         //if image doesn't exist
         if (user_id === post_user_id) {
           imageArr.push(
             <div
               key={i}
               onClick={() => {
-               imageInputRef.current.id = i+1;
-               imageInputRef?.current?.click();
-               imageInputRef.current.id = imagesCopy.length + 1;
+                imageInputRef.current.id = i + 1;
+                imageInputRef?.current?.click();
+                imageInputRef.current.id = imagesCopy.length + 1;
               }}
               className="empty-image gradient-bg-2 small-template"
             >
@@ -204,8 +207,7 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
     }
     setImageElems(imageArr);
   }, [imagesCopy, previewUrl]);
-  
-  
+
   const [showPhotoDisplay, setShowPhotoDisplay] = useState(false);
 
   const setPhotoDisplayVisible = () => {
@@ -217,28 +219,109 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
   };
 
   const deleteImgurImage = async (image) => {
-    
     try {
-        const response = await fetch(`https://api.imgur.com/3/image/${image.deleteHash}`, {
+      const response = await fetch(
+        `https://api.imgur.com/3/image/${image.deleteHash}`,
+        {
           method: "POST",
           headers: {
             Authorization: `Client-ID ${process.env.NEXT_PUBLIC_IMGUR_ID}`,
           },
+        }
+      );
+      const res = await response.json();
+      if (res.status == 200) {
+        const deleteRes = await deleteImage(image.id);
+        if (deleteRes) {
+          toast.success("image deleted");
+          return true;
+        } else {
+          toast.error("Error deleting image");
+        }
+      } else {
+        toast("Error deleting image", {
+          duration: 4000,
+          position: "top-center",
+
+          // Styling
+          style: { border: "1px solid #E52323" },
+          className: "",
+
+          // Custom Icon
+          icon: "⚠️",
+
+          // Change colors of success/error/loading icon
+          iconTheme: {
+            primary: "#000",
+            secondary: "#fff",
+          },
+
+          // Aria
+          ariaProps: {
+            role: "status",
+            "aria-live": "polite",
+          },
         });
+      }
+    } catch (err) {
+      console.log(err.message);
+      return false;
+    }
+    return false;
+  };
+  const imageRef = useRef(null);
+
+  const imageInputRef = useRef(null);
+  useEffect(() => {}, []);
+
+  const uploadImage = async (event, id) => {
+    if (!event.target.files || event.target.files.length === 0) {
+      alert("You must select an image to upload.");
+      return;
+    }
+    const image = imagesCopy[id];
+
+    const deleteStatus = await deleteImgurImage(image);
+
+    if (typeof image == "undefined" ? true : deleteStatus) {
+      setLoading({ state: true, msg: "Uploading image..." });
+      const file = event.target.files[0];
+      let formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        const response = await fetch("https://api.imgur.com/3/upload", {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_IMGUR_ID}`,
+          },
+        });
+
         const res = await response.json();
         if (res.status == 200) {
-            
-            const deleteRes = await deleteImage(image.id);
-            if(deleteRes){
-                
-                toast.success('image deleted');
-                return true;
-            } else{
-                
-                toast.error('Error deleting image')
-            }
+          const uploadedImage = await createImageFetch(
+            res.data.link,
+            res.data.deletehash,
+            location_id
+          );
+
+          setImagesCopy((prev) => {
+            let prevCopy = prev;
+            prevCopy.splice(id, 1);
+            return [...prevCopy, uploadedImage[0]];
+          });
+
+          setPreviewUrl((prev) => {
+            return {
+              ...prev,
+              url: uploadedImage[0].url,
+            };
+          });
+          setLoading({ state: false, msg: "" });
         } else {
-          toast("Error deleting image", {
+          setLoading({ state: false, msg: "" });
+          toast("Error uploading image", {
             duration: 4000,
             position: "top-center",
 
@@ -263,103 +346,11 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
           });
         }
       } catch (err) {
-        console.log(err.message);
-        return false;
-      } 
-      return false;
-  }
-  const imageRef = useRef(null);
-
-  const imageInputRef = useRef(null);
-  useEffect(() => {}, []);
-
-  const uploadImage = async (event, id) => {
-    
-    if (!event.target.files || event.target.files.length === 0) {
-      alert("You must select an image to upload.");
-      return;
+        setLoading({ state: false, msg: "" });
+      }
     }
-    const image = imagesCopy[id];
-   
-    const deleteStatus = await deleteImgurImage(image);
-   
-    if(typeof image == 'undefined' ? true : deleteStatus){
-        setLoading({ state: true, msg: "Uploading image..." });
-        const file = event.target.files[0];
-        let formData = new FormData();
-        formData.append("image", file);
-        
-        try {
-          const response = await fetch("https://api.imgur.com/3/upload", {
-            method: "POST",
-            body: formData,
-            headers: {
-              Authorization: `Client-ID ${process.env.NEXT_PUBLIC_IMGUR_ID}`,
-            },
-          });
-    
-          const res = await response.json();
-          if (res.status == 200) {
-            const uploadedImage = await createImageFetch(
-              res.data.link,
-              res.data.deletehash,
-              location_id
-            );
-            
-            setImagesCopy((prev) => {
-                let prevCopy = prev;
-                prevCopy.splice(id, 1);
-              return [...prevCopy, uploadedImage[0]];
-            });
-            
-            setPreviewUrl(prev => {
-                return {
-                ...prev, 
-                url:uploadedImage[0].url
-                }
-            })
-            setLoading({ state: false, msg: "" });
-          } else {
-            
-            setLoading({ state: false, msg: "" });
-            toast("Error uploading image", {
-              duration: 4000,
-              position: "top-center",
-    
-              // Styling
-              style: { border: "1px solid #E52323" },
-              className: "",
-    
-              // Custom Icon
-              icon: "⚠️",
-    
-              // Change colors of success/error/loading icon
-              iconTheme: {
-                primary: "#000",
-                secondary: "#fff",
-              },
-    
-              // Aria
-              ariaProps: {
-                role: "status",
-                "aria-live": "polite",
-              },
-            });
-          }
-        } catch (err) {
-          setLoading({ state: false, msg: "" });
-          
-          
-            
-            
-          
-        }
-    }
-    
-    
   };
 
-  
   return (
     <Cont colors={COLORS}>
       {loading.state && (
@@ -378,27 +369,37 @@ const ImageSection = ({ images, location_id, user_id, post_user_id }) => {
       {showPhotoDisplay && (
         <PhotoDisplay selectedImage={previewUrl?.url} hidePhoto={hidePhoto} />
       )}
-      <input id={imagesCopy.length-1} ref={imageInputRef} type="file" onChange={(e) =>uploadImage(e, e.target.id)} hidden />
+      <input
+        id={imagesCopy.length - 1}
+        ref={imageInputRef}
+        type="file"
+        onChange={(e) => uploadImage(e, e.target.id)}
+        hidden
+      />
       <div className="hero-image-section dark-blue-bg">
         {previewUrl?.url !== null ? (
           <div className="image-holder ">
             <div className="absolute-center">
-            <div
-              className="image-upload-btn"
-              onClick = {()=> {
-                if(imagesCopy.length < 4){
-                  imageInputRef.current.id = imageInputRef.current.id+1;
-                } else{
-                imageInputRef.current.id = previewUrl.id;
-                }
-                imageInputRef.current.click()
-            }}
-            >
-              <h4 className="blue">UPLOAD</h4>
-              <FontAwesomeIcon icon={faUpload} className="icon-lg blue" />
+              <div
+                className="image-upload-btn"
+                onClick={() => {
+                  if (imagesCopy.length < 4) {
+                    imageInputRef.current.id = imageInputRef.current.id + 1;
+                  } else {
+                    imageInputRef.current.id = previewUrl.id;
+                  }
+                  imageInputRef.current.click();
+                }}
+              >
+                <h4 className="blue">UPLOAD</h4>
+                <FontAwesomeIcon icon={faUpload} className="icon-lg blue" />
+              </div>
             </div>
-            </div>
-            <img className = 'header-image' ref={imageRef} src={previewUrl?.url} />
+            <img
+              className="header-image"
+              ref={imageRef}
+              src={previewUrl?.url}
+            />
           </div>
         ) : (
           <div className="template gradient-bg-2">

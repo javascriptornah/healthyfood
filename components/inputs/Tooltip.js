@@ -6,7 +6,7 @@ const Cont = styled.div`
   background-color: ${(props) => props.colors.lightBeige};
   border: 1px solid ${(props) => props.colors.grey};
   position: absolute;
-  bottom: 100%;
+  bottom: calc(100% + 16px);
   left: 50%;
   transform: translateX(-50%);
   padding: 4px 8px;
