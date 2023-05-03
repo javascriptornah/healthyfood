@@ -8,10 +8,6 @@ import {
   fetchLocation,
   fetchTags,
   createTag,
-  fetchOceans,
-  fetchSeas,
-  fetchPollution,
-  fetchOceanFish,
 } from "../utils/supabaseFunctions";
 import supabase from "../utils/supabaseClient";
 import { useEffect, useState } from "react";
@@ -22,10 +18,7 @@ const Cont = styled.div`
 export const getServerSideProps = async () => {
   const locationsFetch = await fetchLocations();
   const tagsFetch = await fetchTags();
-  //const oceansFetch = await fetchOceans();
-  //const seasFetch = await fetchSeas();
-  //const pollutionFetch = await fetchPollution();
-  //const fishFetch = await fetchOceanFish();
+
   return {
     props: {
       locationsFetch,

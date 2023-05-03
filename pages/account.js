@@ -10,6 +10,8 @@ import {
   fetchUserById,
   fetchUserPostsPreviewById,
 } from "../utils/supabaseFunctions";
+import UserPageLoading from "../components/account/UserPageLoading";
+
 const Cont = styled.div`
   .default-page {
     background: #fff;
@@ -34,6 +36,7 @@ export async function getServerSideProps() {
   };
 }
 const Account = ({ session }) => {
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
@@ -53,6 +56,7 @@ const Account = ({ session }) => {
     } else {
       setIsLogged(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -88,16 +92,23 @@ const Account = ({ session }) => {
         <meta name="description" content={meta.description} />
       </Head>
       <Toaster />
-      {isLogged ? (
-        <UserPage
-          user={user}
-          fetchUser={fetchUser}
-          locationsFetch={userDetails.locations}
-          userDetails={userDetails}
-          postsFetch={posts}
-        />
+
+      {loading ? (
+        <UserPageLoading />
       ) : (
-        <NotLogged />
+        <>
+          {isLogged ? (
+            <UserPage
+              user={user}
+              fetchUser={fetchUser}
+              locationsFetch={userDetails.locations}
+              userDetails={userDetails}
+              postsFetch={posts}
+            />
+          ) : (
+            <NotLogged />
+          )}
+        </>
       )}
     </Cont>
   );

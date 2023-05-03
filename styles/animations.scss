@@ -1,4 +1,52 @@
+$tan: #edc7b7;
+$light-beige: #eee2dc;
+$grey: #bab2b5;
+$darkBlue: #123c69;
+$darkPink: #ac3b61;
+$redGrey: #81646d;
+$lightRedGrey: #999395;
+$black: #192430;
+$desatLightBlue: #c6cacf;
+$desatDarkBlue: #404a55;
+$yellow: #9fac3b;
+$purple: #7028e4;
+$blue: #2521e5;
+$red: #e52323;
+$yellow: #cce729;
+$orange: #df5f28;
+$green: #3bac46;
+$offWhite: #e7eff8;
+$light-blue: #278ffd;
+$light-red: rgb(253, 39, 39);
+$light-blue: #278ffd;
+$light-blue-2: #88c1ff;
+$light-green: #27fd55;
+$light-orange: #fd7d27;
 $red: rgb(236, 41, 41);
+
+.gradient {
+  animation-duration: 1.8s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, $light-beige 8%, $tan 38%, $light-beige 54%);
+  background-size: 1000px 640px;
+  
+  position: relative;
+  
+}
+
+@keyframes placeHolderShimmer{
+  0%{
+      background-position: -468px 0
+  }
+  100%{
+      background-position: 468px 0
+  }
+}
+
 @keyframes opacity {
   from {
     opacity: 0;
@@ -104,3 +152,4 @@ $red: rgb(236, 41, 41);
 .red-animation{
   animation: red-animation 2s ease;
 }
+
