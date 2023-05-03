@@ -27,6 +27,7 @@ import {
   updateUserBio,
   fetchUserById,
   deleteUserLink,
+  createUserBio,
 } from "../utils/supabaseFunctions";
 
 const Cont = styled.div`
@@ -131,6 +132,7 @@ const EditAccount = () => {
   const [usernameBtn, setUsernameBtn] = useState(false);
   const [emailBtn, setEmailBtn] = useState(false);
   const [bioBtn, setBioBtn] = useState(false);
+  const [initialBio, setInitialBio] = useState(undefined);
   useEffect(() => {
     const updateSession = async () => {
       const { data: session } = await supabase.auth.getSession();
@@ -143,8 +145,9 @@ const EditAccount = () => {
         const userInfo = await fetchUserById(session.session.user.id);
         console.log("user info");
         console.log(userInfo);
-        setBio(userInfo.about[0].bio);
-        setLinks(userInfo.about[0].links);
+        setBio(userInfo.about[0]?.bio);
+        setInitialBio(userInfo.about[0]?.bio);
+        setLinks(userInfo.about[0]?.links || []);
         setUser(userInfo);
       }
     };
@@ -244,9 +247,15 @@ const EditAccount = () => {
   };
 
   const submitBio = async () => {
-    const res = await updateUserBio(session.user.id, bio);
+    let res = false;
+    if (typeof initialBio == "undefined") {
+      res = await createUserBio(session.user.id, bio);
+    } else {
+      res = await updateUserBio(session.user.id, bio);
+    }
     if (res) {
       toast.success("Bio updated!");
+      setInitialBio("anything");
     } else {
       toast.error("Error updating bio");
     }
@@ -397,7 +406,18 @@ const EditAccount = () => {
           </div>
         </div>
       )}
-
+      <div className="flex justify-end">
+        <Link href="/account">
+          <div className="flex-inline align-center">
+            <h5 className="underline mar-right-8">Back to account</h5>
+            <FontAwesomeIcon
+              icon={faTurnDown}
+              className="red icon-ssm"
+              style={{ transform: "rotate(90deg)" }}
+            />
+          </div>
+        </Link>
+      </div>
       <div className="center-inline  ssm-spacer">
         <h2 className="black">Edit Profile</h2>
       </div>
@@ -434,18 +454,21 @@ const EditAccount = () => {
                   ))}
               </div>
             </div>
-            <div>
-              <h5
-                onClick={() => fileRef.current.click()}
-                className="green cursor mar-bottom-32"
-              >
-                Change profile picture
-              </h5>
-            </div>
-            {uploading && (
-              <div className="lds-ripple">
+            {uploading ? (
+              <div className="lds-ring-green">
                 <div></div>
                 <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            ) : (
+              <div>
+                <h5
+                  onClick={() => fileRef.current.click()}
+                  className="green cursor mar-bottom-32"
+                >
+                  Change profile picture
+                </h5>
               </div>
             )}
           </div>

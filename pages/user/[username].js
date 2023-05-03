@@ -68,6 +68,7 @@ const User = ({ userFetch }) => {
       "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder",
   };
 
+  console.log(userFetch);
   return (
     <Cont colors={COLORS}>
       <Header

@@ -168,7 +168,7 @@ const AddSocial = ({ hideSocial, user_id, pushLink }) => {
             </div>
             <div
               className="link box-shadow-2 cursor"
-              onClick={() => startAdding(faInstagram, "Instagram", "#f09433")}
+              onClick={() => startAdding(faYoutube, "Youtube", "#FF0000")}
             >
               <FontAwesomeIcon
                 icon={faYoutube}
@@ -179,7 +179,7 @@ const AddSocial = ({ hideSocial, user_id, pushLink }) => {
             </div>
             <div
               className="link box-shadow-2 cursor"
-              onClick={() => startAdding(faYoutube, "Youtube", "#FF0000")}
+              onClick={() => startAdding(faInstagram, "Instagram", "#f09433")}
             >
               <FontAwesomeIcon
                 icon={faInstagram}

@@ -106,7 +106,7 @@ const SigninForm = ({ passwordState, togglePasswordState, updateHeight }) => {
         <>
           <form onSubmit={signIn} ref={signInRef}>
             <div className="input-line">
-              <h5>EMAIL</h5>
+              <h5>Email</h5>
               <input
                 {...register("emailSignIn", {
                   required: true,
@@ -121,7 +121,7 @@ const SigninForm = ({ passwordState, togglePasswordState, updateHeight }) => {
             </div>
 
             <div className="input-line">
-              <h5>PASSWORD</h5>
+              <h5>Password</h5>
               <div className="tags-input-box">
                 <input
                   {...register("passwordSignIn", {

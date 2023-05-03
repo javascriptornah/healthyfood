@@ -2,66 +2,73 @@ import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../data/colors";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const Cont = styled.div`
-  display: flex;
   background-color: ${(props) => props.colors.tan};
-  position: relative;
-  overflow: hidden;
-  flex-direction: row;
-  @media only screen and (max-width: 400px) {
-    flex-direction: column;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  .underline-hover {
+    text-decoration-color: ${(props) => props.colors.darkPink};
   }
-  section {
-    padding: 16px 32px;
-  }
-  .right {
-    text-align: right;
-    background-color: ${(props) => props.colors.offWhite};
-  }
-  .rect {
-    height: 120%;
-    width: 80px;
-    transform: rotate(20deg);
-    position: absolute;
-    left: calc(50% - 40px);
-    background-color: ${(props) => props.colors.offWhite};
+  .contact {
+    border-right: 1px solid ${(props) => props.colors.darkPink};
+    border-left: 1px solid ${(props) => props.colors.darkPink};
+    padding-left: 16px;
+    padding-right: 16px;
   }
 `;
 
 const Footer = () => {
   return (
     <Cont colors={COLORS}>
-      <div className="rect hide-400"></div>
-      <section className="left flex-one">
+      <div>
         <Link href="/">
-          <h4 className="underline-hover">FOOD MAP</h4>
+          <h5 className=" underline-hover mar-bottom-8">Food Finder</h5>
         </Link>
-        <Link href="/">
-          <h5 className="light underline-hover">MAP</h5>
+        <Link href="/articles">
+          <h5 className=" underline-hover mar-bottom-8">Articles</h5>
         </Link>
-        <Link href="/forum">
-          <h5 className="light underline-hover">FORUM</h5>
+        <Link href="/nutritionsearch">
+          <h5 className=" underline-hover mar-bottom-8">Nutrition</h5>
         </Link>
-      </section>
+      </div>
 
-      <section className="right flex-one flex space-between">
-        <div></div>
-        <div>
-          <Link href="/">
-            <h4 className="underline-hover blue">FISH</h4>
-          </Link>
-          <Link href="/">
-            <h5 className="light underline-hover blue">MAP</h5>
-          </Link>
-          <Link href="/forum">
-            <h5 className="light underline-hover blue">ARTICLES</h5>
-          </Link>
-          <Link href="/forum">
-            <h5 className="light underline-hover blue">DATA SEARCH</h5>
+      <div>
+        <div className="flex">
+          <div className="contact mar-right-32">
+            <h5 className="mar-bottom-8">Contact</h5>
+            <a
+              href="https://www.instagram.com/healthyfoodmap_/"
+              target="_blank"
+            >
+              <div className="flex align-center underline-hover">
+                <FontAwesomeIcon
+                  icon={faInstagram}
+                  className="icon-ssm red mar-right-8"
+                />
+                <p className="red ">@healthyfoodmap_</p>
+              </div>
+            </a>
+            <div className="mar-bottom-4"></div>
+            <a href="mailto:healthyfoodmap@hotmail.com">
+              <div className="flex align-center underline-hover">
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  className="icon-ssm red mar-right-8"
+                />
+                <p className="red ">healthyfoodmap@hotmail.com</p>
+              </div>
+            </a>
+          </div>
+          <Link href="/login">
+            <p className="red underline">Create new account</p>
           </Link>
         </div>
-      </section>
+      </div>
     </Cont>
   );
 };

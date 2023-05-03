@@ -19,8 +19,6 @@ const Cont = styled.div`
 `;
 
 const RecentPosts = ({ posts, username }) => {
-  console.log("usernameeeee");
-  console.log(username);
   const postElems = posts.map((post, index) => {
     return (
       <Post

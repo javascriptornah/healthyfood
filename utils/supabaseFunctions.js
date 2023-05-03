@@ -1591,11 +1591,25 @@ export const updateUserBio = async (user_id, bio) => {
       .maybeSingle();
     if (bioError) throw bioError;
 
-    console.log("ran here");
     const { data, error } = await supabase
       .from("about")
       .update({ bio, user_id })
       .eq("user_id", user_id);
+
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const createUserBio = async (user_id, bio) => {
+  try {
+    const { data, error } = await supabase
+      .from("about")
+      .insert({ bio, user_id })
+      .select();
 
     if (error) throw error;
     return true;

@@ -170,6 +170,11 @@ const AccountPreview = ({
           </Link>
         </div>
       </div>
+      <div className="flex justify-center">
+        <Link href={`/user/${username}`}>
+          <p className="light-blue underline">View your public account</p>
+        </Link>
+      </div>
       <div className="padding-x-12 padding-y-8">
         <h5 className="mar-bottom-8">{username}</h5>
         <p className="bio">{bio}</p>

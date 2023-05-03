@@ -135,12 +135,12 @@ const UserPage = ({
           <div className="bio">
             <AccountPreview
               user={user}
-              username="rawfatgod"
-              bio={userDetails.about[0].bio}
+              username={userDetails.username}
+              bio={userDetails.about[0]?.bio}
               upvotes={userDetails.upvotes[0].count}
               posts={userDetails.posts.length}
               comments={userDetails.comments[0].count}
-              links={userDetails.about[0].links}
+              links={userDetails.about[0]?.links || []}
             />
           </div>
         </div>

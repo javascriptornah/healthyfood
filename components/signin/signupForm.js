@@ -97,7 +97,7 @@ const SignupForm = ({ passwordState, togglePasswordState }) => {
     <Cont className="flex flex-column">
       <form onSubmit={signUp}>
         <div className="input-line">
-          <h5>USERNAME</h5>
+          <h5>Username</h5>
           <input
             {...register("username", {
               required: true,
@@ -120,7 +120,7 @@ const SignupForm = ({ passwordState, togglePasswordState }) => {
         </div>
 
         <div className="input-line">
-          <h5>EMAIL</h5>
+          <h5>Email</h5>
           <input
             {...register("email", {
               required: true,
@@ -135,7 +135,7 @@ const SignupForm = ({ passwordState, togglePasswordState }) => {
         </div>
 
         <div className="input-line">
-          <h5>PASSWORD</h5>
+          <h5>Password</h5>
           <div className="tags-input-box">
             <input
               {...register("password", {
@@ -165,7 +165,7 @@ const SignupForm = ({ passwordState, togglePasswordState }) => {
         </div>
 
         <div className="input-line">
-          <h5>CONFIRM PASSWORD </h5>
+          <h5>Confirm Password </h5>
           <input
             {...register("confirmPassword", {
               required: true,

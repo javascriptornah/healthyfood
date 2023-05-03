@@ -69,6 +69,8 @@ const Account = ({ session }) => {
     keywords:
       "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder",
   };
+
+  console.log(user);
   return (
     <Cont colors={COLORS}>
       <Head>

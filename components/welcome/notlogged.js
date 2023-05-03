@@ -79,6 +79,9 @@ const Cont = styled.div`
       flex-direction: column;
     }
   }
+  .grey-border-2 {
+    padding: 32px;
+  }
 `;
 const NotLogged = () => {
   const router = useRouter();
@@ -120,13 +123,15 @@ const NotLogged = () => {
     <Cont colors={COLORS}>
       <div className="default-page">
         <div className="flex space-around sm-spacer content-holder">
-          <div className="center-inline mar-bottom-32 left-content">
-            <h3 className="blue text-shadow mar-bottom-16">
+          <div className="center-inline mar-bottom-32 left-content grey-border-2">
+            <h3 className=" text-shadow-red mar-bottom-16">
               Thanks For Signing Up!
             </h3>
-            <div className="box-shadow features">
-              <h4 className="light contrast mar-bottom-8">Login below</h4>
-
+            <h5 className="contrast mar-bottom-32">
+              Please check your email for an authetication link, then login
+              below!
+            </h5>
+            <div className="">
               <form onSubmit={submitForm}>
                 <div className="input-line">
                   <h5>EMAIL</h5>
@@ -174,63 +179,13 @@ const NotLogged = () => {
                 </div>
                 <p ref={errorText} className="error"></p>
 
-                <button className="blue-btn-one">
+                <button className="blue-btn-one width-100">
                   <h5>LOGIN</h5>
                 </button>
               </form>
             </div>
           </div>
-          <div className="flex flex-column">
-            <div className="features box-shadow ssm-spacer center-inline ">
-              <h3 className="blue text-shadow ">Check your email</h3>
-              <FontAwesomeIcon
-                icon={faEnvelope}
-                className="blue icon-lg mar-bottom-16"
-              />
-              <h5 className="light contrast">
-                A verification link has been sent to your email
-              </h5>
-            </div>
-            <div className="features box-shadow ssm-spacer">
-              <div className="flex align-center mar-bottom-16">
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  className="icon-ssm green mar-right-16"
-                />
-                <p className="bold">Location posts can now be edited later</p>
-              </div>
-
-              <div className="flex align-center mar-bottom-16">
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  className="icon-ssm green mar-right-16"
-                />
-                <p className="bold">Save location posts for later</p>
-              </div>
-
-              <div className="flex align-center mar-bottom-16">
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  className="icon-ssm green mar-right-16"
-                />
-                <p className="bold">
-                  Share your account page with all your location posts
-                </p>
-              </div>
-
-              <div className="flex align-center mar-bottom-16">
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  className="icon-ssm green mar-right-16"
-                />
-                <p className="bold">
-                  Forum post notifications (future feature)
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
-        <div className="blue-line"></div>
       </div>
     </Cont>
   );
