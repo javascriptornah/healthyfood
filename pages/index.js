@@ -96,7 +96,7 @@ export default function Home({ locationsFetch, tagsFetch }) {
           fetchNewLocation={fetchNewLocation}
           user={user}
         />
-        <Feed />
+        <Feed locationsFetch={locationsFetch} />
         <Suppliers />
       </Cont>
     </>

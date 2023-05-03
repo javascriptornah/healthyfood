@@ -86,12 +86,6 @@ const Farmmap = ({ tagsFetch, locationsFetch }) => {
         });
       })
       .catch((err) => console.log(err));
-    /*
-    setLocations((prevLocations) => {
-      let newLocations = foodLocations.sort((a, b) => {
-        return a.title.localeCompare(b.title);
-      });
-    }); */
   }, []);
 
   useEffect(() => {
@@ -120,7 +114,6 @@ const Farmmap = ({ tagsFetch, locationsFetch }) => {
       console.log(dataFetch);
       updateCountry(dataFetch.countryName);
       setCountry(dataFetch.countryName);
-      //setState(dataFetch.stateProv);
     };
 
     func();
