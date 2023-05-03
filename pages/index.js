@@ -11,6 +11,8 @@ import {
 } from "../utils/supabaseFunctions";
 import supabase from "../utils/supabaseClient";
 import { useEffect, useState } from "react";
+import Suppliers from "../components/google/Suppliers";
+import Feed from "../components/feed/index";
 const Cont = styled.div`
   min-height: 100vh;
 `;
@@ -94,6 +96,8 @@ export default function Home({ locationsFetch, tagsFetch }) {
           fetchNewLocation={fetchNewLocation}
           user={user}
         />
+        <Feed />
+        <Suppliers />
       </Cont>
     </>
   );

@@ -253,7 +253,6 @@ const Index = ({
         updateCoords={updateCoords}
       />
       <div className="lg-spacer"></div>
-      <Suppliers />
     </Cont>
   );
 };
