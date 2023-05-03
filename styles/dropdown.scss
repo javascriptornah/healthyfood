@@ -8,7 +8,9 @@ $black: rgb(25, 36, 48);
 $k: "#fff";
 $none: none;
 $yellow: #9fac3b;
-
+html, body{
+  overflow-x: hidden;
+}
 .dropdown {
   position: relative;
   border: 1px solid $grey;

@@ -23,6 +23,7 @@ const Locations = ({ locations }) => {
         <Location
           key={index}
           name={location.name}
+          id={location.id}
           address={location.address[0].full_address}
           tags={location.tags}
           url={location.images?.length > 0 ? location.images[0].url : null}

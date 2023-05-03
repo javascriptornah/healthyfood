@@ -17,6 +17,26 @@ const Cont = styled.div`
   .link-elem {
     margin-right: 0;
   }
+  @media only screen and (max-width: 750px) {
+    .flex-flip {
+      flex-direction: column;
+    }
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 500px) {
+    grid-template-columns: 1fr;
+    .flex-flip {
+      align-items: center;
+    }
+    .image-holder {
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .link-holder {
+      align-items: center;
+    }
+  }
 `;
 
 const Header = ({
@@ -42,7 +62,7 @@ const Header = ({
   );
   return (
     <Cont colors={COLORS}>
-      <div>
+      <div className="image-holder flex">
         <Image
           src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${avatar_url}`}
           width={140}
@@ -53,10 +73,10 @@ const Header = ({
       </div>
 
       <div>
-        <div className="flex align-start mar-bottom-32">
-          <h4 className="black mar-right-32">{username}</h4>
+        <div className="flex flex-flip align-start mar-bottom-32">
+          <h4 className="black mar-right-32 mar-bottom-16">{username}</h4>
 
-          <div className="tan-icon mar-right-16">
+          <div className="tan-icon mar-right-16  mar-bottom-16">
             <FontAwesomeIcon
               icon={faComment}
               className="icon-sm red mar-right-8"
@@ -72,7 +92,7 @@ const Header = ({
           </div>
         </div>
         <div className=" mar-bottom-16">
-          <div className="flex space-between info flex-wrap mar-bottom-32">
+          <div className="flex space-between info flex-wrap mar-bottom-32 flex-flip">
             <div className="mar-bottom-8">
               <p className="bold mar-bottom-4">Upvotes</p>
               <div className="flex-inline align-center">
@@ -108,7 +128,9 @@ const Header = ({
         </div>
       </div>
 
-      <div className=" flex  flex-column align-end ">{linkElems}</div>
+      <div className=" flex  flex-column align-end link-holder">
+        {linkElems}
+      </div>
     </Cont>
   );
 };
