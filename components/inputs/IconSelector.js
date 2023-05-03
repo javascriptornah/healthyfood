@@ -55,11 +55,12 @@ const IconSelector = ({ pushTag, deleteTag }) => {
     });
   };
   const [iconElems, setIconElems] = useState(
-    Object.entries(icons).map(([key, icon]) => {
+    Object.entries(icons).map(([key, icon], index) => {
       return (
         <div
           className={icon.selected ? "button active" : "button"}
           onClick={() => selectIcon(key, icon.selected)}
+          key={index}
         >
           <Image
             src={`/icons/${icon.text}.png`}
@@ -74,9 +75,10 @@ const IconSelector = ({ pushTag, deleteTag }) => {
 
   useEffect(() => {
     setIconElems((prev) => {
-      return Object.entries(icons).map(([key, icon]) => {
+      return Object.entries(icons).map(([key, icon], index) => {
         return (
           <div
+            key={index}
             className={icon.selected ? "button active" : "button"}
             onClick={() => selectIcon(key, icon.selected)}
             onMouseOver={() => showIcon(key)}

@@ -53,7 +53,11 @@ const Footer = () => {
       <div>
         <div className="contact flex flex-column align-center mar-bottom-16">
           <h5 className="mar-bottom-8">Contact</h5>
-          <a href="https://www.instagram.com/healthyfoodmap_/" target="_blank">
+          <a
+            href="https://www.instagram.com/healthyfoodmap_/"
+            rel="noreferrer"
+            target="_blank"
+          >
             <div className="flex align-center underline-hover">
               <FontAwesomeIcon
                 icon={faInstagram}
