@@ -67,6 +67,8 @@ const IconSelector = ({ pushTag, deleteTag }) => {
             width={32}
             height={32}
             style={{ objectFit: "contain" }}
+            priority
+            quality={100}
           />
         </div>
       );
@@ -91,6 +93,8 @@ const IconSelector = ({ pushTag, deleteTag }) => {
               width={32}
               height={32}
               style={{ objectFit: "contain" }}
+              priority
+              quality={100}
             />
           </div>
         );
