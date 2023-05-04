@@ -433,7 +433,7 @@ const Bottombar = ({
         reviewFields.friendly.stars === 0 ? null : reviewFields.friendly.stars,
         howToOrder,
         user.id,
-        selectedIcon
+        selectedTags[0]
       );
       return locationId;
     } else {

@@ -149,8 +149,7 @@ const Sortbar = ({ locationsFetch }) => {
   useEffect(() => {
     setLocations((prevLocations) => {
       return farmLocations.filter((location) => {
-        console.log(location.address[0].country_id.name === country);
-        return location.address[0].country_id.name === country;
+        return location.address[0]?.country_id.name === country;
       });
     });
   }, [country]);
@@ -158,7 +157,7 @@ const Sortbar = ({ locationsFetch }) => {
   useEffect(() => {
     setLocations((prevLocations) => {
       return farmLocations.filter((location) => {
-        return location.address[0].state_id.name === state;
+        return location.address[0]?.state_id.name === state;
       });
     });
   }, [state]);
