@@ -20,7 +20,7 @@ const Dropdown = ({
   DropdownComponent,
   name,
 }) => {
-  const [showDropdown, setShowDropdown] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
   const dropdownEl = useRef();
   const handleClickOutside = useCallback((e) => {
     console.log(e.target.closest(".dropdown"));

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
 import Sortbar from "./Sortbar";
-
+import Locations from "./Locations";
 const Cont = styled.div`
   max-width: 1400px;
   width: 100%;
@@ -19,6 +19,11 @@ const Cont = styled.div`
   }
 `;
 const Index = ({ locationsFetch }) => {
+  const [locations, setLocation] = useState(locationsFetch);
+  const [renderCount, setRenderCount] = useState(10);
+
+  console.log("locations");
+  console.log(locations);
   return (
     <Cont colors={COLORS}>
       <div className="header-spec red-title center-inline mar-bottom-32">
@@ -26,6 +31,7 @@ const Index = ({ locationsFetch }) => {
       </div>
 
       <Sortbar locationsFetch={locationsFetch} />
+      <Locations locations={locations} renderCount={renderCount} />
       <div className="sm-spacer"></div>
     </Cont>
   );

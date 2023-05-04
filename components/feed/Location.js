@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../../data/colors";
-
+import { fetchDaysDiff } from "../../utils/functions";
 const Cont = styled.div``;
 const Location = ({
   name,
