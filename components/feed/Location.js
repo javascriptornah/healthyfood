@@ -13,7 +13,7 @@ const Cont = styled.div`
   border-bottom: 1px solid ${(props) => props.colors.grey};
   padding: 16px;
   margin-bottom: 32px;
-  cursor: pointer;
+
   .grey-circle {
     width: 6px;
     height: 6px;

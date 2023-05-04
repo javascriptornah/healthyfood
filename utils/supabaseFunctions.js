@@ -333,7 +333,8 @@ export const fetchLocations = async () => {
       .from("locations")
       .select(
         "*, user_id(username, avatar_url), address(*, country_id(name), state_id(name)), products(*), images(*)"
-      );
+      )
+      .order("id", { ascending: false });
     if (error) throw error;
     return data;
   } catch (error) {
