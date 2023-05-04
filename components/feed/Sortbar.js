@@ -209,12 +209,12 @@ const Sortbar = ({ locationsFetch }) => {
   }
   const updateValue = () => {};
   return (
-    <Cont colors={COLORS} className="flex flex-wrap align-center">
+    <Cont colors={COLORS} className="flex flex-wrap align-center mar-bottom-32">
       <FontAwesomeIcon
         icon={faSort}
-        className="mar-bottom-16 red icon-med mar-right-32"
+        className="mar-bottom-8 red icon-med mar-right-32"
       />
-      <h5 className="mar-right-32">Date</h5>
+      <h5 className="mar-right-32 mar-bottom-8">Date</h5>
       <div className="mar-right-16 mar-bottom-16">
         <p className="bold">From</p>
         <input type="date" />

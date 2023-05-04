@@ -332,7 +332,7 @@ export const fetchLocations = async () => {
     const { data, error } = await supabase
       .from("locations")
       .select(
-        "*,address(*, country_id(name), state_id(name)), products(*), images(*)"
+        "*, user_id(username, avatar_url), address(*, country_id(name), state_id(name)), products(*), images(*)"
       );
     if (error) throw error;
     return data;

@@ -67,9 +67,7 @@ const Location = ({
       </div>
 
       <div className="image-carousel">
-        <div className="image-cont relative">
-          <Image src = {}
-        </div>
+        <div className="image-cont relative"></div>
       </div>
     </Cont>
   );

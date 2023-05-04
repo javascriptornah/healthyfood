@@ -17,11 +17,14 @@ const Locations = ({ locations, renderCount }) => {
           created_at={locations[i].created_at}
           description={locations[i].description}
           images={locations[i].images || []}
+          username={locations[i].user_id?.username || "anon"}
+          avatar_url={locations[i].user_id?.avatar_url || "anon.png"}
         />
       );
     }
+    setLocationElems(locationArray);
   }, [locations, renderCount]);
-  return <Cont colors={COLORS}></Cont>;
+  return <Cont colors={COLORS}>{locationElems}</Cont>;
 };
 
 export default Locations;
