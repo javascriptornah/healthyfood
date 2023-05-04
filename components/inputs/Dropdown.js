@@ -10,7 +10,7 @@ const Cont = styled.div`
     width: 172px;
   }
   .dropdown-holder {
-    z-index: 1;
+    z-index: 5001;
   }
 `;
 

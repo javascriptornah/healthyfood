@@ -39,7 +39,7 @@ const Index = ({ locationsFetch }) => {
   const [locationsStale, setLocationsStale] = useState(locationsFetch);
   const [locations, setLocations] = useState(locationsFetch);
   const [renderCount, setRenderCount] = useState(10);
-  //console.log(locations);
+  console.log(locations);
   const filterByDate = (from, to) => {
     setLocations((prev) => {
       return locationsStale
@@ -52,6 +52,17 @@ const Index = ({ locationsFetch }) => {
     });
   };
 
+  const filterByRegion = (region, regionType) => {
+    setLocations((prev) => {
+      return locationsStale
+        .filter((location) =>
+          location.address[0][regionType + "_id"].name.includes(region)
+        )
+        .sort((a, b) =>
+          a.created_at > b.created_at ? -1 : b.created_at > a.created_at ? 1 : 0
+        );
+    });
+  };
   const showMore = () => {
     if (renderCount + 10 > locations.length) {
       setRenderCount(locations.length);
@@ -65,7 +76,11 @@ const Index = ({ locationsFetch }) => {
         <h1>Feed</h1>
       </div>
 
-      <Sortbar locationsFetch={locationsFetch} filterByDate={filterByDate} />
+      <Sortbar
+        locationsFetch={locationsFetch}
+        filterByDate={filterByDate}
+        filterByRegion={filterByRegion}
+      />
       <Locations locations={locations} renderCount={renderCount} />
       <div className="mar-bottom-32">
         {renderCount < locations.length && (

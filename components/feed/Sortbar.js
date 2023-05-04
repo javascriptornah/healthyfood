@@ -75,7 +75,7 @@ const LocationSelector = ({
         setOptions={setStates}
         name="state"
       />
-      <div className="mar-bottom-16"></div>
+      {/* <div className="mar-bottom-16"></div>
       <h5 className="light contrast mar-bottom-8">CITY</h5>
       <Select
         regions={citiesStale}
@@ -85,11 +85,11 @@ const LocationSelector = ({
         options={cities}
         setOptions={setCities}
         name="city"
-      />
+  /> */}
     </div>
   );
 };
-const Sortbar = ({ locationsFetch, filterByDate }) => {
+const Sortbar = ({ locationsFetch, filterByDate, filterByRegion }) => {
   const [farmLocations, setFarmLocations] = useState(locationsFetch);
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
@@ -200,6 +200,7 @@ const Sortbar = ({ locationsFetch, filterByDate }) => {
   }
 
   function updateRegion(location, name) {
+    filterByRegion(location, name);
     if (name === "country") {
       updateCountry(location);
     } else if (name === "state") {
