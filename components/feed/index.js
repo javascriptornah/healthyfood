@@ -28,6 +28,12 @@ const Cont = styled.div`
       border-left: none;
     }
   }
+  .blue-btn-one {
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+      text-align: center;
+    }
+  }
 `;
 const Index = ({ locationsFetch }) => {
   const [locationsStale, setLocationsStale] = useState(locationsFetch);
@@ -46,6 +52,13 @@ const Index = ({ locationsFetch }) => {
     });
   };
 
+  const showMore = () => {
+    if (renderCount + 10 > locations.length) {
+      setRenderCount(locations.length);
+    } else {
+      setRenderCount(renderCount + 10);
+    }
+  };
   return (
     <Cont colors={COLORS} className="box-shadow-2">
       <div className="header-spec red-title center-inline mar-bottom-32">
@@ -54,7 +67,15 @@ const Index = ({ locationsFetch }) => {
 
       <Sortbar locationsFetch={locationsFetch} filterByDate={filterByDate} />
       <Locations locations={locations} renderCount={renderCount} />
-      <div className="sm-spacer"></div>
+      <div className="mar-bottom-32">
+        {renderCount < locations.length && (
+          <div className="flex justify-center p-x-16">
+            <div className="blue-btn-one" onClick={showMore}>
+              <h5>Show more</h5>
+            </div>
+          </div>
+        )}
+      </div>
     </Cont>
   );
 };

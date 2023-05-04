@@ -72,9 +72,14 @@ const Location = ({
         </Link>
 
         <div className="flex align-center mar-bottom-16">
-          <Link href={`/user/${username}`}>
-            <p className="green bold underline-hover">{username}</p>
-          </Link>
+          {username != "anon" ? (
+            <Link href={`/user/${username}`}>
+              <p className="green bold underline-hover">{username}</p>
+            </Link>
+          ) : (
+            <p className="black bold ">{username}</p>
+          )}
+
           <div className="avatar-holder relative mar-left-16">
             <Image
               src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_PATH}/${avatar_url}`}

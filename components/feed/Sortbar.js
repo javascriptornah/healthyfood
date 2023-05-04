@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "../inputs/Dropdown";
 import Select from "../google/Select";
+import toast from "react-hot-toast";
 const Cont = styled.div`
   background-color: ${(props) => props.colors.tan};
   padding: 16px;
@@ -231,6 +232,8 @@ const Sortbar = ({ locationsFetch, filterByDate }) => {
         toDate = new Date(dates.to);
       if (toDate > fromDate) {
         calculateDates();
+      } else {
+        toast.error("Your dates are invalid");
       }
     }
   };
@@ -248,6 +251,8 @@ const Sortbar = ({ locationsFetch, filterByDate }) => {
         toDate = new Date(value);
       if (toDate > fromDate) {
         calculateDates();
+      } else {
+        toast.error("Your dates are invalid");
       }
     }
   };
