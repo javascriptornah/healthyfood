@@ -88,7 +88,7 @@ const LocationSelector = ({
     </div>
   );
 };
-const Sortbar = ({ locationsFetch }) => {
+const Sortbar = ({ locationsFetch, filterByDate }) => {
   const [farmLocations, setFarmLocations] = useState(locationsFetch);
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
@@ -208,6 +208,49 @@ const Sortbar = ({ locationsFetch }) => {
     }
   }
   const updateValue = () => {};
+
+  const [dates, setDates] = useState({
+    from: "",
+    to: "",
+  });
+
+  const calculateDates = () => {
+    filterByDate(dates.from, dates.to);
+  };
+
+  const updateDateFrom = (e) => {
+    const value = e.target.value;
+    setDates((prev) => {
+      return {
+        ...prev,
+        from: value,
+      };
+    });
+    if (dates.to !== "") {
+      const fromDate = new Date(value),
+        toDate = new Date(dates.to);
+      if (toDate > fromDate) {
+        calculateDates();
+      }
+    }
+  };
+
+  const updateDateTo = (e) => {
+    const value = e.target.value;
+    setDates((prev) => {
+      return {
+        ...prev,
+        to: value,
+      };
+    });
+    if (dates.from !== "") {
+      const fromDate = new Date(dates.from),
+        toDate = new Date(value);
+      if (toDate > fromDate) {
+        calculateDates();
+      }
+    }
+  };
   return (
     <Cont colors={COLORS} className="flex flex-wrap align-center mar-bottom-32">
       <FontAwesomeIcon
@@ -217,11 +260,11 @@ const Sortbar = ({ locationsFetch }) => {
       <h5 className="mar-right-32 mar-bottom-8">Date</h5>
       <div className="mar-right-16 mar-bottom-16">
         <p className="bold">From</p>
-        <input type="date" />
+        <input type="date" value={dates.from} onChange={updateDateFrom} />
       </div>
       <div className="mar-right-32 mar-bottom-16">
         <p className="bold">To</p>
-        <input type="date" />
+        <input type="date" value={dates.to} onChange={updateDateTo} />
       </div>
       <div className="flex flex-wrap align-center">
         <h5 className="mar-right-16 mar-bottom-8">Location</h5>

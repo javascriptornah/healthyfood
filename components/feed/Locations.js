@@ -9,7 +9,9 @@ const Locations = ({ locations, renderCount }) => {
   const [locationElems, setLocationElems] = useState([]);
   useEffect(() => {
     const locationArray = [];
-    for (let i = 0; i < renderCount; i++) {
+    const counter =
+      renderCount > locations.length ? locations.length : renderCount;
+    for (let i = 0; i < counter; i++) {
       locationArray.push(
         <Location
           key={i}

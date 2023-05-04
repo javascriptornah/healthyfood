@@ -9,6 +9,9 @@ const Cont = styled.div`
   .dropdown__selected {
     width: 172px;
   }
+  .dropdown-holder {
+    z-index: 1;
+  }
 `;
 
 const Dropdown = ({
@@ -23,8 +26,6 @@ const Dropdown = ({
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownEl = useRef();
   const handleClickOutside = useCallback((e) => {
-    console.log(e.target.closest(".dropdown"));
-
     /* if (showDropdown && e.target.closest(".dropdown") !== dropdownEl.current) {
       setShowDropdown(false);
     } */
@@ -60,7 +61,7 @@ const Dropdown = ({
             <p>{value}</p>
           </div>
           {showDropdown && (
-            <div className=" absolute dropdown-holder ">
+            <div className=" absolute dropdown-holder opacity-anim ">
               {DropdownComponent}
             </div>
           )}
