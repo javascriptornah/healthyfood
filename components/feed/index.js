@@ -4,11 +4,12 @@ import COLORS from "../../data/colors";
 import Sortbar from "./Sortbar";
 import Locations from "./Locations";
 const Cont = styled.div`
-  max-width: 1400px;
+  max-width: 800px;
   width: 100%;
   margin: 0 auto;
   background-color: ${(props) => props.colors.lightBeige};
   border-radius: 16px 16px 0 0;
+  border: 1px solid ${(props) => props.colors.grey};
 
   .header-spec {
   }
@@ -35,7 +36,7 @@ const Index = ({ locationsFetch }) => {
   console.log("locations");
   console.log(locations);
   return (
-    <Cont colors={COLORS}>
+    <Cont colors={COLORS} className="box-shadow-2">
       <div className="header-spec red-title center-inline mar-bottom-32">
         <h1>Feed</h1>
       </div>

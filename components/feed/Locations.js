@@ -5,12 +5,15 @@ import Location from "./Location";
 
 const Cont = styled.div``;
 const Locations = ({ locations, renderCount }) => {
+  console.log(locations);
   const [locationElems, setLocationElems] = useState([]);
   useEffect(() => {
     const locationArray = [];
     for (let i = 0; i < renderCount; i++) {
       locationArray.push(
         <Location
+          key={i}
+          id={locations[i].id}
           name={locations[i].name}
           country={locations[i].address[0].country_id.name}
           state={locations[i].address[0].state_id.name}
