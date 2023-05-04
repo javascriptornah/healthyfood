@@ -83,11 +83,9 @@ const Slideshow = ({ images }) => {
         <Image
           src={image.url}
           fill
-          quality="100"
           style={{ objectFit: "contain" }}
           alt="Preview"
           size={"100%"}
-          priority
         />
       </div>
     );
