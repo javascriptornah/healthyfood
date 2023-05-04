@@ -209,43 +209,49 @@ const Sortbar = ({ locationsFetch }) => {
   }
   const updateValue = () => {};
   return (
-    <Cont colors={COLORS} className="flex align-center">
-      <FontAwesomeIcon icon={faSort} className="red icon-med mar-right-32" />
+    <Cont colors={COLORS} className="flex flex-wrap align-center">
+      <FontAwesomeIcon
+        icon={faSort}
+        className="mar-bottom-16 red icon-med mar-right-32"
+      />
       <h5 className="mar-right-32">Date</h5>
-      <div className="mar-right-16">
+      <div className="mar-right-16 mar-bottom-16">
         <p className="bold">From</p>
         <input type="date" />
       </div>
-      <div className="mar-right-32">
+      <div className="mar-right-32 mar-bottom-16">
         <p className="bold">To</p>
         <input type="date" />
       </div>
-
-      <h5 className="mar-right-16">Location</h5>
-      <Dropdown
-        title="Location"
-        value={value}
-        updateValue={updateValue}
-        defaultOptionLabel={"All"}
-        name={"All"}
-        DropdownComponent={
-          <LocationSelector
-            countries={regions}
-            country={country}
-            updateRegion={updateRegion}
-            options={options}
-            setOptions={setOptions}
-            states={states}
-            statesStale={statesStale}
-            state={state}
-            setStates={setStates}
-            cities={cities}
-            citiesStale={citiesStale}
-            city={city}
-            setCities={setCities}
+      <div className="flex flex-wrap align-center">
+        <h5 className="mar-right-16 mar-bottom-8">Location</h5>
+        <div className="mar-bottom-8">
+          <Dropdown
+            title="Location"
+            value={value}
+            updateValue={updateValue}
+            defaultOptionLabel={"All"}
+            name={"All"}
+            DropdownComponent={
+              <LocationSelector
+                countries={regions}
+                country={country}
+                updateRegion={updateRegion}
+                options={options}
+                setOptions={setOptions}
+                states={states}
+                statesStale={statesStale}
+                state={state}
+                setStates={setStates}
+                cities={cities}
+                citiesStale={citiesStale}
+                city={city}
+                setCities={setCities}
+              />
+            }
           />
-        }
-      />
+        </div>
+      </div>
     </Cont>
   );
 };

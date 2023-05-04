@@ -8,6 +8,8 @@ const Cont = styled.div`
   width: 100%;
   margin: 0 auto;
   background-color: ${(props) => props.colors.lightBeige};
+  border-radius: 16px 16px 0 0;
+
   .header-spec {
   }
   .red-title {
@@ -16,6 +18,14 @@ const Cont = styled.div`
   }
   .sm-spacer {
     margin-bottom: 500px;
+  }
+  @media only screen and (max-width: 1400px) {
+    border-radius: 0;
+    .red-title {
+      border-radius: 0;
+      border-right: none;
+      border-left: none;
+    }
   }
 `;
 const Index = ({ locationsFetch }) => {
