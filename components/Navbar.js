@@ -117,7 +117,28 @@ const Cont = styled.div`
     }
     &:active {
       border: 2px solid ${(props) => props.colors.darkPink};
+      -webkit-box-shadow: inset 1px 1px 10px #333;
+      -moz-box-shadow: inset 1px 1px 10px #333;
+      box-shadow: inset 1px 1px 10px #333;
       box-shadow: none;
+    }
+  }
+  .mobile-icon-active {
+    -webkit-box-shadow: inset 1px 1px 10px #333;
+    -moz-box-shadow: inset 1px 1px 10px #333;
+    box-shadow: inset 1px 1px 10px #333;
+    background-color: ${(props) => props.colors.darkPink};
+    .red {
+      color: ${(props) => props.colors.tan};
+    }
+  }
+
+  .desktop-icon-active {
+    h5 {
+      color: ${(props) => props.colors.black};
+    }
+    .red {
+      color: ${(props) => props.colors.black};
     }
   }
 `;
@@ -126,7 +147,7 @@ const Navbar = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [mobileActive, setMobileActive] = useState(false);
-
+  console.log(router);
   const hideMobileActive = () => {
     setMobileActive(false);
   };
@@ -166,7 +187,14 @@ const Navbar = () => {
             />
           </Link>
 
-          <Link href="/" className="no-color-link text-shadow-red">
+          <Link
+            href="/"
+            className={
+              router.route == "/"
+                ? "desktop-icon-active no-color-link text-shadow-red"
+                : "no-color-link text-shadow-red"
+            }
+          >
             <div className="flex-inline  align-center">
               <FontAwesomeIcon
                 icon={faMapPin}
@@ -189,7 +217,14 @@ const Navbar = () => {
           </Link> */}
 
           <div className="grey-line-nav"></div>
-          <Link href="/articles" className="no-color-link text-shadow-red">
+          <Link
+            href="/articles"
+            className={
+              router.route == "/articles"
+                ? "desktop-icon-active no-color-link text-shadow-red"
+                : "no-color-link text-shadow-red"
+            }
+          >
             <div className="flex-inline  align-center">
               <FontAwesomeIcon
                 icon={faNewspaper}
@@ -202,7 +237,11 @@ const Navbar = () => {
           <div className="grey-line-nav"></div>
           <Link
             href="/nutritionsearch"
-            className="no-color-link text-shadow-red"
+            className={
+              router.route == "/nutritionsearch"
+                ? "desktop-icon-active no-color-link text-shadow-red"
+                : "no-color-link text-shadow-red"
+            }
           >
             <div className="flex-inline  align-center">
               <FontAwesomeIcon
@@ -223,9 +262,12 @@ const Navbar = () => {
                 </div>
               </Link>
               {!loading ? (
-                <h5 onClick={logoutFunctional} className="black cursor">
+                <p
+                  onClick={logoutFunctional}
+                  className="light-blue underline-hover cursor"
+                >
                   Sign Out
-                </h5>
+                </p>
               ) : (
                 <div className="lds-ring-green">
                   <div></div>
@@ -277,7 +319,13 @@ const Navbar = () => {
               </Link>
             )}
             <Link href="/">
-              <div className="mobile-icon box-shadow mar-bottom-8">
+              <div
+                className={
+                  router.route == "/"
+                    ? "mobile-icon box-shadow mar-bottom-8 mobile-icon-active"
+                    : "mobile-icon box-shadow mar-bottom-8"
+                }
+              >
                 <FontAwesomeIcon
                   icon={faLocationDot}
                   className="icon-ssm red"
@@ -285,7 +333,13 @@ const Navbar = () => {
               </div>
             </Link>
             <Link href="/nutritionsearch">
-              <div className="mobile-icon box-shadow mar-bottom-8">
+              <div
+                className={
+                  router.route == "/nutritionsearch"
+                    ? "mobile-icon box-shadow mar-bottom-8 mobile-icon-active"
+                    : "mobile-icon box-shadow mar-bottom-8"
+                }
+              >
                 <FontAwesomeIcon icon={faSearch} className="icon-ssm red" />
               </div>
             </Link>

@@ -47,6 +47,7 @@ const Header = ({
   links,
   bio,
   avatar_url,
+  locations,
 }) => {
   const [linkElems, setLinkElems] = useState(
     links.map((link, index) => {
@@ -104,13 +105,13 @@ const Header = ({
               </div>
             </div>
             <div className="mar-bottom-8">
-              <p className="bold mar-bottom-4">Posts</p>
+              <p className="bold mar-bottom-4">Locations</p>
               <div className="flex-inline align-center">
                 <FontAwesomeIcon
                   icon={faNewspaper}
                   className="icon-ssm contrast mar-right-8"
                 />
-                <p className="contrast">{posts.length}</p>
+                <p className="contrast">{locations}</p>
               </div>
             </div>
             <div className="mar-bottom-8">

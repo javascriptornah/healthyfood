@@ -76,6 +76,8 @@ const User = ({ userFetch }) => {
       "online farm finder, find farm, find farms near me, grassfed meat near me, healthyfoodmap, healthy farms, find farms, farm finder",
   };
 
+  console.log("user fetch");
+  console.log(userFetch);
   return (
     <Cont colors={COLORS}>
       {userFetch == null ? (
@@ -105,7 +107,7 @@ const User = ({ userFetch }) => {
             username={userFetch?.username}
             avatar_url={userFetch?.avatar_url}
             created_at={userFetch?.created_at}
-            locations={userFetch?.locations}
+            locations={userFetch?.locations.length}
             posts={userFetch?.posts || []}
             comments={userFetch?.comments[0].count}
             bio={userFetch?.about[0]?.bio || ""}

@@ -78,9 +78,14 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      <Link href="/login">
-        <p className="red underline ">Create new account</p>
-      </Link>
+      <div>
+        <Link href="/login">
+          <p className="red underline ">Create new account</p>
+        </Link>
+        <Link href="/terms">
+          <p className="red underline">Terms of service</p>
+        </Link>
+      </div>
     </Cont>
   );
 };
