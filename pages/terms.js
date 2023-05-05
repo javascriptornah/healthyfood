@@ -21,8 +21,8 @@ const Terms = () => {
       <div className="grey-line mar-bottom-16"></div>
       <p>
         At Healthyfoodmap, we strive to protect your data and keep you safe.
-        That is why we have choosen Supabase as or other secure authentication
-        providers to protect your precious user details.
+        That is why we have choosen Supabase or other secure authentication
+        providers (google) to protect your precious user details.
       </p>
 
       <p>

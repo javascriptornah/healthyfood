@@ -163,7 +163,8 @@ const EditAccount = () => {
       const validateUsername = (res) => {
         if (res) {
           toast.success("Username updated!");
-          setUsernameDisplay(username);
+
+          setUsernameBtn(false);
         }
         setUsernameLoading(false);
       };
@@ -256,6 +257,7 @@ const EditAccount = () => {
     if (res) {
       toast.success("Bio updated!");
       setInitialBio("anything");
+      setBioBtn(false);
     } else {
       toast.error("Error updating bio");
     }

@@ -10,6 +10,8 @@ import {
 import supabase from "../../utils/supabaseClient";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import Google from "../inputs/auth/google";
+
 const Cont = styled.div`
   width: 100%;
 `;
@@ -186,21 +188,25 @@ const SignupForm = ({ passwordState, togglePasswordState }) => {
         </div>
         <button type="submit" hidden></button>
       </form>
-      <div className="signup-footer justify-center flex">
-        {loading ? (
-          <div class="lds-ring-green">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        ) : (
-          <FontAwesomeIcon
-            icon={faCircleChevronRight}
-            className="white icon-xl cursor"
-            onClick={signUp}
-          />
-        )}
+      <div className="signup-footer">
+        <Google />
+        <div className="mar-bottom-16"></div>
+        <div className=" justify-center flex">
+          {loading ? (
+            <div class="lds-ring-green">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          ) : (
+            <FontAwesomeIcon
+              icon={faCircleChevronRight}
+              className="white icon-xl cursor"
+              onClick={signUp}
+            />
+          )}
+        </div>
       </div>
     </Cont>
   );

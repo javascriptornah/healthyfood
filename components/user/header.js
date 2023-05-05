@@ -48,6 +48,7 @@ const Header = ({
   bio,
   avatar_url,
   locations,
+  user,
 }) => {
   const [linkElems, setLinkElems] = useState(
     links.map((link, index) => {
@@ -61,6 +62,7 @@ const Header = ({
       );
     })
   );
+
   return (
     <Cont colors={COLORS}>
       <div className="image-holder flex">
@@ -76,21 +78,24 @@ const Header = ({
       <div>
         <div className="flex flex-flip align-start mar-bottom-32">
           <h4 className="black mar-right-32 mar-bottom-16">{username}</h4>
-
-          <div className="tan-icon mar-right-16  mar-bottom-16">
-            <FontAwesomeIcon
-              icon={faComment}
-              className="icon-sm red mar-right-8"
-            />
-            <h5>Message</h5>
-          </div>
-          <div className="tan-icon">
-            <FontAwesomeIcon
-              icon={faUser}
-              className="icon-sm red mar-right-8"
-            />
-            <h5>Add Friend</h5>
-          </div>
+          {user.user_metadata.username != username && (
+            <>
+              <div className="tan-icon mar-right-16  mar-bottom-16">
+                <FontAwesomeIcon
+                  icon={faComment}
+                  className="icon-sm red mar-right-8"
+                />
+                <h5>Message</h5>
+              </div>
+              <div className="tan-icon">
+                <FontAwesomeIcon
+                  icon={faUser}
+                  className="icon-sm red mar-right-8"
+                />
+                <h5>Add Friend</h5>
+              </div>
+            </>
+          )}
         </div>
         <div className=" mar-bottom-16">
           <div className="flex space-between info flex-wrap mar-bottom-32 flex-flip">

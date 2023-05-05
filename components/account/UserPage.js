@@ -44,24 +44,28 @@ const Cont = styled.div`
   .recent-posts {
     margin-right: 16px;
     @media only screen and (max-width: 1200px) {
-      grid-column-start: 2;
-      grid-column-end: 3;
+      grid-column-start: 1;
+      grid-row-start: 1;
+      padding-right: 16px;
+      grid-column-end: 2;
       margin: 0;
     }
     @media only screen and (max-width: 900px) {
-      grid-column: 1/2;
+      grid-column: 1/3;
+      grid-row: 2/3;
+      padding: 0;
     }
   }
   .post-activity {
     margin-right: 16px;
     @media only screen and (max-width: 1200px) {
-      grid-row-start: 1;
+      grid-row-start: 2;
       grid-row-end: 10;
       grid-column: 1/2;
     }
     @media only screen and (max-width: 900px) {
-      grid-column: 1/2;
-      grid-row: 2/3;
+      grid-column: 1/3;
+      grid-row-start: 3;
       margin-bottom: 32px;
       margin-right: 0;
     }
@@ -72,7 +76,8 @@ const Cont = styled.div`
       margin-bottom: 32px;
     }
     @media only screen and (max-width: 900px) {
-      grid-column: 1/2;
+      grid-column: 1/3;
+      grid-row: 1/2;
     }
   }
 `;

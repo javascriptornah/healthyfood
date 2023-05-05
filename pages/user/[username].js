@@ -113,6 +113,7 @@ const User = ({ userFetch }) => {
             bio={userFetch?.about[0]?.bio || ""}
             links={userFetch?.about[0]?.links || []}
             upvotes={userFetch?.upvotes[0].count}
+            user={user}
           />
           <div className="mar-bottom-32"></div>
           <div className="grey-line mar-bottom-16"></div>
